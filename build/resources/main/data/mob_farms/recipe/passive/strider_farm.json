@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "SOS"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "O": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "id": "mob_farms:strider_farm",
+    "count": 1
+  }
+}

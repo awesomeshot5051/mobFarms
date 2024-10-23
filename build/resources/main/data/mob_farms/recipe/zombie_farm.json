@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "RSZ"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "R": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "Z": {
+      "item": "minecraft:zombie_head"
+    }
+  },
+  "result": {
+    "id": "mob_farms:zombie_farm",
+    "count": 1
+  }
+}

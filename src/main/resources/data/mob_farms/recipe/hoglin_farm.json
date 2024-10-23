@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "YSP"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "Y": {
+      "item": "minecraft:leather"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "P": {
+      "item": "minecraft:porkchop"
+    }
+  },
+  "result": {
+    "id": "mob_farms:hoglin_farm",
+    "count": 1
+  }
+}

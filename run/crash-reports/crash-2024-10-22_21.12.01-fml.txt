@@ -1,0 +1,192 @@
+---- Minecraft Crash Report ----
+// Uh... Did I do that?
+
+Time: 2024-10-22 21:12:01
+Description: Mod loading failures have occurred; consult the issue messages for more details
+
+net.neoforged.neoforge.logging.CrashReportExtender$ModLoadingCrashException: Mod loading has failed
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Stacktrace:
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259) ~[?:?] {re:mixin}
+-- Mod loading issue for: mob_farms --
+Details:
+	Mod file: /D:/MCreatorWorkspaces/mobFarms/MobFarms/build/classes/java/main/
+	Failure message: Mob Farms (mob_farms) encountered an error while dispatching the net.neoforged.neoforge.registries.RegisterEvent event
+		java.lang.NullPointerException: Block id not set
+	Mod version: 1
+	Mod issues URL: <No issues URL found>
+	Exception message: java.lang.NullPointerException: Block id not set
+Stacktrace:
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259) ~[?:?] {re:mixin}
+	at TRANSFORMER/minecraft@1.21.2/net.minecraft.world.level.block.state.BlockBehaviour$Properties.effectiveDrops(BlockBehaviour.java:1242) ~[neoforge-21.2.0-beta-minecraft.jar%23211!/:?] {re:mixin,re:classloading}
+	at TRANSFORMER/minecraft@1.21.2/net.minecraft.world.level.block.state.BlockBehaviour.<init>(BlockBehaviour.java:113) ~[neoforge-21.2.0-beta-minecraft.jar%23211!/:?] {re:classloading,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.2/net.minecraft.world.level.block.Block.<init>(Block.java:186) ~[neoforge-21.2.0-beta-minecraft.jar%23211!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/mob_farms@1/com.awesomeshot5051.mobfarms.blocks.HorizontalRotatableBlock.<init>(HorizontalRotatableBlock.java:18) ~[%23215!/:?] {re:classloading}
+	at TRANSFORMER/mob_farms@1/com.awesomeshot5051.mobfarms.blocks.BlockBase.<init>(BlockBase.java:29) ~[%23215!/:?] {re:classloading}
+	at TRANSFORMER/mob_farms@1/com.awesomeshot5051.mobfarms.blocks.passiveMobs.ChickenFarmBlock.<init>(ChickenFarmBlock.java:41) ~[%23215!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$register$0(DeferredRegister.java:215) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$register$1(DeferredRegister.java:234) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$addEntries$2(DeferredRegister.java:375) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.RegisterEvent.register(RegisterEvent.java:48) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.addEntries(DeferredRegister.java:375) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.ConsumerEventHandler.invoke(ConsumerEventHandler.java:26) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:350) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:329) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModContainer.acceptEvent(ModContainer.java:177) ~[loader-4.0.29.jar%23165!/:4.0] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.lambda$postEventWithWrapInModOrder$16(ModLoader.java:379) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[?:?] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModList.forEachModInOrder(ModList.java:174) ~[loader-4.0.29.jar%23165!/:4.0] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.postEventWithWrapInModOrder(ModLoader.java:377) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.postEventWrapContainerInModOrder(ModLoader.java:368) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.GameData.postRegisterEvents(GameData.java:90) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.internal.CommonModLoader.lambda$begin$0(CommonModLoader.java:54) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?] {}
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?] {}
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?] {}
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?] {}
+
+
+-- Mod loading issue for: mob_farms --
+Details:
+	Mod file: /D:/MCreatorWorkspaces/mobFarms/MobFarms/build/classes/java/main/
+	Failure message: Mob Farms (mob_farms) encountered an error while dispatching the net.neoforged.neoforge.registries.RegisterEvent event
+		java.lang.NullPointerException: Trying to access unbound value: ResourceKey[minecraft:block / mob_farms:inventory_viewer]
+	Mod version: 1
+	Mod issues URL: <No issues URL found>
+	Exception message: java.lang.NullPointerException: Trying to access unbound value: ResourceKey[minecraft:block / mob_farms:inventory_viewer]
+Stacktrace:
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredHolder.value(DeferredHolder.java:103) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister$Items.lambda$registerSimpleBlockItem$1(DeferredRegister.java:499) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$register$1(DeferredRegister.java:234) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$addEntries$2(DeferredRegister.java:375) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.RegisterEvent.register(RegisterEvent.java:48) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.addEntries(DeferredRegister.java:375) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.ConsumerEventHandler.invoke(ConsumerEventHandler.java:26) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:350) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:329) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModContainer.acceptEvent(ModContainer.java:177) ~[loader-4.0.29.jar%23165!/:4.0] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.lambda$postEventWithWrapInModOrder$16(ModLoader.java:379) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[?:?] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModList.forEachModInOrder(ModList.java:174) ~[loader-4.0.29.jar%23165!/:4.0] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.postEventWithWrapInModOrder(ModLoader.java:377) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.postEventWrapContainerInModOrder(ModLoader.java:368) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.GameData.postRegisterEvents(GameData.java:90) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.internal.CommonModLoader.lambda$begin$0(CommonModLoader.java:54) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?] {}
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?] {}
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?] {}
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?] {}
+
+
+-- Mod loading issue for: mob_farms --
+Details:
+	Mod file: /D:/MCreatorWorkspaces/mobFarms/MobFarms/build/classes/java/main/
+	Failure message: Mob Farms (mob_farms) encountered an error while dispatching the net.neoforged.neoforge.registries.RegisterEvent event
+		java.lang.NullPointerException: Trying to access unbound value: ResourceKey[minecraft:block / mob_farms:inventory_viewer]
+	Mod version: 1
+	Mod issues URL: <No issues URL found>
+	Exception message: java.lang.NullPointerException: Trying to access unbound value: ResourceKey[minecraft:block / mob_farms:inventory_viewer]
+Stacktrace:
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredHolder.value(DeferredHolder.java:103) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredHolder.get(DeferredHolder.java:117) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/mob_farms@1/com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities.lambda$static$0(ModTileEntities.java:28) ~[%23215!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$register$0(DeferredRegister.java:215) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$register$1(DeferredRegister.java:234) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.lambda$addEntries$2(DeferredRegister.java:375) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.RegisterEvent.register(RegisterEvent.java:48) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.DeferredRegister.addEntries(DeferredRegister.java:375) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.ConsumerEventHandler.invoke(ConsumerEventHandler.java:26) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:350) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:329) ~[bus-8.0.2.jar%23169!/:?] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModContainer.acceptEvent(ModContainer.java:177) ~[loader-4.0.29.jar%23165!/:4.0] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.lambda$postEventWithWrapInModOrder$16(ModLoader.java:379) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[?:?] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModList.forEachModInOrder(ModList.java:174) ~[loader-4.0.29.jar%23165!/:4.0] {re:mixin}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.postEventWithWrapInModOrder(ModLoader.java:377) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.29/net.neoforged.fml.ModLoader.postEventWrapContainerInModOrder(ModLoader.java:368) ~[loader-4.0.29.jar%23165!/:4.0] {}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.registries.GameData.postRegisterEvents(GameData.java:90) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at TRANSFORMER/neoforge@21.2.0-beta/net.neoforged.neoforge.internal.CommonModLoader.lambda$begin$0(CommonModLoader.java:54) ~[neoforge-21.2.0-beta-minecraft.jar%23212!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?] {}
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?] {}
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?] {}
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21.2
+	Minecraft Version ID: 1.21.2
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 21.0.3, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 85811072 bytes (81 MiB) / 459276288 bytes (438 MiB) up to 4078960640 bytes (3890 MiB)
+	CPUs: 12
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 5 7640HS w/ Radeon 760M Graphics     
+	Identifier: AuthenticAMD Family 25 Model 116 Stepping 1
+	Microarchitecture: Zen 3
+	Frequency (GHz): 4.29
+	Number of physical packages: 1
+	Number of physical CPUs: 6
+	Number of logical CPUs: 12
+	Graphics card #0 name: AMD Radeon(TM) 760M
+	Graphics card #0 vendor: Advanced Micro Devices, Inc.
+	Graphics card #0 VRAM (MiB): 512.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 32.0.11027.1000
+	Graphics card #1 name: NVIDIA GeForce RTX 4060 Laptop GPU
+	Graphics card #1 vendor: NVIDIA
+	Graphics card #1 VRAM (MiB): 8188.00
+	Graphics card #1 deviceId: VideoController2
+	Graphics card #1 versionInfo: 32.0.15.6590
+	Memory slot #0 capacity (MiB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 5.60
+	Memory slot #0 type: Unknown
+	Memory slot #1 capacity (MiB): 8192.00
+	Memory slot #1 clockSpeed (GHz): 5.60
+	Memory slot #1 type: Unknown
+	Virtual memory max (MiB): 36034.36
+	Virtual memory used (MiB): 28765.23
+	Swap memory total (MiB): 20480.00
+	Swap memory used (MiB): 3488.55
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 128260.52, total: 486109.00
+	Space in storage for workdir (MiB): available: 595614.88, total: 953852.00
+	JVM Flags: 0 total; 
+	Loaded Shaderpack: (off)
+	ModLauncher: 11.0.4+main.d2e20e43
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher services: 
+		sponge-mixin-0.15.2+mixin.0.8.7.jar mixin PLUGINSERVICE 
+		loader-4.0.29.jar slf4jfixer PLUGINSERVICE 
+		loader-4.0.29.jar runtime_enum_extender PLUGINSERVICE 
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
+		loader-4.0.29.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-11.0.4.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-11.0.4.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		javafml@4.0
+		lowcodefml@4.0
+		minecraft@4.0
+	Mod List: 
+		corelib-1.21.2-2.1.5.jar                          |Corelib                       |corelib                       |1.21.2-2.1.5        |Manifest: NOSIGNATURE
+		fabric_renderer_api_v1-3.3.0+1.21.2-pre1.jar      |Fabric Rendering API          |fabric_renderer_api_v1        |3.3.0+1.21.2-pre1   |Manifest: NOSIGNATURE
+		fabric-api-base-0.4.42+d1308ded19.jar             |Forgified Fabric API Base     |fabric_api_base               |0.4.42+d1308ded19   |Manifest: NOSIGNATURE
+		fabric-block-view-api-v2-1.0.10+9afaaf8c19.jar    |Forgified Fabric BlockView API|fabric_block_view_api_v2      |1.0.10+9afaaf8c19   |Manifest: NOSIGNATURE
+		fabric-rendering-data-attachment-v1-0.3.48+73761d2|Forgified Fabric Rendering Dat|fabric_rendering_data_attachme|0.3.48+73761d2e19   |Manifest: NOSIGNATURE
+		iris-neoforge-1.8.0-beta.6+mc1.21.2.jar           |Iris                          |iris                          |1.8.0-beta.6+mc1.21.|Manifest: NOSIGNATURE
+		neoforge-21.2.0-beta-minecraft.jar                |Minecraft                     |minecraft                     |1.21.2              |Manifest: NOSIGNATURE
+		main                                              |Mob Farms                     |mob_farms                     |1                   |Manifest: NOSIGNATURE
+		neoforge-21.2.0-beta-minecraft.jar                |NeoForge                      |neoforge                      |21.2.0-beta         |Manifest: NOSIGNATURE
+		sodium-neoforge-0.6.0-beta.3+mc1.21.2.jar         |Sodium                        |sodium                        |0.6.0-beta.3+mc1.21.|Manifest: NOSIGNATURE
+	Crash Report UUID: b7b04acb-0a11-4e71-9fec-511220d57950
+	FML: 4.0.29
+	NeoForge: 21.2.0-beta

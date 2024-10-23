@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "aba",
+    "cde"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "b": {
+      "item": "minecraft:lava_bucket"
+    },
+    "c": {
+      "item": "minecraft:mutton"
+    },
+    "d": {
+      "item": "minecraft:stone"
+    },
+    "e": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "id": "mob_farms:sheep_farm",
+    "count": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "STB"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "S": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "T": {
+      "item": "minecraft:stone"
+    },
+    "B": {
+      "item": "minecraft:bone"
+    }
+  },
+  "result": {
+    "id": "mob_farms:skeleton_farm",
+    "count": 1
+  }
+}

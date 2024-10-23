@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "SZC"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "S": {
+      "item": "minecraft:snowball"
+    },
+    "Z": {
+      "item": "minecraft:stone"
+    },
+    "C": {
+      "item": "minecraft:carved_pumpkin"
+    }
+  },
+  "result": {
+    "id": "mob_farms:snow_golem_farm",
+    "count": 1
+  }
+}

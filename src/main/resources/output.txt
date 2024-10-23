@@ -1,0 +1,39 @@
+Folder PATH listing for volume Data
+Volume serial number is F452-2237
+D:.
++---assets
+|   \---mob_farms
+|       +---blockstates
+|       |   +---aggressive
+|       |   +---neutral
+|       |   \---passive
+|       +---lang
+|       +---models
+|       |   +---block
+|       |   |   +---aggressive
+|       |   |   +---neutral
+|       |   |   \---passive
+|       |   \---item
+|       |       +---aggressive
+|       |       +---neutral
+|       |       \---passive
+|       \---textures
+|           +---block
+|           \---gui
+|               \---container
++---data
+|   +---minecraft
+|   |   \---tags
+|   |       \---block
+|   |           \---mineable
+|   \---mob_farms
+|       +---loot_table
+|       |   \---blocks
+|       |       +---aggressive
+|       |       +---neutral
+|       |       \---passive
+|       \---recipe
+|           +---aggressive
+|           +---neutral
+|           \---passive
+\---META-INF

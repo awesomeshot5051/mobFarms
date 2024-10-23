@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "PSP"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "P": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "id": "mob_farms:guardian_farm",
+    "count": 1
+  }
+}

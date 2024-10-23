@@ -1,0 +1,43 @@
+modLoader = "javafml"
+loaderVersion = "*"
+license = "All rights reserved"
+#issueTrackerURL = "https://github.com/henkelmax/easy-villagers/issues"
+[[mods]]
+modId = "mob_farms"
+#version = "${mod_version}"
+displayName = "Mob Farms"
+#updateJSONURL = "https://update.maxhenkel.de/neoforge/mob_farms"
+#displayURL = "https://www.curseforge.com/minecraft/mc-mods/easy-villagers"
+logoFile = "../assets/mob_farms/textures/gui/icons/icon.png"
+authors = "awesomeshot5051"
+description = '''Mod Farms'''
+[[dependencies.mob_farms]]
+modId = "neoforge"
+type = "required"
+version="1.0.0"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.mob_farms]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.mob_farms]]
+modId = "jei"
+type = "optional"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.mob_farms]]
+modId = "theoneprobe"
+type = "optional"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.mob_farms]]
+modId = "jade"
+type = "optional"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"

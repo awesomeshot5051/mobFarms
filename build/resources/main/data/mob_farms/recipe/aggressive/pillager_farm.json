@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "ESO"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "O": {
+      "item": "minecraft:ominous_bottle"
+    }
+  },
+  "result": {
+    "id": "mob_farms:pillager_farm",
+    "count": 1
+  }
+}

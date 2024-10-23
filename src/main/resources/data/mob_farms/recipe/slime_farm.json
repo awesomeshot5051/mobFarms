@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "SIF"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "S": {
+      "item": "minecraft:slime_block"
+    },
+    "I": {
+      "item": "minecraft:stone"
+    },
+    "F": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "id": "mob_farms:slime_farm",
+    "count": 1
+  }
+}

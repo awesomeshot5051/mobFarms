@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "PSA"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "P": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "A": {
+      "item": "minecraft:prismarine_shard"
+    }
+  },
+  "result": {
+    "id": "mob_farms:elder_guardian_farm",
+    "count": 1
+  }
+}

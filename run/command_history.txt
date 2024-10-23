@@ -1,0 +1,50 @@
+/kill @e[type=item]
+/time set night
+/kill @e[type=minecraft:skeleton]
+/kill @e[type=item]
+/kill @e[type=minecraft:skeleton]
+/kill @e[type=item]
+/summon skeleton ~ ~ ~ {NoAI:1b,OnGround:1b,PersistenceRequired:1b,Silent:1b}
+/
+/summon skeleton ~ ~ ~ {NoAI:1b,OnGround:1b,PersistenceRequired:1b,Silent:1b}
+/give @a crossbow[enchantments={levels:{mending:1,multishot:1,piercing:4,quick_charge:3,unbreaking:3}},unbreakable={},fire_resistant={}]
+/summon wither ~ ~ ~ {Invul:10,Passengers:[{id:ender_dragon,CanPickUpLoot:1b,Glowing:1b,HasVisualFire:1b,NoAI:1b,PersistenceRequired:1b,Silent:1b}]}
+/kill @e[type=minecraft:wither]
+/kill @e[type=minecraft:ender_dragon]
+/execute at Dev in minecraft:the_end run tp Dev 0 80 0
+/kill @e[type=minecraft:end_crystal]
+/tick freeze
+/tick step 1t
+/kill 8ea954b5-017d-4e02-9503-365f8d998e70
+/tick unfreeze
+/kill 8ea954b5-017d-4e02-9503-365f8d998e70
+/kill @e[type=minecraft:ender_dragon]
+/summon wither ~ ~ ~ {Invul:10,Passengers:[{id:ender_dragon,CanPickUpLoot:1b,Glowing:1b,HasVisualFire:1b,PersistenceRequired:1b,Silent:1b}]}
+/tick rate 20
+/summon wither ~ ~ ~ {Invul:10,Passengers:[{id:ender_dragon,CanPickUpLoot:1b,Glowing:1b,HasVisualFire:1b,PersistenceRequired:1b,Silent:1b}]}
+/tp @e[type=minecraft:ender_dragon] Dev
+/kill @e[type=minecraft:ender_dragon]
+/tp @e[type=minecraft:experience_orb]
+/tp @e[type=minecraft:experience_orb] Dev
+/tick rate 2000
+/tick rate 20
+/kill @e[type=minecraft:end_crystal]
+/tp @e[type=minecraft:ender_dragon]
+/tp @e[type=minecraft:ender_dragon] Dev
+/data merge entity @e[type=minecraft:ender_dragon,limit=1] {NoAI:1b,DragonPhase:2}
+/data merge entity @e[type=minecraft:ender_dragon,limit=1] {NoAI:0b,DragonPhase:2}
+/tp @e[type=minecraft:experience_orb] Dev
+/clear
+/execute at Dev in minecraft:overworld run tp Dev 0 100 0
+/reload
+/tick rate 10000
+/weather clear
+/time set day
+/gamerule doWeatherCycle false
+/gamerule doDaylightCycle false
+/time set noon
+/tick rate 10000
+/clear Dev minecraft:crossbow
+/tick rate 20
+/tick rate 10000
+/tick rate 2000

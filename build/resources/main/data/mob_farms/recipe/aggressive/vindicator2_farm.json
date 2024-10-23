@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "ESR"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "E": {
+      "item": "minecraft:enchanted_book"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "R": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "result": {
+    "id": "mob_farms:vindicator_farm",
+    "count": 1
+  }
+}

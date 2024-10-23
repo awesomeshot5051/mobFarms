@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "mob_farms:copy_block_entity"
+            }
+          ],
+          "name": "mob_farms:goat_farm"
+        }
+      ]
+    }
+  ]
+}

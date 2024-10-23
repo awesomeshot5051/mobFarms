@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mob_farms:block/tropical_fish_farm"
+    },
+    "facing=south": {
+      "model": "mob_farms:block/tropical_fish_farm",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mob_farms:block/tropical_fish_farm",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "mob_farms:block/tropical_fish_farm",
+      "y": 90
+    }
+  }
+}

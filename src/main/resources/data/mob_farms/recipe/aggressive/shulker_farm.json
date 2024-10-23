@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "SNU"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "S": {
+      "item": "minecraft:shulker_box"
+    },
+    "N": {
+      "item": "minecraft:stone"
+    },
+    "U": {
+      "item": "minecraft:shulker_shell"
+    }
+  },
+  "result": {
+    "id": "mob_farms:shulker_farm",
+    "count": 1
+  }
+}

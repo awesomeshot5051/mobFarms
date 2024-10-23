@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "TSX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "T": {
+      "item": "minecraft:turtle_scute"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "X": {
+      "item": "minecraft:turtle_helmet"
+    }
+  },
+  "result": {
+    "id": "mob_farms:turtle_farm",
+    "count": 1
+  }
+}
