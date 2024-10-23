@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.SpiderRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Spider;
@@ -17,7 +18,7 @@ public class SpiderFarmRenderer extends RendererBase<SpiderFarmTileentity> {
 
     private WeakReference<Spider> spiderCache = new WeakReference<>(null);
     private WeakReference<SpiderRenderer> spiderRendererCache = new WeakReference<>(null);
-
+    private LivingEntityRenderState spiderRenderState;
     public SpiderFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -39,19 +40,9 @@ public class SpiderFarmRenderer extends RendererBase<SpiderFarmTileentity> {
             spiderRenderer = new SpiderRenderer(createEntityRenderer());
             spiderRendererCache = new WeakReference<>(spiderRenderer);
         }
-
+        spiderRenderState = getRenderState(spiderRenderer, spiderRenderState);
         Direction direction = Direction.SOUTH;
 
-        if (farm.getVillagerEntity() != null) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(-5D / 16D, 0D, -5D / 16D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(90));
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
-            getVillagerRenderer().render(farm.getVillagerEntity(), 0F, 1F, matrixStack, buffer, combinedLight);
-            matrixStack.popPose();
-        }
 
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 1D / 16D, 0.5D);
@@ -72,7 +63,7 @@ public class SpiderFarmRenderer extends RendererBase<SpiderFarmTileentity> {
             } else {
                 spider.hurtTime = 0;
             }
-            spiderRenderer.render(spider, 0F, 1F, matrixStack, buffer, combinedLight);
+            spiderRenderer.render(spiderRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

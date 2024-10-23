@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.PhantomRenderer;
+import net.minecraft.client.renderer.entity.state.PhantomRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Phantom;
@@ -17,7 +18,7 @@ public class PhantomFarmRenderer extends RendererBase<PhantomFarmTileentity> {
 
     private WeakReference<Phantom> phantomCache = new WeakReference<>(null);
     private WeakReference<PhantomRenderer> phantomRendererCache = new WeakReference<>(null);
-
+    private PhantomRenderState phantomRenderState;
     public PhantomFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class PhantomFarmRenderer extends RendererBase<PhantomFarmTileentity> {
             phantomRenderer = new PhantomRenderer(createEntityRenderer());
             phantomRendererCache = new WeakReference<>(phantomRenderer);
         }
-
+        phantomRenderState = getRenderState(phantomRenderer, phantomRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= PhantomFarmTileentity.getPhantomSpawnTime() && farm.getTimer() < PhantomFarmTileentity.getPhantomExplodeTime()) {
@@ -47,7 +48,7 @@ public class PhantomFarmRenderer extends RendererBase<PhantomFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            phantomRenderer.render(phantom, 0F, 1F, matrixStack, buffer, combinedLight);
+            phantomRenderer.render(phantomRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

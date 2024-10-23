@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.HorseRenderer;
+import net.minecraft.client.renderer.entity.state.HorseRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -17,7 +18,7 @@ public class HorseFarmRenderer extends RendererBase<HorseFarmTileentity> {
 
     private WeakReference<Horse> horseCache = new WeakReference<>(null);
     private WeakReference<HorseRenderer> horseRendererCache = new WeakReference<>(null);
-
+    private HorseRenderState horseRenderState;
     public HorseFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class HorseFarmRenderer extends RendererBase<HorseFarmTileentity> {
             horseRenderer = new HorseRenderer(createEntityRenderer());
             horseRendererCache = new WeakReference<>(horseRenderer);
         }
-
+        horseRenderState = getRenderState(horseRenderer, horseRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= HorseFarmTileentity.getHorseSpawnTime() && farm.getTimer() < HorseFarmTileentity.getHorseKillTime()) {
@@ -47,7 +48,7 @@ public class HorseFarmRenderer extends RendererBase<HorseFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 0.2D);
             matrixStack.scale(0.4F, 0.4F, 0.4F);
-            horseRenderer.render(horse, 0F, 1F, matrixStack, buffer, combinedLight);
+            horseRenderer.render(horseRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

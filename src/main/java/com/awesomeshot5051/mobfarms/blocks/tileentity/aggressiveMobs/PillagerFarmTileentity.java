@@ -5,6 +5,7 @@ import com.awesomeshot5051.mobfarms.OutputItemHandler;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
+import com.awesomeshot5051.mobfarms.items.MobFarmClass;
 import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
 import de.maxhenkel.corelib.inventory.ItemListInventory;
 import net.minecraft.core.BlockPos;
@@ -15,20 +16,21 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -99,22 +101,55 @@ public class PillagerFarmTileentity extends VillagerTileentity implements ITicka
             return Collections.emptyList();
         }
 
-        LootParams.Builder builder = new LootParams.Builder(serverWorld)
-                .withParameter(LootContextParams.THIS_ENTITY, new Pillager(EntityType.PILLAGER, level))
-                .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
-                .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().explosion(null));
+        List<ItemStack> drops = new ArrayList<>();
 
-        LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
+        // Add emeralds with a chance based on difficulty
+        int emeraldCount = 0;
+        if (serverWorld.getDifficulty() == Difficulty.EASY) {
+            emeraldCount = serverWorld.random.nextInt(2); // 0-1 emeralds
+        } else if (serverWorld.getDifficulty() == Difficulty.NORMAL) {
+            emeraldCount = serverWorld.random.nextInt(3); // 0-2 emeralds
+        } else if (serverWorld.getDifficulty() == Difficulty.HARD) {
+            emeraldCount = serverWorld.random.nextInt(6); // 0-5 emeralds
+        }
 
-        LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(PILLAGER_LOOT_TABLE);
+        // Add emeralds to drops
+        if (emeraldCount > 0) {
+            drops.add(new ItemStack(Items.EMERALD, emeraldCount));
+        }
 
-        return lootTable.getRandomItems(lootContext);
+        // Add a crossbow with a chance to be enchanted
+        if (serverWorld.random.nextFloat() < 0.12F) { // 12% chance
+            ItemStack crossbow = new ItemStack(Items.CROSSBOW);
+
+            // Create a new instance of MobFarmClass for enchanting
+            MobFarmClass mobFarmClass = new MobFarmClass(EntityType.PILLAGER, serverWorld);
+            RandomSource random = RandomSource.create();
+
+            // Get a specific difficulty instance
+            DifficultyInstance difficultyInstance = new DifficultyInstance(
+                    serverWorld.getDifficulty(),
+                    serverWorld.getDayTime(),
+                    0L,
+                    serverWorld.getMoonBrightness()
+            );
+
+            // Enchant the crossbow
+            mobFarmClass.enchantSpawnedEquipment(serverWorld, EquipmentSlot.MAINHAND, random, 1.0F, difficultyInstance, this, 0);
+
+            // After enchanting, add the crossbow to the drops
+            drops.add(crossbow);
+        }
+
+        // Add other drops like the ominous banner or Bad Omen effect if necessary...
+
+        return drops;
     }
+
 
     public Container getOutputInventory() {
         return new ItemListInventory(inventory, this::setChanged);
     }
-
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         super.saveAdditional(compound, provider);
@@ -134,4 +169,11 @@ public class PillagerFarmTileentity extends VillagerTileentity implements ITicka
         return outputItemHandler;
     }
 
+    // Add the setItem method
+    public void setItem(int slot, ItemStack itemStack) {
+        if (slot >= 0 && slot < inventory.size()) {
+            inventory.set(slot, itemStack);
+            setChanged(); // Notify that the inventory has changed
+        }
+    }
 }

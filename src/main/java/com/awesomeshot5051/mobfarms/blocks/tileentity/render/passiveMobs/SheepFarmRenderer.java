@@ -1,5 +1,6 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs;
 
+import com.awesomeshot5051.mobfarms.blocks.passiveMobs.SheepFarmBlock;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.SheepFarmTileentity;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -7,9 +8,11 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.SheepRenderer;
+import net.minecraft.client.renderer.entity.state.SheepRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.item.DyeColor;
 
 import java.lang.ref.WeakReference;
 
@@ -17,7 +20,7 @@ public class SheepFarmRenderer extends RendererBase<SheepFarmTileentity> {
 
     private WeakReference<Sheep> sheepCache = new WeakReference<>(null);
     private WeakReference<SheepRenderer> sheepRendererCache = new WeakReference<>(null);
-
+    private SheepRenderState sheepRenderState;
     public SheepFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +41,10 @@ public class SheepFarmRenderer extends RendererBase<SheepFarmTileentity> {
             sheepRenderer = new SheepRenderer(createEntityRenderer());
             sheepRendererCache = new WeakReference<>(sheepRenderer);
         }
-
+        sheepRenderState = getRenderState(sheepRenderer, sheepRenderState);
+        // Get the color from the SheepFarmTileentity
+        DyeColor woolColor = farm.getBlockState().getValue(SheepFarmBlock.COLOR);
+        sheep.setColor(woolColor); // Set the sheep's color based on the block's color
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= SheepFarmTileentity.getSheepSpawnTime() && farm.getTimer() < SheepFarmTileentity.getSheepKillTime()) {
@@ -47,7 +53,7 @@ public class SheepFarmRenderer extends RendererBase<SheepFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            sheepRenderer.render(sheep, 0F, 1F, matrixStack, buffer, combinedLight);
+            sheepRenderer.render(sheepRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

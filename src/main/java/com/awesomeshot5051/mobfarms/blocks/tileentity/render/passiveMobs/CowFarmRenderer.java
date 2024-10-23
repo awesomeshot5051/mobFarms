@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.CowRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
@@ -17,7 +18,7 @@ public class CowFarmRenderer extends RendererBase<CowFarmTileentity> {
 
     private WeakReference<Cow> cowCache = new WeakReference<>(null);
     private WeakReference<CowRenderer> cowRendererCache = new WeakReference<>(null);
-
+    private LivingEntityRenderState cowRenderState;
     public CowFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class CowFarmRenderer extends RendererBase<CowFarmTileentity> {
             cowRenderer = new CowRenderer(createEntityRenderer());
             cowRendererCache = new WeakReference<>(cowRenderer);
         }
-
+        cowRenderState = getRenderState(cowRenderer, cowRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= CowFarmTileentity.getCowSpawnTime() && farm.getTimer() < CowFarmTileentity.getCowKillTime()) {
@@ -47,7 +48,7 @@ public class CowFarmRenderer extends RendererBase<CowFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            cowRenderer.render(cow, 0F, 1F, matrixStack, buffer, combinedLight);
+            cowRenderer.render(cowRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

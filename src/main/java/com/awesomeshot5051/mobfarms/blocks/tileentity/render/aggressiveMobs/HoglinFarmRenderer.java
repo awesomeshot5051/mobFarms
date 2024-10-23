@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.HoglinRenderer;
+import net.minecraft.client.renderer.entity.state.HoglinRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
@@ -17,7 +18,7 @@ public class HoglinFarmRenderer extends RendererBase<HoglinFarmTileentity> {
 
     private WeakReference<Hoglin> hoglinCache = new WeakReference<>(null);
     private WeakReference<HoglinRenderer> hoglinRendererCache = new WeakReference<>(null);
-
+    private HoglinRenderState hoglinRenderState;
     public HoglinFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class HoglinFarmRenderer extends RendererBase<HoglinFarmTileentity> {
             hoglinRenderer = new HoglinRenderer(createEntityRenderer());
             hoglinRendererCache = new WeakReference<>(hoglinRenderer);
         }
-
+        hoglinRenderState = getRenderState(hoglinRenderer, hoglinRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= HoglinFarmTileentity.getHoglinSpawnTime() && farm.getTimer() < HoglinFarmTileentity.getHoglinExplodeTime()) {
@@ -47,7 +48,7 @@ public class HoglinFarmRenderer extends RendererBase<HoglinFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            hoglinRenderer.render(hoglin, 0F, 1F, matrixStack, buffer, combinedLight);
+            hoglinRenderer.render(hoglinRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

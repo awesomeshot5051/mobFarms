@@ -5,7 +5,6 @@ import com.awesomeshot5051.mobfarms.OutputItemHandler;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
 import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
 import de.maxhenkel.corelib.inventory.ItemListInventory;
 import net.minecraft.core.BlockPos;
@@ -65,8 +64,8 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
 
     @Override
     public void tick() {
-        EasyVillagerEntity v = getVillagerEntity();
-        if (v != null) {
+//        EasyVillagerEntity v = getVillagerEntity();
+//        if (v != null) {
             // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.VILLAGER_AMBIENT);
             // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
 
@@ -98,7 +97,7 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
                 timer = 0L;
                 sync();
             }
-        }
+//        }
     }
 
     private List<ItemStack> getDrops() {

@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.WardenRenderer;
+import net.minecraft.client.renderer.entity.state.WardenRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.warden.Warden;
@@ -17,7 +18,7 @@ public class WardenFarmRenderer extends RendererBase<WardenFarmTileentity> {
 
     private WeakReference<Warden> wardenCache = new WeakReference<>(null);
     private WeakReference<WardenRenderer> wardenRendererCache = new WeakReference<>(null);
-
+    private WardenRenderState wardenRenderState;
     public WardenFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class WardenFarmRenderer extends RendererBase<WardenFarmTileentity> {
             wardenRenderer = new WardenRenderer(createEntityRenderer());
             wardenRendererCache = new WeakReference<>(wardenRenderer);
         }
-
+        wardenRenderState = getRenderState(wardenRenderer, wardenRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= WardenFarmTileentity.getWardenSpawnTime() && farm.getTimer() < WardenFarmTileentity.getWardenExplodeTime()) {
@@ -47,7 +48,7 @@ public class WardenFarmRenderer extends RendererBase<WardenFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            wardenRenderer.render(warden, 0F, 1F, matrixStack, buffer, combinedLight);
+            wardenRenderer.render(wardenRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

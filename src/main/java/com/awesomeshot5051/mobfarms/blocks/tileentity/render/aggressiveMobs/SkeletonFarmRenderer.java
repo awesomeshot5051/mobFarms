@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
+import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Skeleton;
@@ -17,7 +18,7 @@ public class SkeletonFarmRenderer extends RendererBase<SkeletonFarmTileentity> {
 
     private WeakReference<Skeleton> skeletonCache = new WeakReference<>(null);
     private WeakReference<SkeletonRenderer> skeletonRendererCache = new WeakReference<>(null);
-
+    private SkeletonRenderState skeletonRenderState;
     public SkeletonFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class SkeletonFarmRenderer extends RendererBase<SkeletonFarmTileentity> {
             skeletonRenderer = new SkeletonRenderer(createEntityRenderer());
             skeletonRendererCache = new WeakReference<>(skeletonRenderer);
         }
-
+        skeletonRenderState = getRenderState(skeletonRenderer, skeletonRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= SkeletonFarmTileentity.getSkeletonSpawnTime() && farm.getTimer() < SkeletonFarmTileentity.getSkeletonExplodeTime()) {
@@ -47,7 +48,7 @@ public class SkeletonFarmRenderer extends RendererBase<SkeletonFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            skeletonRenderer.render(skeleton, 0F, 1F, matrixStack, buffer, combinedLight);
+            skeletonRenderer.render(skeletonRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

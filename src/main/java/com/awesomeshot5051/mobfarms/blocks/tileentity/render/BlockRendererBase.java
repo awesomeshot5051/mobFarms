@@ -1,8 +1,8 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.FakeWorldTileentity;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -25,7 +25,16 @@ public class BlockRendererBase<T extends FakeWorldTileentity> implements BlockEn
     }
 
     public EntityRendererProvider.Context createEntityRenderer() {
-        return new EntityRendererProvider.Context(minecraft.getEntityRenderDispatcher(), minecraft.getItemRenderer(), minecraft.getBlockRenderer(), minecraft.gameRenderer.itemInHandRenderer, minecraft.getResourceManager(), minecraft.getEntityModels(), minecraft.font);
+        return new EntityRendererProvider.Context(
+                minecraft.getEntityRenderDispatcher(),
+                minecraft.getItemRenderer(),
+                minecraft.getMapRenderer(),
+                minecraft.getBlockRenderer(),
+                minecraft.getResourceManager(),
+                minecraft.getEntityModels(),
+                minecraft.getEquipmentModels(),
+                minecraft.font
+        );
     }
 
     @Override

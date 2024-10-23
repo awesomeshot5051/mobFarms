@@ -7,13 +7,13 @@ forgeserveruserdev
 --gameDir
 .
 --fml.neoForgeVersion
-21.1.1
+21.2.0-beta
 --fml.fmlVersion
-4.0.24
+4.0.29
 --fml.mcVersion
-1.21.1
+1.21.2
 --fml.neoFormVersion
-20240808.144430
+20241022.151510
 
 # User Supplied Program Arguments
 --nogui

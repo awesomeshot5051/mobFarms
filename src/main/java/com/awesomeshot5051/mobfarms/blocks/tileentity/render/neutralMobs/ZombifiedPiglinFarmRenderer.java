@@ -7,7 +7,8 @@ import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.PiglinRenderer;
+import net.minecraft.client.renderer.entity.ZombifiedPiglinRenderer;
+import net.minecraft.client.renderer.entity.state.ZombifiedPiglinRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
@@ -17,8 +18,8 @@ import java.lang.ref.WeakReference;
 public class ZombifiedPiglinFarmRenderer extends RendererBase<ZombifiedPiglinFarmTileentity> {
 
     private WeakReference<ZombifiedPiglin> zombifiedPiglinCache = new WeakReference<>(null);
-    private WeakReference<PiglinRenderer> piglinRendererCache = new WeakReference<>(null);
-
+    private WeakReference<ZombifiedPiglinRenderer> piglinRendererCache = new WeakReference<>(null);
+    private ZombifiedPiglinRenderState zombifiedpiglinRenderState;
     public ZombifiedPiglinFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -36,30 +37,23 @@ public class ZombifiedPiglinFarmRenderer extends RendererBase<ZombifiedPiglinFar
             zombifiedPiglinCache = new WeakReference<>(zombifiedPiglin);
         }
 
-        PiglinRenderer piglinRenderer = piglinRendererCache.get();
+        ZombifiedPiglinRenderer piglinRenderer = piglinRendererCache.get();
         if (piglinRenderer == null) {
-            piglinRenderer = new PiglinRenderer(
+            piglinRenderer = new ZombifiedPiglinRenderer(
                     createEntityRenderer(),
+                    ModelLayers.ZOMBIFIED_PIGLIN,
                     ModelLayers.ZOMBIFIED_PIGLIN,
                     ModelLayers.ZOMBIFIED_PIGLIN_INNER_ARMOR,
                     ModelLayers.ZOMBIFIED_PIGLIN_OUTER_ARMOR,
-                    true // noRightEar set to true for zombified piglin
+                    ModelLayers.ZOMBIFIED_PIGLIN_INNER_ARMOR,
+                    ModelLayers.ZOMBIFIED_PIGLIN_OUTER_ARMOR
+                    // noRightEar set to true for zombified piglin
             );
             piglinRendererCache = new WeakReference<>(piglinRenderer);
         }
-
+        zombifiedpiglinRenderState = getRenderState(piglinRenderer, zombifiedpiglinRenderState);
         Direction direction = Direction.SOUTH;
 
-        if (farm.getVillagerEntity() != null) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(-5D / 16D, 0D, -5D / 16D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(90));
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
-            getVillagerRenderer().render(farm.getVillagerEntity(), 0F, 1F, matrixStack, buffer, combinedLight);
-            matrixStack.popPose();
-        }
 
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 1D / 16D, 0.5D);
@@ -80,7 +74,7 @@ public class ZombifiedPiglinFarmRenderer extends RendererBase<ZombifiedPiglinFar
             } else {
                 zombifiedPiglin.hurtTime = 0;
             }
-            piglinRenderer.render(zombifiedPiglin, 0F, 1F, matrixStack, buffer, combinedLight);
+            piglinRenderer.render(zombifiedpiglinRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

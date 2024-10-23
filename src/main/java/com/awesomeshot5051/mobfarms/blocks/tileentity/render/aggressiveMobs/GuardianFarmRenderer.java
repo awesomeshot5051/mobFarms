@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.GuardianRenderer;
+import net.minecraft.client.renderer.entity.state.GuardianRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Guardian;
@@ -17,7 +18,7 @@ public class GuardianFarmRenderer extends RendererBase<GuardianFarmTileentity> {
 
     private WeakReference<Guardian> guardianCache = new WeakReference<>(null);
     private WeakReference<GuardianRenderer> guardianRendererCache = new WeakReference<>(null);
-
+    private GuardianRenderState guardianRenderState;
     public GuardianFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class GuardianFarmRenderer extends RendererBase<GuardianFarmTileentity> {
             guardianRenderer = new GuardianRenderer(createEntityRenderer());
             guardianRendererCache = new WeakReference<>(guardianRenderer);
         }
-
+        guardianRenderState = getRenderState(guardianRenderer, guardianRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= GuardianFarmTileentity.getGuardianSpawnTime() && farm.getTimer() < GuardianFarmTileentity.getGuardianExplodeTime()) {
@@ -47,7 +48,7 @@ public class GuardianFarmRenderer extends RendererBase<GuardianFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            guardianRenderer.render(guardian, 0F, 1F, matrixStack, buffer, combinedLight);
+            guardianRenderer.render(guardianRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

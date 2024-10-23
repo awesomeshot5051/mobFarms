@@ -8,11 +8,10 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ParrotRenderer;
-import net.minecraft.client.renderer.entity.PigRenderer;
+import net.minecraft.client.renderer.entity.state.ParrotRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Parrot;
-import net.minecraft.world.entity.animal.Pig;
 
 import java.lang.ref.WeakReference;
 
@@ -20,7 +19,7 @@ public class ParrotFarmRenderer extends RendererBase<ParrotFarmTileentity> {
 
     private WeakReference<Parrot> parrotCache = new WeakReference<>(null);
     private WeakReference<ParrotRenderer> parrotRendererCache = new WeakReference<>(null);
-
+    private ParrotRenderState parrotRenderState;
     public ParrotFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -41,7 +40,7 @@ public class ParrotFarmRenderer extends RendererBase<ParrotFarmTileentity> {
             parrotRenderer = new ParrotRenderer(createEntityRenderer());
             parrotRendererCache = new WeakReference<>(parrotRenderer);
         }
-
+        parrotRenderState = getRenderState(parrotRenderer, parrotRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= PigFarmTileentity.getPigSpawnTime() && farm.getTimer() < PigFarmTileentity.getPorkKillTime()) {
@@ -50,7 +49,7 @@ public class ParrotFarmRenderer extends RendererBase<ParrotFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            parrotRenderer.render(parrot, 0F, 1F, matrixStack, buffer, combinedLight);
+            parrotRenderer.render(parrotRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

@@ -20,6 +20,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Illusioner;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -29,6 +30,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -98,7 +100,7 @@ public class IllusionerFarmTileentity extends VillagerTileentity implements ITic
         if (!(level instanceof ServerLevel serverWorld)) {
             return Collections.emptyList();
         }
-
+        List<ItemStack> drops = new ArrayList<>();
         LootParams.Builder builder = new LootParams.Builder(serverWorld)
                 .withParameter(LootContextParams.THIS_ENTITY, new Illusioner(EntityType.ILLUSIONER, level))
                 .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
@@ -107,8 +109,10 @@ public class IllusionerFarmTileentity extends VillagerTileentity implements ITic
         LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(ILLUSIONER_LOOT_TABLE);
+        drops.addAll(lootTable.getRandomItems(lootContext));
+            drops.add(new ItemStack(Items.DIAMOND));
 
-        return lootTable.getRandomItems(lootContext);
+        return drops;
     }
 
     public Container getOutputInventory() {

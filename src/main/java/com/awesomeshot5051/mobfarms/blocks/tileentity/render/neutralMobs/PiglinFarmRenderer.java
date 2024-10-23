@@ -8,6 +8,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.PiglinRenderer;
+import net.minecraft.client.renderer.entity.state.PiglinRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.piglin.Piglin;
@@ -18,7 +19,7 @@ public class PiglinFarmRenderer extends RendererBase<PiglinFarmTileentity> {
 
     private WeakReference<Piglin> piglinCache = new WeakReference<>(null);
     private WeakReference<PiglinRenderer> piglinRendererCache = new WeakReference<>(null);
-
+    private PiglinRenderState piglinRenderState;
     public PiglinFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -42,25 +43,16 @@ public class PiglinFarmRenderer extends RendererBase<PiglinFarmTileentity> {
             piglinRenderer = new PiglinRenderer(
                     createEntityRenderer(),
                     ModelLayers.PIGLIN,
+                    ModelLayers.PIGLIN,
                     ModelLayers.PIGLIN_INNER_ARMOR,
                     ModelLayers.PIGLIN_OUTER_ARMOR,
-                    false // noRightEar set to false for adult Piglin
+                    ModelLayers.PIGLIN_INNER_ARMOR,
+                    ModelLayers.PIGLIN_OUTER_ARMOR
             );
             piglinRendererCache = new WeakReference<>(piglinRenderer);
         }
-
+        piglinRenderState = getRenderState(piglinRenderer, piglinRenderState);
         Direction direction = Direction.SOUTH;
-
-        if (farm.getVillagerEntity() != null) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(-5D / 16D, 0D, -5D / 16D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(90));
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
-            getVillagerRenderer().render(farm.getVillagerEntity(), 0F, 1F, matrixStack, buffer, combinedLight);
-            matrixStack.popPose();
-        }
 
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 1D / 16D, 0.5D);
@@ -81,7 +73,7 @@ public class PiglinFarmRenderer extends RendererBase<PiglinFarmTileentity> {
             } else {
                 piglin.hurtTime = 0;
             }
-            piglinRenderer.render(piglin, 0F, 1F, matrixStack, buffer, combinedLight);
+            piglinRenderer.render(piglinRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

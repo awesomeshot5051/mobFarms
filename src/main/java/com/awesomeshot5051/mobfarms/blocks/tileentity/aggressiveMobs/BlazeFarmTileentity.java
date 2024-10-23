@@ -17,18 +17,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -99,17 +95,21 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
             return Collections.emptyList();
         }
 
-        LootParams.Builder builder = new LootParams.Builder(serverWorld)
-                .withParameter(LootContextParams.THIS_ENTITY, new Blaze(EntityType.BLAZE, level))
-                .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
-                .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().explosion(null));
+        // Chance to drop blaze rod
+        double dropChance = 0.5; // 50% chance to drop blaze rod
+        List<ItemStack> drops = new ArrayList<>();
 
-        LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
+        if (serverWorld.random.nextDouble() < dropChance) {
+            int dropCount = serverWorld.random.nextIntBetweenInclusive(1, 4);
+            drops.add(new ItemStack(Items.BLAZE_ROD, dropCount)); // Drop 1 blaze rod
+        }
 
-        LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(BLAZE_LOOT_TABLE);
+        // Optionally, you can add other items to drop here if needed
+        // drops.add(new ItemStack(Items.SOME_OTHER_ITEM, 1));
 
-        return lootTable.getRandomItems(lootContext);
+        return drops;
     }
+
 
     public Container getOutputInventory() {
         return new ItemListInventory(inventory, this::setChanged);

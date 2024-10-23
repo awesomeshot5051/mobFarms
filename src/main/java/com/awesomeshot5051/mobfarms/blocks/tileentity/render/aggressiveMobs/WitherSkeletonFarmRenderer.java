@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.WitherSkeletonRenderer;
+import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.WitherSkeleton;
@@ -17,7 +18,7 @@ public class WitherSkeletonFarmRenderer extends RendererBase<WitherSkeletonFarmT
 
     private WeakReference<WitherSkeleton> witherSkeletonCache = new WeakReference<>(null);
     private WeakReference<WitherSkeletonRenderer> witherSkeletonRendererCache = new WeakReference<>(null);
-
+    private SkeletonRenderState witherSkeletonRenderState;
     public WitherSkeletonFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class WitherSkeletonFarmRenderer extends RendererBase<WitherSkeletonFarmT
             witherSkeletonRenderer = new WitherSkeletonRenderer(createEntityRenderer());
             witherSkeletonRendererCache = new WeakReference<>(witherSkeletonRenderer);
         }
-
+        witherSkeletonRenderState = getRenderState(witherSkeletonRenderer, witherSkeletonRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= WitherSkeletonFarmTileentity.getWitherSkeletonSpawnTime() && farm.getTimer() < WitherSkeletonFarmTileentity.getWitherSkeletonExplodeTime()) {
@@ -47,7 +48,7 @@ public class WitherSkeletonFarmRenderer extends RendererBase<WitherSkeletonFarmT
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            witherSkeletonRenderer.render(witherSkeleton, 0F, 1F, matrixStack, buffer, combinedLight);
+            witherSkeletonRenderer.render(witherSkeletonRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

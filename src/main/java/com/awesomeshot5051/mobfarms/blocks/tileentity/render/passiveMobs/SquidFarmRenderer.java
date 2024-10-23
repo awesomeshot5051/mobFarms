@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.SquidRenderer;
+import net.minecraft.client.renderer.entity.state.SquidRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Squid;
@@ -19,6 +20,7 @@ public class SquidFarmRenderer extends RendererBase<SquidFarmTileentity> {
 
     private WeakReference<Squid> squidCache = new WeakReference<>(null);
     private WeakReference<SquidRenderer> squidRendererCache = new WeakReference<>(null);
+    private SquidRenderState squidRenderState;
 
     public SquidFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
@@ -35,12 +37,21 @@ public class SquidFarmRenderer extends RendererBase<SquidFarmTileentity> {
             squidCache = new WeakReference<>(squid);
         }
 
+
         SquidRenderer squidRenderer = squidRendererCache.get();
         if (squidRenderer == null) {
-            SquidModel<Squid> squidModel = new SquidModel<>(createEntityRenderer().bakeLayer(ModelLayers.SQUID));
-            squidRenderer = new SquidRenderer(createEntityRenderer(),squidModel);
+            // Create two SquidModel instances as required by the constructor
+            SquidModel squidModel1 = new SquidModel(createEntityRenderer().bakeLayer(ModelLayers.SQUID));
+            SquidModel squidModel2 = new SquidModel(createEntityRenderer().bakeLayer(ModelLayers.SQUID));
+
+            // Create a new SquidRenderer instance with both models
+            squidRenderer = new SquidRenderer<>(createEntityRenderer(), squidModel1, squidModel2);
+
+            // Cache the renderer in the WeakReference
             squidRendererCache = new WeakReference<>(squidRenderer);
         }
+
+        squidRenderState = getRenderState(squidRenderer, squidRenderState);
 
         Direction direction = Direction.SOUTH;
 
@@ -50,7 +61,7 @@ public class SquidFarmRenderer extends RendererBase<SquidFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            squidRenderer.render(squid, 0F, 1F, matrixStack, buffer, combinedLight);
+            squidRenderer.render(squidRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

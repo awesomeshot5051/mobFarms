@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.GhastRenderer;
+import net.minecraft.client.renderer.entity.state.GhastRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Ghast;
@@ -17,7 +18,7 @@ public class GhastFarmRenderer extends RendererBase<GhastFarmTileentity> {
 
     private WeakReference<Ghast> ghastCache = new WeakReference<>(null);
     private WeakReference<GhastRenderer> ghastRendererCache = new WeakReference<>(null);
-
+    private GhastRenderState ghastRenderState;
     public GhastFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class GhastFarmRenderer extends RendererBase<GhastFarmTileentity> {
             ghastRenderer = new GhastRenderer(createEntityRenderer());
             ghastRendererCache = new WeakReference<>(ghastRenderer);
         }
-
+        ghastRenderState = getRenderState(ghastRenderer, ghastRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= GhastFarmTileentity.getGhastSpawnTime() && farm.getTimer() < GhastFarmTileentity.getGhastExplodeTime()) {
@@ -51,7 +52,7 @@ public class GhastFarmRenderer extends RendererBase<GhastFarmTileentity> {
             matrixStack.scale(0.09F, 0.09F, 0.09F); // Change to 0.09F
 
 
-            ghastRenderer.render(ghast, 0F, 1F, matrixStack, buffer, combinedLight);
+            ghastRenderer.render(ghastRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

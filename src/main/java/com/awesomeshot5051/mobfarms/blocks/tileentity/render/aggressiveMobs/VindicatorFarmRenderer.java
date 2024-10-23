@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.VindicatorRenderer;
+import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Vindicator;
@@ -17,6 +18,7 @@ public class VindicatorFarmRenderer extends RendererBase<VindicatorFarmTileentit
 
     private WeakReference<Vindicator> vindicatorCache = new WeakReference<>(null);
     private WeakReference<VindicatorRenderer> vindicatorRendererCache = new WeakReference<>(null);
+    private IllagerRenderState vindicatorRenderState;
 
     public VindicatorFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
@@ -38,7 +40,7 @@ public class VindicatorFarmRenderer extends RendererBase<VindicatorFarmTileentit
             vindicatorRenderer = new VindicatorRenderer(createEntityRenderer());
             vindicatorRendererCache = new WeakReference<>(vindicatorRenderer);
         }
-
+        vindicatorRenderState = getRenderState(vindicatorRenderer, vindicatorRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= VindicatorFarmTileentity.getVindicatorSpawnTime() && farm.getTimer() < VindicatorFarmTileentity.getVindicatorExplodeTime()) {
@@ -47,7 +49,7 @@ public class VindicatorFarmRenderer extends RendererBase<VindicatorFarmTileentit
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            vindicatorRenderer.render(vindicator, 0F, 1F, matrixStack, buffer, combinedLight);
+            vindicatorRenderer.render(vindicatorRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

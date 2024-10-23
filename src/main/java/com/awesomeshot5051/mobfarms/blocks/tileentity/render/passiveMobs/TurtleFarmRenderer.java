@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.TurtleRenderer;
+import net.minecraft.client.renderer.entity.state.TurtleRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Turtle;
@@ -17,7 +18,7 @@ public class TurtleFarmRenderer extends RendererBase<TurtleFarmTileentity> {
 
     private WeakReference<Turtle> turtleCache = new WeakReference<>(null);
     private WeakReference<TurtleRenderer> turtleRendererCache = new WeakReference<>(null);
-
+    private TurtleRenderState turtleRenderState;
     public TurtleFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class TurtleFarmRenderer extends RendererBase<TurtleFarmTileentity> {
             turtleRenderer = new TurtleRenderer(createEntityRenderer());
             turtleRendererCache = new WeakReference<>(turtleRenderer);
         }
-
+        turtleRenderState = getRenderState(turtleRenderer, turtleRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= TurtleFarmTileentity.getTurtleSpawnTime() && farm.getTimer() < TurtleFarmTileentity.getTurtleKillTime()) {
@@ -47,7 +48,7 @@ public class TurtleFarmRenderer extends RendererBase<TurtleFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            turtleRenderer.render(turtle, 0F, 1F, matrixStack, buffer, combinedLight);
+            turtleRenderer.render(turtleRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

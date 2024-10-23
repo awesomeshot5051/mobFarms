@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.MagmaCubeRenderer;
+import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.MagmaCube;
@@ -17,7 +18,7 @@ public class MagmaCubeFarmRenderer extends RendererBase<MagmaCubeFarmTileentity>
 
     private WeakReference<MagmaCube> magmaCubeCache = new WeakReference<>(null);
     private WeakReference<MagmaCubeRenderer> magmaCubeRendererCache = new WeakReference<>(null);
-
+    SlimeRenderState magmaCubeRenderState;
     public MagmaCubeFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class MagmaCubeFarmRenderer extends RendererBase<MagmaCubeFarmTileentity>
             magmaCubeRenderer = new MagmaCubeRenderer(createEntityRenderer());
             magmaCubeRendererCache = new WeakReference<>(magmaCubeRenderer);
         }
-
+        magmaCubeRenderState = getRenderState(magmaCubeRenderer, magmaCubeRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= MagmaCubeFarmTileentity.getMagmaCubeSpawnTime() && farm.getTimer() < MagmaCubeFarmTileentity.getMagmaCubeExplodeTime()) {
@@ -47,7 +48,7 @@ public class MagmaCubeFarmRenderer extends RendererBase<MagmaCubeFarmTileentity>
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            magmaCubeRenderer.render(magmaCube, 0F, 1F, matrixStack, buffer, combinedLight);
+            magmaCubeRenderer.render(magmaCubeRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

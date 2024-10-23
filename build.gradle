@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '1.0.20'
+    id 'net.neoforged.moddev' version '2.0.39-beta'
 //    id 'net.neoforged.moddevgradle.tasks.JarJar' version '0.4.2' // Added JarJar plugin
 }
 
@@ -40,6 +40,12 @@ repositories {
     }
     maven {
         url "file://${project.projectDir}/repo"
+    }
+    maven {
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup "maven.modrinth"
+        }
     }
 }
 
@@ -99,14 +105,20 @@ configurations {
 }
 
 dependencies {
-    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    implementation "mcjty.theoneprobe:theoneprobe:${top_version}"
-    implementation "curse.maven:jade-324717:${jade_id}"
-    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-
+//    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-1.21.1-common-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${jei_version}"
+//    implementation "mcjty.theoneprobe:theoneprobe:${top_version}"
+//    implementation "curse.maven:jade-324717:${jade_id}"
+//    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+//    localRuntime "mezz.jei:jei-1.21.1-neoforge:${jei_version}"
     // JarJar dependency
+    compileOnly "maven.modrinth:jei:${jei_version}"
+    compileOnly "maven.modrinth:the-one-probe:${top_version}"
+    compileOnly "maven.modrinth:jade:${jade_version}"
     jarJar(implementation("de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}")) {
+//    jarJar(implementation("de.maxhenkel.corelib:corelib:1.21.1-${corelib_version}")) {
 //        version {
 //            // The version range your mod is actually compatible with.
 //            // Note that you may receive a *lower* version than your preferred if another
@@ -115,8 +127,9 @@ dependencies {
 //            prefer "${corelib_version}" // The version actually used in your dev workspace
 //        }
 //    implementation "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}"
-        compileOnly "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}:javadoc"
+//        compileOnly "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}:javadoc"
 //    implementation 'net.neoforged:JarJarSelector:0.4.2'
+        compileOnly "de.maxhenkel.corelib:corelib:1.21.1-${corelib_version}:javadoc"
     }
 }
 

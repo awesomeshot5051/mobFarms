@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.RavagerRenderer;
+import net.minecraft.client.renderer.entity.state.RavagerRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Ravager;
@@ -17,7 +18,7 @@ public class RavagerFarmRenderer extends RendererBase<RavagerFarmTileentity> {
 
     private WeakReference<Ravager> ravagerCache = new WeakReference<>(null);
     private WeakReference<RavagerRenderer> ravagerRendererCache = new WeakReference<>(null);
-
+    private RavagerRenderState ravagerRenderState;
     public RavagerFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class RavagerFarmRenderer extends RendererBase<RavagerFarmTileentity> {
             ravagerRenderer = new RavagerRenderer(createEntityRenderer());
             ravagerRendererCache = new WeakReference<>(ravagerRenderer);
         }
-
+        ravagerRenderState = getRenderState(ravagerRenderer, ravagerRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= RavagerFarmTileentity.getRavagerSpawnTime() && farm.getTimer() < RavagerFarmTileentity.getRavagerExplodeTime()) {
@@ -47,7 +48,7 @@ public class RavagerFarmRenderer extends RendererBase<RavagerFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            ravagerRenderer.render(ravager, 0F, 1F, matrixStack, buffer, combinedLight);
+            ravagerRenderer.render(ravagerRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

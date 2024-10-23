@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ZombieRenderer;
+import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Zombie;
@@ -17,7 +18,7 @@ public class ZombieFarmRenderer extends RendererBase<ZombieFarmTileentity> {
 
     private WeakReference<Zombie> zombieCache = new WeakReference<>(null);
     private WeakReference<ZombieRenderer> zombieRendererCache = new WeakReference<>(null);
-
+    private ZombieRenderState zombieRenderState;
     public ZombieFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class ZombieFarmRenderer extends RendererBase<ZombieFarmTileentity> {
             zombieRenderer = new ZombieRenderer(createEntityRenderer());
             zombieRendererCache = new WeakReference<>(zombieRenderer);
         }
-
+        zombieRenderState = getRenderState(zombieRenderer, zombieRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= ZombieFarmTileentity.getZombieSpawnTime() && farm.getTimer() < ZombieFarmTileentity.getZombieExplodeTime()) {
@@ -46,8 +47,8 @@ public class ZombieFarmRenderer extends RendererBase<ZombieFarmTileentity> {
             matrixStack.translate(0.5D, 1D / 16D, 0.5D);
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
-            zombieRenderer.render(zombie, 0F, 1F, matrixStack, buffer, combinedLight);
+            matrixStack.scale(.05F, .05F, .05F);
+            zombieRenderer.render(zombieRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

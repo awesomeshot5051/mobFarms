@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.StriderRenderer;
+import net.minecraft.client.renderer.entity.state.StriderRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Strider;
@@ -17,7 +18,7 @@ public class StriderFarmRenderer extends RendererBase<StriderFarmTileentity> {
 
     private WeakReference<Strider> striderCache = new WeakReference<>(null);
     private WeakReference<StriderRenderer> striderRendererCache = new WeakReference<>(null);
-
+    private StriderRenderState striderRenderState;
     public StriderFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class StriderFarmRenderer extends RendererBase<StriderFarmTileentity> {
             striderRenderer = new StriderRenderer(createEntityRenderer());
             striderRendererCache = new WeakReference<>(striderRenderer);
         }
-
+        striderRenderState = getRenderState(striderRenderer, striderRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= StriderFarmTileentity.getStriderSpawnTime() && farm.getTimer() < StriderFarmTileentity.getStriderKillTime()) {
@@ -47,7 +48,7 @@ public class StriderFarmRenderer extends RendererBase<StriderFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            striderRenderer.render(strider, 0F, 1F, matrixStack, buffer, combinedLight);
+            striderRenderer.render(striderRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

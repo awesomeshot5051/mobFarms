@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EndermanRenderer;
+import net.minecraft.client.renderer.entity.state.EndermanRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -17,7 +18,7 @@ public class EndermanFarmRenderer extends RendererBase<EndermanFarmTileentity> {
 
     private WeakReference<EnderMan> endermanCache = new WeakReference<>(null);
     private WeakReference<EndermanRenderer> endermanRendererCache = new WeakReference<>(null);
-
+    private EndermanRenderState endermanRenderState;
     public EndermanFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,19 +39,8 @@ public class EndermanFarmRenderer extends RendererBase<EndermanFarmTileentity> {
             endermanRenderer = new EndermanRenderer(createEntityRenderer());
             endermanRendererCache = new WeakReference<>(endermanRenderer);
         }
-
+        endermanRenderState = getRenderState(endermanRenderer, endermanRenderState);
         Direction direction = Direction.SOUTH;
-
-        if (farm.getVillagerEntity() != null) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(-5D / 16D, 0D, -5D / 16D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(90));
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
-            getVillagerRenderer().render(farm.getVillagerEntity(), 0F, 1F, matrixStack, buffer, combinedLight);
-            matrixStack.popPose();
-        }
 
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 1D / 16D, 0.5D);
@@ -71,7 +61,7 @@ public class EndermanFarmRenderer extends RendererBase<EndermanFarmTileentity> {
             } else {
                 enderman.hurtTime = 0;
             }
-            endermanRenderer.render(enderman, 0F, 1F, matrixStack, buffer, combinedLight);
+            endermanRenderer.render(endermanRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

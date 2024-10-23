@@ -19,7 +19,10 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -29,8 +32,11 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.SheepFarmBlock.COLOR;
 
 public class SheepFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
@@ -102,6 +108,7 @@ public class SheepFarmTileentity extends VillagerTileentity implements ITickable
             return Collections.emptyList();
         }
 
+        // Create a loot parameter builder for generating loot context
         LootParams.Builder builder = new LootParams.Builder(serverWorld)
                 .withParameter(LootContextParams.THIS_ENTITY, new Sheep(EntityType.SHEEP, level))
                 .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
@@ -109,10 +116,51 @@ public class SheepFarmTileentity extends VillagerTileentity implements ITickable
 
         LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
 
-        LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(SHEEP_LOOT_TABLE);
+        // List to hold the drops
+        List<ItemStack> drops = new ArrayList<>();
 
-        return lootTable.getRandomItems(lootContext);
+        // Get the wool color from the block state
+        DyeColor woolColor = getWoolColor(); // Use the method to get the wool color
+        ItemStack WoolColor = setWoolColor(woolColor);
+        drops.add(WoolColor);
+
+        // Manually add cooked mutton drop (since the sheep is killed by lava, we drop cooked mutton)
+        drops.add(new ItemStack(Items.COOKED_MUTTON, 3)); // Adjust the amount if needed
+
+        return drops;
     }
+
+    private ItemStack setWoolColor(DyeColor woolColor) {
+        return switch (woolColor) {
+            case WHITE -> new ItemStack(Items.WHITE_WOOL, 3);
+            case ORANGE -> new ItemStack(Items.ORANGE_WOOL, 3);
+            case MAGENTA -> new ItemStack(Items.MAGENTA_WOOL, 3);
+            case LIGHT_BLUE -> new ItemStack(Items.LIGHT_BLUE_WOOL, 3);
+            case YELLOW -> new ItemStack(Items.YELLOW_WOOL, 3);
+            case LIME -> new ItemStack(Items.LIME_WOOL, 3);
+            case PINK -> new ItemStack(Items.PINK_WOOL, 3);
+            case GRAY -> new ItemStack(Items.GRAY_WOOL, 3);
+            case LIGHT_GRAY -> new ItemStack(Items.LIGHT_GRAY_WOOL, 3);
+            case CYAN -> new ItemStack(Items.CYAN_WOOL, 3);
+            case PURPLE -> new ItemStack(Items.PURPLE_WOOL, 3);
+            case BLUE -> new ItemStack(Items.BLUE_WOOL, 3);
+            case BROWN -> new ItemStack(Items.BROWN_WOOL, 3);
+            case GREEN -> new ItemStack(Items.GREEN_WOOL, 3);
+            case RED -> new ItemStack(Items.RED_WOOL, 3);
+            case BLACK -> new ItemStack(Items.BLACK_WOOL, 3);
+            default -> new ItemStack(Items.WHITE_WOOL, 3); // Return an empty ItemStack for an unknown color
+        };
+    }
+
+
+    private DyeColor getWoolColor() {
+        BlockState state = this.getBlockState(); // Get the current block state
+        if (state.hasProperty(COLOR)) {
+            return state.getValue(COLOR); // Return the color set on the block
+        }
+        return DyeColor.WHITE; // Default to white if no color is set
+    }
+
 
     public Container getOutputInventory() {
         return new ItemListInventory(inventory, this::setChanged);
@@ -135,6 +183,20 @@ public class SheepFarmTileentity extends VillagerTileentity implements ITickable
 
     public IItemHandler getItemHandler() {
         return outputItemHandler;
+    }
+
+    private Item getWoolFromColor(DyeColor color) {
+        switch (color) {
+            case RED:
+                return Items.RED_WOOL;
+            case BLUE:
+                return Items.BLUE_WOOL;
+            case GREEN:
+                return Items.GREEN_WOOL;
+            // Add more cases for all DyeColor values
+            default:
+                return Items.WHITE_WOOL;
+        }
     }
 
 }

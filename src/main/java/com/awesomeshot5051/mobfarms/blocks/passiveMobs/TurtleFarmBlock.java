@@ -5,15 +5,11 @@ import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.TurtleFarmTileentity;
 import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
 import com.awesomeshot5051.mobfarms.gui.OutputContainer;
-import com.awesomeshot5051.mobfarms.items.render.passiveMobs.TurtleFarmItemRenderer;
-import de.maxhenkel.corelib.block.IItemBlock;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
-import de.maxhenkel.corelib.client.CustomRendererBlockItem;
-import de.maxhenkel.corelib.client.ItemRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,12 +22,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -39,21 +33,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TurtleFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
+public class TurtleFarmBlock extends BlockBase implements EntityBlock {
 
-    public TurtleFarmBlock() {
-        super(Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD).noOcclusion());
-    }
-
-    @Override
-    public Item toItem() {
-        return new CustomRendererBlockItem(this, new Item.Properties()) {
-            @OnlyIn(Dist.CLIENT)
-            @Override
-            public ItemRenderer createItemRenderer() {
-                return new TurtleFarmItemRenderer();
-            }
-        };
+    public TurtleFarmBlock(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -63,7 +46,7 @@ public class TurtleFarmBlock extends BlockBase implements EntityBlock, IItemBloc
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack heldItem, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         BlockEntity tileEntity = worldIn.getBlockEntity(pos);
         if (!(tileEntity instanceof TurtleFarmTileentity farm)) {
             return super.useItemOn(heldItem, state, worldIn, pos, player, handIn, hit);
@@ -81,7 +64,7 @@ public class TurtleFarmBlock extends BlockBase implements EntityBlock, IItemBloc
                 return new OutputContainer(id, playerInventory, farm.getOutputInventory(), ContainerLevelAccess.create(worldIn, pos), ModBlocks.TURTLE_FARM::get);
             }
         });
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ElderGuardianRenderer;
+import net.minecraft.client.renderer.entity.state.GuardianRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.ElderGuardian;
@@ -17,6 +18,7 @@ public class ElderGuardianFarmRenderer extends RendererBase<ElderGuardianFarmTil
 
     private WeakReference<ElderGuardian> elderGuardianCache = new WeakReference<>(null);
     private WeakReference<ElderGuardianRenderer> elderGuardianRendererCache = new WeakReference<>(null);
+    private GuardianRenderState elderGuardianRenderState;
 
     public ElderGuardianFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
@@ -38,7 +40,7 @@ public class ElderGuardianFarmRenderer extends RendererBase<ElderGuardianFarmTil
             elderGuardianRenderer = new ElderGuardianRenderer(createEntityRenderer());
             elderGuardianRendererCache = new WeakReference<>(elderGuardianRenderer);
         }
-
+        elderGuardianRenderState = getRenderState(elderGuardianRenderer, elderGuardianRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= ElderGuardianFarmTileentity.getElderGuardianSpawnTime() && farm.getTimer() < ElderGuardianFarmTileentity.getElderGuardianExplodeTime()) {
@@ -47,7 +49,7 @@ public class ElderGuardianFarmRenderer extends RendererBase<ElderGuardianFarmTil
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            elderGuardianRenderer.render(elderGuardian, 0F, 1F, matrixStack, buffer, combinedLight);
+            elderGuardianRenderer.render(elderGuardianRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

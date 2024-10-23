@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EvokerRenderer;
+import net.minecraft.client.renderer.entity.state.EvokerRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Evoker;
@@ -17,7 +18,7 @@ public class EvokerFarmRenderer extends RendererBase<EvokerFarmTileentity> {
 
     private WeakReference<Evoker> evokerCache = new WeakReference<>(null);
     private WeakReference<EvokerRenderer> evokerRendererCache = new WeakReference<>(null);
-
+    private EvokerRenderState evokerRenderState;
     public EvokerFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class EvokerFarmRenderer extends RendererBase<EvokerFarmTileentity> {
             evokerRenderer = new EvokerRenderer(createEntityRenderer());
             evokerRendererCache = new WeakReference<>(evokerRenderer);
         }
-
+        evokerRenderState = getRenderState(evokerRenderer, evokerRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= EvokerFarmTileentity.getEvokerSpawnTime() && farm.getTimer() < EvokerFarmTileentity.getEvokerExplodeTime()) {
@@ -47,7 +48,7 @@ public class EvokerFarmRenderer extends RendererBase<EvokerFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            evokerRenderer.render(evoker, 0F, 1F, matrixStack, buffer, combinedLight);
+            evokerRenderer.render(evokerRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

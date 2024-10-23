@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.BlazeRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Blaze;
@@ -17,7 +18,7 @@ public class BlazeFarmRenderer extends RendererBase<BlazeFarmTileentity> {
 
     private WeakReference<Blaze> blazeCache = new WeakReference<>(null);
     private WeakReference<BlazeRenderer> blazeRendererCache = new WeakReference<>(null);
-
+    private LivingEntityRenderState blazeRenderState;
     public BlazeFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -29,6 +30,7 @@ public class BlazeFarmRenderer extends RendererBase<BlazeFarmTileentity> {
 
         Blaze blaze = blazeCache.get();
         if (blaze == null) {
+            assert minecraft.level != null;
             blaze = new Blaze(EntityType.BLAZE, minecraft.level);
             blazeCache = new WeakReference<>(blaze);
         }
@@ -38,7 +40,7 @@ public class BlazeFarmRenderer extends RendererBase<BlazeFarmTileentity> {
             blazeRenderer = new BlazeRenderer(createEntityRenderer());
             blazeRendererCache = new WeakReference<>(blazeRenderer);
         }
-
+        blazeRenderState = getRenderState(blazeRenderer, blazeRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= BlazeFarmTileentity.getBlazeSpawnTime() && farm.getTimer() < BlazeFarmTileentity.getBlazeExplodeTime()) {
@@ -47,11 +49,10 @@ public class BlazeFarmRenderer extends RendererBase<BlazeFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            blazeRenderer.render(blaze, 0F, 1F, matrixStack, buffer, combinedLight);
+            blazeRenderer.render(blazeRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 
         matrixStack.popPose();
     }
-
 }

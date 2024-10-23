@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ShulkerRenderer;
+import net.minecraft.client.renderer.entity.state.ShulkerRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Shulker;
@@ -17,7 +18,7 @@ public class ShulkerFarmRenderer extends RendererBase<ShulkerFarmTileentity> {
 
     private WeakReference<Shulker> shulkerCache = new WeakReference<>(null);
     private WeakReference<ShulkerRenderer> shulkerRendererCache = new WeakReference<>(null);
-
+    private ShulkerRenderState shulkerRenderState;
     public ShulkerFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class ShulkerFarmRenderer extends RendererBase<ShulkerFarmTileentity> {
             shulkerRenderer = new ShulkerRenderer(createEntityRenderer());
             shulkerRendererCache = new WeakReference<>(shulkerRenderer);
         }
-
+        shulkerRenderState = getRenderState(shulkerRenderer, shulkerRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= ShulkerFarmTileentity.getShulkerSpawnTime() && farm.getTimer() < ShulkerFarmTileentity.getShulkerExplodeTime()) {
@@ -47,7 +48,7 @@ public class ShulkerFarmRenderer extends RendererBase<ShulkerFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            shulkerRenderer.render(shulker, 0F, 1F, matrixStack, buffer, combinedLight);
+            shulkerRenderer.render(shulkerRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.DrownedRenderer;
+import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Drowned;
@@ -17,7 +18,7 @@ public class DrownedFarmRenderer extends RendererBase<DrownedFarmTileentity> {
 
     private WeakReference<Drowned> drownedCache = new WeakReference<>(null);
     private WeakReference<DrownedRenderer> drownedRendererCache = new WeakReference<>(null);
-
+    private ZombieRenderState DrownedRenderState;
     public DrownedFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class DrownedFarmRenderer extends RendererBase<DrownedFarmTileentity> {
             drownedRenderer = new DrownedRenderer(createEntityRenderer());
             drownedRendererCache = new WeakReference<>(drownedRenderer);
         }
-
+        DrownedRenderState = getRenderState(drownedRenderer, DrownedRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= DrownedFarmTileentity.getDrownedSpawnTime() && farm.getTimer() < DrownedFarmTileentity.getDrownedExplodeTime()) {
@@ -47,7 +48,7 @@ public class DrownedFarmRenderer extends RendererBase<DrownedFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            drownedRenderer.render(drowned, 0F, 1F, matrixStack, buffer, combinedLight);
+            drownedRenderer.render(DrownedRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

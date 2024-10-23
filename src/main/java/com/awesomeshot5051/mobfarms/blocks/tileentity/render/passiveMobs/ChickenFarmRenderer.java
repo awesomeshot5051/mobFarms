@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
+import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
@@ -17,7 +18,7 @@ public class ChickenFarmRenderer extends RendererBase<ChickenFarmTileentity> {
 
     private WeakReference<Chicken> chickenCache = new WeakReference<>(null);
     private WeakReference<ChickenRenderer> chickenRendererCache = new WeakReference<>(null);
-
+    private ChickenRenderState chickenRenderState;
     public ChickenFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class ChickenFarmRenderer extends RendererBase<ChickenFarmTileentity> {
             chickenRenderer = new ChickenRenderer(createEntityRenderer());
             chickenRendererCache = new WeakReference<>(chickenRenderer);
         }
-
+        chickenRenderState = getRenderState(chickenRenderer, chickenRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= ChickenFarmTileentity.getChickenSpawnTime() && farm.getTimer() < ChickenFarmTileentity.getChickenKillTime()) {
@@ -47,7 +48,7 @@ public class ChickenFarmRenderer extends RendererBase<ChickenFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            chickenRenderer.render(chicken, 0F, 1F, matrixStack, buffer, combinedLight);
+            chickenRenderer.render(chickenRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.TropicalFishRenderer;
+import net.minecraft.client.renderer.entity.state.TropicalFishRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.TropicalFish;
@@ -17,7 +18,7 @@ public class TropicalFishFarmRenderer extends RendererBase<TropicalFishFarmTilee
 
     private WeakReference<TropicalFish> tropicalFishCache = new WeakReference<>(null);
     private WeakReference<TropicalFishRenderer> tropicalFishRendererCache = new WeakReference<>(null);
-
+    private TropicalFishRenderState tropicalFishRenderState;
     public TropicalFishFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class TropicalFishFarmRenderer extends RendererBase<TropicalFishFarmTilee
             tropicalFishRenderer = new TropicalFishRenderer(createEntityRenderer());
             tropicalFishRendererCache = new WeakReference<>(tropicalFishRenderer);
         }
-
+        tropicalFishRenderState = getRenderState(tropicalFishRenderer, tropicalFishRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= TropicalFishFarmTileentity.getTropicalFishSpawnTime() && farm.getTimer() < TropicalFishFarmTileentity.getTropicalFishKillTime()) {
@@ -47,7 +48,7 @@ public class TropicalFishFarmRenderer extends RendererBase<TropicalFishFarmTilee
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            tropicalFishRenderer.render(tropicalFish, 0F, 1F, matrixStack, buffer, combinedLight);
+            tropicalFishRenderer.render(tropicalFishRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

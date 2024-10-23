@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.GoatRenderer;
+import net.minecraft.client.renderer.entity.state.GoatRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.goat.Goat;
@@ -17,7 +18,7 @@ public class GoatFarmRenderer extends RendererBase<GoatFarmTileentity> {
 
     private WeakReference<Goat> goatCache = new WeakReference<>(null);
     private WeakReference<GoatRenderer> goatRendererCache = new WeakReference<>(null);
-
+    private GoatRenderState goatRenderState;
     public GoatFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -39,19 +40,8 @@ public class GoatFarmRenderer extends RendererBase<GoatFarmTileentity> {
             goatRenderer = new GoatRenderer(createEntityRenderer());
             goatRendererCache = new WeakReference<>(goatRenderer);
         }
-
+        goatRenderState = getRenderState(goatRenderer, goatRenderState);
         Direction direction = Direction.SOUTH;
-
-        if (farm.getVillagerEntity() != null) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(-5D / 16D, 0D, -5D / 16D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(90));
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
-            getVillagerRenderer().render(farm.getVillagerEntity(), 0F, 1F, matrixStack, buffer, combinedLight);
-            matrixStack.popPose();
-        }
 
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 1D / 16D, 0.5D);
@@ -72,7 +62,7 @@ public class GoatFarmRenderer extends RendererBase<GoatFarmTileentity> {
             } else {
                 goat.hurtTime = 0;
             }
-            goatRenderer.render(goat, 0F, 1F, matrixStack, buffer, combinedLight);
+            goatRenderer.render(goatRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

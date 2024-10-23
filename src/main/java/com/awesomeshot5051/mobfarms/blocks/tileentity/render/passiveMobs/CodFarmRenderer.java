@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.CodRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cod;
@@ -17,6 +18,7 @@ public class CodFarmRenderer extends RendererBase<CodFarmTileentity> {
 
     private WeakReference<Cod> codCache = new WeakReference<>(null);
     private WeakReference<CodRenderer> codRendererCache = new WeakReference<>(null);
+    private LivingEntityRenderState codRenderState;
 
     public CodFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
@@ -40,14 +42,14 @@ public class CodFarmRenderer extends RendererBase<CodFarmTileentity> {
         }
 
         Direction direction = Direction.SOUTH;
-
+        codRenderState = getRenderState(codRenderer, codRenderState);
         if (farm.getTimer() >= CodFarmTileentity.getCodSpawnTime() && farm.getTimer() < CodFarmTileentity.getCodKillTime()) {
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1D / 16D, 0.5D);
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            codRenderer.render(cod, 0F, 1F, matrixStack, buffer, combinedLight);
+            codRenderer.render(codRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

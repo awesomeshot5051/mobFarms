@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.WitchRenderer;
+import net.minecraft.client.renderer.entity.state.WitchRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Witch;
@@ -17,6 +18,7 @@ public class WitchFarmRenderer extends RendererBase<WitchFarmTileentity> {
 
     private WeakReference<Witch> witchCache = new WeakReference<>(null);
     private WeakReference<WitchRenderer> witchRendererCache = new WeakReference<>(null);
+    private WitchRenderState witchRenderState;
 
     public WitchFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
@@ -38,7 +40,7 @@ public class WitchFarmRenderer extends RendererBase<WitchFarmTileentity> {
             witchRenderer = new WitchRenderer(createEntityRenderer());
             witchRendererCache = new WeakReference<>(witchRenderer);
         }
-
+        witchRenderState = getRenderState(witchRenderer, witchRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= WitchFarmTileentity.getWitchSpawnTime() && farm.getTimer() < WitchFarmTileentity.getWitchExplodeTime()) {
@@ -47,7 +49,7 @@ public class WitchFarmRenderer extends RendererBase<WitchFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            witchRenderer.render(witch, 0F, 1F, matrixStack, buffer, combinedLight);
+            witchRenderer.render(witchRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

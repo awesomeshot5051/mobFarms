@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.PigRenderer;
+import net.minecraft.client.renderer.entity.state.PigRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Pig;
@@ -17,7 +18,7 @@ public class PigFarmRenderer extends RendererBase<PigFarmTileentity> {
 
     private WeakReference<Pig> pigCache = new WeakReference<>(null);
     private WeakReference<PigRenderer> pigRendererCache = new WeakReference<>(null);
-
+    private PigRenderState pigRenderState;
     public PigFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class PigFarmRenderer extends RendererBase<PigFarmTileentity> {
             pigRenderer = new PigRenderer(createEntityRenderer());
             pigRendererCache = new WeakReference<>(pigRenderer);
         }
-
+        pigRenderState = getRenderState(pigRenderer, pigRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= PigFarmTileentity.getPigSpawnTime() && farm.getTimer() < PigFarmTileentity.getPorkKillTime()) {
@@ -47,7 +48,7 @@ public class PigFarmRenderer extends RendererBase<PigFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            pigRenderer.render(pig, 0F, 1F, matrixStack, buffer, combinedLight);
+            pigRenderer.render(pigRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

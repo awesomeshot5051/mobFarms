@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ZoglinRenderer;
+import net.minecraft.client.renderer.entity.state.HoglinRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Zoglin;
@@ -17,6 +18,7 @@ public class ZoglinFarmRenderer extends RendererBase<ZoglinFarmTileentity> {
 
     private WeakReference<Zoglin> zoglinCache = new WeakReference<>(null);
     private WeakReference<ZoglinRenderer> zoglinRendererCache = new WeakReference<>(null);
+    private HoglinRenderState zoglinRenderState;
 
     public ZoglinFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
@@ -38,7 +40,7 @@ public class ZoglinFarmRenderer extends RendererBase<ZoglinFarmTileentity> {
             zoglinRenderer = new ZoglinRenderer(createEntityRenderer());
             zoglinRendererCache = new WeakReference<>(zoglinRenderer);
         }
-
+        zoglinRenderState = getRenderState(zoglinRenderer, zoglinRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= ZoglinFarmTileentity.getZoglinSpawnTime() && farm.getTimer() < ZoglinFarmTileentity.getZoglinExplodeTime()) {
@@ -47,7 +49,7 @@ public class ZoglinFarmRenderer extends RendererBase<ZoglinFarmTileentity> {
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            zoglinRenderer.render(zoglin, 0F, 1F, matrixStack, buffer, combinedLight);
+            zoglinRenderer.render(zoglinRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

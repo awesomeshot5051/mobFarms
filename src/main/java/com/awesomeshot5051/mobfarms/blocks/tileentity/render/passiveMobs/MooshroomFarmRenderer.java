@@ -8,6 +8,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.MushroomCowRenderer;
+import net.minecraft.client.renderer.entity.state.MushroomCowRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.MushroomCow;
@@ -18,7 +19,7 @@ public class MooshroomFarmRenderer extends RendererBase<MooshroomFarmTileentity>
 
     private WeakReference<MushroomCow> mooshroomCache = new WeakReference<>(null);
     private WeakReference<MushroomCowRenderer> mooshroomRendererCache = new WeakReference<>(null);
-
+    private MushroomCowRenderState mooshroomRenderState;
     public MooshroomFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -39,7 +40,7 @@ public class MooshroomFarmRenderer extends RendererBase<MooshroomFarmTileentity>
             mooshroomRenderer = new MushroomCowRenderer(createEntityRenderer());
             mooshroomRendererCache = new WeakReference<>(mooshroomRenderer);
         }
-
+        mooshroomRenderState = getRenderState(mooshroomRenderer, mooshroomRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= PigFarmTileentity.getPigSpawnTime() && farm.getTimer() < PigFarmTileentity.getPorkKillTime()) {
@@ -48,7 +49,7 @@ public class MooshroomFarmRenderer extends RendererBase<MooshroomFarmTileentity>
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            mooshroomRenderer.render(mooshroom, 0F, 1F, matrixStack, buffer, combinedLight);
+            mooshroomRenderer.render(mooshroomRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

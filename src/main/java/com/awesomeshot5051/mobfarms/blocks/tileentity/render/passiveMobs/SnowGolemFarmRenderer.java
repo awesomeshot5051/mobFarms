@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.SnowGolemRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.SnowGolem;
@@ -17,7 +18,7 @@ public class SnowGolemFarmRenderer extends RendererBase<SnowGolemFarmTileentity>
 
     private WeakReference<SnowGolem> snowGolemCache = new WeakReference<>(null);
     private WeakReference<SnowGolemRenderer> snowGolemRendererCache = new WeakReference<>(null);
-
+    private LivingEntityRenderState snowGolemRenderState;
     public SnowGolemFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
     }
@@ -38,7 +39,7 @@ public class SnowGolemFarmRenderer extends RendererBase<SnowGolemFarmTileentity>
             snowGolemRenderer = new SnowGolemRenderer(createEntityRenderer());
             snowGolemRendererCache = new WeakReference<>(snowGolemRenderer);
         }
-
+        snowGolemRenderState = getRenderState(snowGolemRenderer, snowGolemRenderState);
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= SnowGolemFarmTileentity.getSnowGolemSpawnTime() && farm.getTimer() < SnowGolemFarmTileentity.getSnowGolemKillTime()) {
@@ -47,7 +48,7 @@ public class SnowGolemFarmRenderer extends RendererBase<SnowGolemFarmTileentity>
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            snowGolemRenderer.render(snowGolem, 0F, 1F, matrixStack, buffer, combinedLight);
+            snowGolemRenderer.render(snowGolemRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

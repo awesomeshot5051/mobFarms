@@ -7,7 +7,7 @@
   ],
   "key": {
     "#": {
-      "tag": "c:glass_panes/colorless"
+      "item": "minecraft:glass_pane"
     },
     "L": {
       "item": "minecraft:lava_bucket"

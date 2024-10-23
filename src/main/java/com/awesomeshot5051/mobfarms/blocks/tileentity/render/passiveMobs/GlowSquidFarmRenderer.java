@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.GlowSquidRenderer;
+import net.minecraft.client.renderer.entity.state.SquidRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.GlowSquid;
@@ -19,6 +20,7 @@ public class GlowSquidFarmRenderer extends RendererBase<GlowSquidFarmTileentity>
 
     private WeakReference<GlowSquid> glowSquidCache = new WeakReference<>(null);
     private WeakReference<GlowSquidRenderer> glowSquidRendererCache = new WeakReference<>(null);
+    private SquidRenderState glowSquidRenderState;
 
     public GlowSquidFarmRenderer(BlockEntityRendererProvider.Context renderer) {
         super(renderer);
@@ -35,15 +37,21 @@ public class GlowSquidFarmRenderer extends RendererBase<GlowSquidFarmTileentity>
             glowSquidCache = new WeakReference<>(glowSquid);
         }
 
+
         GlowSquidRenderer glowSquidRenderer = glowSquidRendererCache.get();
         if (glowSquidRenderer == null) {
-            // Create the SquidModel for GlowSquid
-            SquidModel<GlowSquid> glowSquidModel = new SquidModel<>(createEntityRenderer().bakeLayer(ModelLayers.GLOW_SQUID));
+            // Create two GlowSquidModel instances as required by the constructor
+            SquidModel glowSquidModel1 = new SquidModel(createEntityRenderer().bakeLayer(ModelLayers.GLOW_SQUID));
+            SquidModel glowSquidModel2 = new SquidModel(createEntityRenderer().bakeLayer(ModelLayers.GLOW_SQUID));
 
-            // Create the GlowSquidRenderer with the correct parameters
-            glowSquidRenderer = new GlowSquidRenderer(createEntityRenderer(), glowSquidModel);
+            // Create a new GlowSquidRenderer instance with both models
+            glowSquidRenderer = new GlowSquidRenderer(createEntityRenderer(), glowSquidModel1, glowSquidModel2);
+
+            // Cache the renderer in the WeakReference
             glowSquidRendererCache = new WeakReference<>(glowSquidRenderer);
         }
+
+        glowSquidRenderState = getRenderState(glowSquidRenderer, glowSquidRenderState);
 
         Direction direction = Direction.SOUTH;
 
@@ -53,7 +61,7 @@ public class GlowSquidFarmRenderer extends RendererBase<GlowSquidFarmTileentity>
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
             matrixStack.scale(0.3F, 0.3F, 0.3F);
-            glowSquidRenderer.render(glowSquid, 0F, 1F, matrixStack, buffer, combinedLight);
+            glowSquidRenderer.render(glowSquidRenderState, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }
 

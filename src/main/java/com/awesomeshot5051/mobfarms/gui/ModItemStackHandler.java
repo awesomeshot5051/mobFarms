@@ -19,7 +19,9 @@ public class ModItemStackHandler extends ItemStackHandler {
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {
         EasyVillagerEntity v = inventoryViewer.getVillagerEntity();
-        return super.isItemValid(slot, stack) && v != null && v.wantsToPickUp(stack);
+        //TODO Check if this causes a crash
+        return super.isItemValid(slot, stack) && v != null && v.wantsToPickUp(null, stack);
     }
+
 
 }
