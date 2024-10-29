@@ -4,10 +4,14 @@ import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
 import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
 import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
+import com.awesomeshot5051.mobfarms.gui.CookedmeatConfigMenu;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -17,6 +21,8 @@ public class ModItems {
 
 //    public static final DeferredHolder<Item, Item> INCUBATOR = ITEM_REGISTER.register("incubator", () -> ModBlocks.INCUBATOR.get().toItem());
     public static final DeferredHolder<Item, Item> INVENTORY_VIEWER = ITEM_REGISTER.register("inventory_viewer", () -> ModBlocks.INVENTORY_VIEWER.get().toItem());
+    public static final DeferredRegister<MenuType<?>> REGISTRY = DeferredRegister.create(Registries.MENU, Main.MODID);
+    public static final DeferredHolder<MenuType<?>, MenuType<CookedmeatConfigMenu>> COOKEDMEAT_CONFIG = REGISTRY.register("cookedmeat_config", () -> IMenuTypeExtension.create(CookedmeatConfigMenu::new));
 
 
     //passive mobs
@@ -80,6 +86,7 @@ public class ModItems {
     public static void init(IEventBus eventBus) {
         ITEM_REGISTER.register(eventBus);
         DATA_COMPONENT_TYPE_REGISTER.register(eventBus);
+        REGISTRY.register(eventBus);
     }
 
 }
