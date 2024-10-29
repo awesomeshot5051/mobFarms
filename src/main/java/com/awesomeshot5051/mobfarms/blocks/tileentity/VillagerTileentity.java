@@ -1,39 +1,33 @@
-package com.awesomeshot5051.mobfarms.blocks.tileentity;
-
-//import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
-import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
-import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
-
-public class VillagerTileentity extends FakeWorldTileentity {
-
-    protected ItemStack villager;
-    protected EasyVillagerEntity villagerEntity;
-
-    public VillagerTileentity(BlockEntityType<?> type, BlockState defaultState, BlockPos pos, BlockState state) {
-        super(type, defaultState, pos, state);
-        villager = ItemStack.EMPTY;
-    }
-
-    public boolean hasVillager() {
-        return !villager.isEmpty();
-    }
-
-    @Nullable
-    public EasyVillagerEntity getVillagerEntity() {
-        if (villagerEntity == null && !villager.isEmpty()) {
-            villagerEntity = VillagerData.createEasyVillager(villager, level);
-        }
-        return villagerEntity;
-    }
-
-        protected void onAddVillager(EasyVillagerEntity villager) {
-
-    }
-
-}
+/*   0 */ package com.awesomeshot5051.mobfarms.blocks.tileentity;
+/*   0 */ 
+/*   0 */ import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
+/*   0 */ import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
+/*   0 */ import javax.annotation.Nullable;
+/*   0 */ import net.minecraft.core.BlockPos;
+/*   0 */ import net.minecraft.world.item.ItemStack;
+/*   0 */ import net.minecraft.world.level.block.entity.BlockEntityType;
+/*   0 */ import net.minecraft.world.level.block.state.BlockState;
+/*   0 */ 
+/*   0 */ public class VillagerTileentity extends FakeWorldTileentity {
+/*   0 */   protected ItemStack villager;
+/*   0 */   
+/*   0 */   protected EasyVillagerEntity villagerEntity;
+/*   0 */   
+/*   0 */   public VillagerTileentity(BlockEntityType<?> type, BlockState defaultState, BlockPos pos, BlockState state) {
+/*  19 */     super(type, defaultState, pos, state);
+/*  20 */     this.villager = ItemStack.EMPTY;
+/*   0 */   }
+/*   0 */   
+/*   0 */   public boolean hasVillager() {
+/*  24 */     return !this.villager.isEmpty();
+/*   0 */   }
+/*   0 */   
+/*   0 */   @Nullable
+/*   0 */   public EasyVillagerEntity getVillagerEntity() {
+/*  29 */     if (this.villagerEntity == null && !this.villager.isEmpty())
+/*  30 */       this.villagerEntity = VillagerData.createEasyVillager(this.villager, this.level); 
+/*  32 */     return this.villagerEntity;
+/*   0 */   }
+/*   0 */   
+/*   0 */   protected void onAddVillager(EasyVillagerEntity villager) {}
+/*   0 */ }

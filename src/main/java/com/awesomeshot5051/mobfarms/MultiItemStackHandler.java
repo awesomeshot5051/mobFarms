@@ -1,175 +1,135 @@
-package com.awesomeshot5051.mobfarms;
-
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.function.Predicate;
-
-public class MultiItemStackHandler implements IItemHandler {
-
-    protected NonNullList<ItemStack> modifiable;
-    protected NonNullList<ItemStack> takeOnly;
-    @Nullable
-    protected Predicate<ItemStack> inputValidator;
-
-    public MultiItemStackHandler(NonNullList<ItemStack> modifiable, NonNullList<ItemStack> takeOnly, Predicate<ItemStack> inputValidator) {
-        this.modifiable = modifiable;
-        this.takeOnly = takeOnly;
-        this.inputValidator = inputValidator;
-    }
-
-    public MultiItemStackHandler(NonNullList<ItemStack> modifiable, NonNullList<ItemStack> takeOnly) {
-        this(modifiable, takeOnly, null);
-    }
-
-    @Override
-    public int getSlots() {
-        return modifiable.size() + takeOnly.size();
-    }
-
-    @NotNull
-    @Override
-    public ItemStack getStackInSlot(int slot) {
-        validateSlotIndex(slot);
-        return getList(slot).get(getListIndex(slot));
-    }
-
-    @NotNull
-    @Override
-    public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-        if (stack.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-
-        if (!isItemValid(slot, stack)) {
-            return stack;
-        }
-
-        validateSlotIndex(slot);
-
-        ItemStack existing = getStackInSlot(slot);
-
-        int limit = getStackLimit(slot, stack);
-
-        if (!existing.isEmpty()) {
-            if (!ItemStack.isSameItemSameComponents(stack, existing)) {
-                return stack;
-            }
-
-            limit -= existing.getCount();
-        }
-
-        if (limit <= 0) {
-            return stack;
-        }
-
-        boolean reachedLimit = stack.getCount() > limit;
-
-        if (!simulate) {
-            if (existing.isEmpty()) {
-                getList(slot).set(getListIndex(slot), reachedLimit ? copyStackWithSize(stack, limit) : stack);
-            } else {
-                existing.grow(reachedLimit ? limit : stack.getCount());
-            }
-        }
-
-        return reachedLimit ? copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
-    }
-
-    private ItemStack copyStackWithSize(ItemStack stack, int amount) {
-        if (amount == 0) {
-            return ItemStack.EMPTY;
-        }
-        ItemStack copy = stack.copy();
-        copy.setCount(amount);
-        return copy;
-    }
-
-    @NotNull
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (amount == 0) {
-            return ItemStack.EMPTY;
-        }
-
-        validateSlotIndex(slot);
-
-        if (!canExtract(slot)) {
-            return ItemStack.EMPTY;
-        }
-
-        ItemStack existing = getStackInSlot(slot);
-
-        if (existing.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-
-        int toExtract = Math.min(amount, existing.getMaxStackSize());
-
-        if (existing.getCount() <= toExtract) {
-            if (!simulate) {
-                getList(slot).set(getListIndex(slot), ItemStack.EMPTY);
-                return existing;
-            } else {
-                return existing.copy();
-            }
-        } else {
-            if (!simulate) {
-                getList(slot).set(getListIndex(slot), copyStackWithSize(existing, existing.getCount() - toExtract));
-            }
-
-            return copyStackWithSize(existing, toExtract);
-        }
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-        return 64;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        if (slot < modifiable.size()) {
-            if (inputValidator != null) {
-                return inputValidator.test(stack);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    protected boolean canExtract(int slot) {
-        return slot >= modifiable.size();
-    }
-
-    protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-        return Math.min(getSlotLimit(slot), stack.getMaxStackSize());
-    }
-
-    protected void validateSlotIndex(int slot) {
-        if (slot < 0 || slot >= getSlots()) {
-            throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
-        }
-    }
-
-    protected NonNullList<ItemStack> getList(int slot) {
-        validateSlotIndex(slot);
-        if (slot < modifiable.size()) {
-            return modifiable;
-        }
-        return takeOnly;
-    }
-
-    protected int getListIndex(int slot) {
-        validateSlotIndex(slot);
-        if (slot < modifiable.size()) {
-            return slot;
-        }
-        return slot - modifiable.size();
-    }
-
-}
+/*    0 */ package com.awesomeshot5051.mobfarms;
+/*    0 */ 
+/*    0 */ import java.util.function.Predicate;
+/*    0 */ import javax.annotation.Nonnull;
+/*    0 */ import javax.annotation.Nullable;
+/*    0 */ import net.minecraft.core.NonNullList;
+/*    0 */ import net.minecraft.world.item.ItemStack;
+/*    0 */ import net.neoforged.neoforge.items.IItemHandler;
+/*    0 */ import org.jetbrains.annotations.NotNull;
+/*    0 */ 
+/*    0 */ public class MultiItemStackHandler implements IItemHandler {
+/*    0 */   protected NonNullList<ItemStack> modifiable;
+/*    0 */   
+/*    0 */   protected NonNullList<ItemStack> takeOnly;
+/*    0 */   
+/*    0 */   @Nullable
+/*    0 */   protected Predicate<ItemStack> inputValidator;
+/*    0 */   
+/*    0 */   public MultiItemStackHandler(NonNullList<ItemStack> modifiable, NonNullList<ItemStack> takeOnly, Predicate<ItemStack> inputValidator) {
+/*   20 */     this.modifiable = modifiable;
+/*   21 */     this.takeOnly = takeOnly;
+/*   22 */     this.inputValidator = inputValidator;
+/*    0 */   }
+/*    0 */   
+/*    0 */   public MultiItemStackHandler(NonNullList<ItemStack> modifiable, NonNullList<ItemStack> takeOnly) {
+/*   26 */     this(modifiable, takeOnly, null);
+/*    0 */   }
+/*    0 */   
+/*    0 */   public int getSlots() {
+/*   31 */     return this.modifiable.size() + this.takeOnly.size();
+/*    0 */   }
+/*    0 */   
+/*    0 */   @NotNull
+/*    0 */   public ItemStack getStackInSlot(int slot) {
+/*   37 */     validateSlotIndex(slot);
+/*   38 */     return (ItemStack)getList(slot).get(getListIndex(slot));
+/*    0 */   }
+/*    0 */   
+/*    0 */   @NotNull
+/*    0 */   public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+/*   44 */     if (stack.isEmpty())
+/*   45 */       return ItemStack.EMPTY; 
+/*   48 */     if (!isItemValid(slot, stack))
+/*   49 */       return stack; 
+/*   52 */     validateSlotIndex(slot);
+/*   54 */     ItemStack existing = getStackInSlot(slot);
+/*   56 */     int limit = getStackLimit(slot, stack);
+/*   58 */     if (!existing.isEmpty()) {
+/*   59 */       if (!ItemStack.isSameItemSameComponents(stack, existing))
+/*   60 */         return stack; 
+/*   63 */       limit -= existing.getCount();
+/*    0 */     } 
+/*   66 */     if (limit <= 0)
+/*   67 */       return stack; 
+/*   70 */     boolean reachedLimit = (stack.getCount() > limit);
+/*   72 */     if (!simulate)
+/*   73 */       if (existing.isEmpty()) {
+/*   74 */         getList(slot).set(getListIndex(slot), reachedLimit ? copyStackWithSize(stack, limit) : stack);
+/*    0 */       } else {
+/*   76 */         existing.grow(reachedLimit ? limit : stack.getCount());
+/*    0 */       }  
+/*   80 */     return reachedLimit ? copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
+/*    0 */   }
+/*    0 */   
+/*    0 */   private ItemStack copyStackWithSize(ItemStack stack, int amount) {
+/*   84 */     if (amount == 0)
+/*   85 */       return ItemStack.EMPTY; 
+/*   87 */     ItemStack copy = stack.copy();
+/*   88 */     copy.setCount(amount);
+/*   89 */     return copy;
+/*    0 */   }
+/*    0 */   
+/*    0 */   @NotNull
+/*    0 */   public ItemStack extractItem(int slot, int amount, boolean simulate) {
+/*   95 */     if (amount == 0)
+/*   96 */       return ItemStack.EMPTY; 
+/*   99 */     validateSlotIndex(slot);
+/*  101 */     if (!canExtract(slot))
+/*  102 */       return ItemStack.EMPTY; 
+/*  105 */     ItemStack existing = getStackInSlot(slot);
+/*  107 */     if (existing.isEmpty())
+/*  108 */       return ItemStack.EMPTY; 
+/*  111 */     int toExtract = Math.min(amount, existing.getMaxStackSize());
+/*  113 */     if (existing.getCount() <= toExtract) {
+/*  114 */       if (!simulate) {
+/*  115 */         getList(slot).set(getListIndex(slot), ItemStack.EMPTY);
+/*  116 */         return existing;
+/*    0 */       } 
+/*  118 */       return existing.copy();
+/*    0 */     } 
+/*  121 */     if (!simulate)
+/*  122 */       getList(slot).set(getListIndex(slot), copyStackWithSize(existing, existing.getCount() - toExtract)); 
+/*  125 */     return copyStackWithSize(existing, toExtract);
+/*    0 */   }
+/*    0 */   
+/*    0 */   public int getSlotLimit(int slot) {
+/*  131 */     return 64;
+/*    0 */   }
+/*    0 */   
+/*    0 */   public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+/*  136 */     if (slot < this.modifiable.size()) {
+/*  137 */       if (this.inputValidator != null)
+/*  138 */         return this.inputValidator.test(stack); 
+/*  140 */       return true;
+/*    0 */     } 
+/*  142 */     return false;
+/*    0 */   }
+/*    0 */   
+/*    0 */   protected boolean canExtract(int slot) {
+/*  146 */     return (slot >= this.modifiable.size());
+/*    0 */   }
+/*    0 */   
+/*    0 */   protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+/*  150 */     return Math.min(getSlotLimit(slot), stack.getMaxStackSize());
+/*    0 */   }
+/*    0 */   
+/*    0 */   protected void validateSlotIndex(int slot) {
+/*  154 */     if (slot < 0 || slot >= getSlots())
+/*  155 */       throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")"); 
+/*    0 */   }
+/*    0 */   
+/*    0 */   protected NonNullList<ItemStack> getList(int slot) {
+/*  160 */     validateSlotIndex(slot);
+/*  161 */     if (slot < this.modifiable.size())
+/*  162 */       return this.modifiable; 
+/*  164 */     return this.takeOnly;
+/*    0 */   }
+/*    0 */   
+/*    0 */   protected int getListIndex(int slot) {
+/*  168 */     validateSlotIndex(slot);
+/*  169 */     if (slot < this.modifiable.size())
+/*  170 */       return slot; 
+/*  172 */     return slot - this.modifiable.size();
+/*    0 */   }
+/*    0 */ }
