@@ -1,21 +1,21 @@
-/*   0 */ package com.awesomeshot5051.mobfarms.blocks;
-/*   0 */ 
-/*   0 */ import com.awesomeshot5051.mobfarms.blocks.passiveMobs.SheepFarmBlock;
-/*   0 */ import net.minecraft.core.BlockPos;
-/*   0 */ import net.minecraft.core.Direction;
-/*   0 */ import net.minecraft.core.dispenser.BlockSource;
-/*   0 */ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
-/*   0 */ import net.minecraft.server.level.ServerLevel;
-/*   0 */ import net.minecraft.world.item.DyeColor;
-/*   0 */ import net.minecraft.world.item.DyeItem;
-/*   0 */ import net.minecraft.world.item.ItemStack;
-/*   0 */ import net.minecraft.world.level.Level;
-/*   0 */ import net.minecraft.world.level.block.DispenserBlock;
-/*   0 */ import net.minecraft.world.level.block.state.BlockState;
-/*   0 */ import net.minecraft.world.level.block.state.properties.Property;
-/*   0 */ 
-/*   0 */ public class DyeDispenseItemBehavior extends DefaultDispenseItemBehavior {
-/*   0 */   public ItemStack execute(BlockSource blockSource, ItemStack item) {
+package com.awesomeshot5051.mobfarms.blocks;
+
+import com.awesomeshot5051.mobfarms.blocks.passiveMobs.SheepFarmBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
+
+public class DyeDispenseItemBehavior extends DefaultDispenseItemBehavior {
+   public ItemStack execute(BlockSource blockSource, ItemStack item) {
 /*  19 */     if (!(item.getItem() instanceof DyeItem))
 /*  20 */       return super.execute(blockSource, item); 
 /*  23 */     ServerLevel serverLevel = blockSource.level();
@@ -26,13 +26,13 @@
 /*  30 */       DyeColor dyeColor = ((DyeItem)item.getItem()).getDyeColor();
 /*  31 */       ((SheepFarmBlock)state.getBlock()).dyeBlock(state, (Level)serverLevel, dyeColor, pos);
 /*  32 */       item.shrink(1);
-/*   0 */     } else {
+     } else {
 /*  34 */       return super.execute(blockSource, item);
-/*   0 */     } 
+     } 
 /*  37 */     return item;
-/*   0 */   }
-/*   0 */   
-/*   0 */   protected void playSound(BlockSource blockSource) {
+   }
+   
+   protected void playSound(BlockSource blockSource) {
 /*  42 */     blockSource.level().levelEvent(1000, blockSource.pos(), 0);
-/*   0 */   }
-/*   0 */ }
+   }
+}
