@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.dropsCookedMeat;
 import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.SheepFarmBlock.COLOR;
 
 public class SheepFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
@@ -125,7 +126,7 @@ public class SheepFarmTileentity extends VillagerTileentity implements ITickable
         drops.add(WoolColor);
 
         // Manually add cooked mutton drop (since the sheep is killed by lava, we drop cooked mutton)
-        drops.add(new ItemStack(Items.COOKED_MUTTON, 3)); // Adjust the amount if needed
+        drops.add(new ItemStack(dropsCookedMeat.get() ? Items.COOKED_MUTTON : Items.MUTTON, 3)); // Adjust the amount if needed
 
         return drops;
     }

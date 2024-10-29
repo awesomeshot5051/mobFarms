@@ -30,8 +30,11 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.dropsCookedMeat;
 
 public class MooshroomFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
@@ -100,6 +103,16 @@ public class MooshroomFarmTileentity extends VillagerTileentity implements ITick
             return Collections.emptyList();
         }
 
+        List<ItemStack> drops = new ArrayList<>();
+
+        // Add emeralds with a 50% chance
+        drops.add(new ItemStack(Items.COOKED_BEEF)); // Drop 0 or 1 emerald
+        drops.add(new ItemStack(dropsCookedMeat.get() ? Items.COOKED_BEEF : Items.BEEF, 3));
+        // Add an iron axe with a chance to enchant it
+        ItemStack leather = new ItemStack(Items.LEATHER);
+        drops.add(leather);
+
+
         LootParams.Builder builder = new LootParams.Builder(serverWorld)
                 .withParameter(LootContextParams.THIS_ENTITY, new MushroomCow(EntityType.MOOSHROOM, level)) // Change to Mooshroom
                 .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
@@ -108,8 +121,8 @@ public class MooshroomFarmTileentity extends VillagerTileentity implements ITick
         LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(MOOSHROOM_LOOT_TABLE);
-
-        return Collections.singletonList(new ItemStack(Items.MUSHROOM_STEW, 3));
+        drops.add(new ItemStack(Items.MUSHROOM_STEW));
+        return drops;
     }
 
     public Container getOutputInventory() {

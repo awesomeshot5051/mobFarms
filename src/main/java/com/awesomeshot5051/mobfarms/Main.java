@@ -1,6 +1,6 @@
 package com.awesomeshot5051.mobfarms;
 
-import com.awesomeshot5051.mobfarms.advancements.MobFarmsTriggerInstance;
+//import com.awesomeshot5051.mobfarms.advancements.MobFarmsTriggerInstance;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
 import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.WitherFarmBlock;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
@@ -42,7 +42,7 @@ public class Main {
 //        eventBus.addListener(this::onRegisterPayloadHandler);
         eventBus.addListener(IMC::enqueueIMC);
         eventBus.addListener(ModTileEntities::onRegisterCapabilities);
-        MobFarmsTriggerInstance.MobFarmsTrigger.TRIGGER_TYPES.register(eventBus);
+//        MobFarmsTriggerInstance.MobFarmsTrigger.TRIGGER_TYPES.register(eventBus);
 
         ModBlocks.init(eventBus);
         ModItems.init(eventBus);

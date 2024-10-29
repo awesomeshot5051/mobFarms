@@ -2,7 +2,9 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs;
 
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.OutputItemHandler;
+import com.awesomeshot5051.mobfarms.ServerConfig;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
 import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
@@ -27,17 +29,19 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.Collections;
 import java.util.List;
 
+import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.dropsCookedMeat;
+
 public class ChickenFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
     // Update the loot table for chickens instead of iron golems
     private static final ResourceKey<LootTable> CHICKEN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/chicken"));
-
     protected NonNullList<ItemStack> inventory;
     protected long timer;
     protected ItemStackHandler itemHandler;
@@ -109,7 +113,8 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(CHICKEN_LOOT_TABLE);
 
-        return Collections.singletonList(new ItemStack(Items.COOKED_CHICKEN, 3));
+        return Collections.singletonList(new ItemStack(dropsCookedMeat.get() ? Items.COOKED_CHICKEN : Items.CHICKEN, 3));
+
     }
 
     public Container getOutputInventory() {

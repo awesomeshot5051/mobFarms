@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.dropsCookedMeat;
+
 public class CowFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
     // Update the loot table for pigs instead of iron golems
@@ -99,7 +101,7 @@ public class CowFarmTileentity extends VillagerTileentity implements ITickableBl
 
         // Add emeralds with a 50% chance
         drops.add(new ItemStack(Items.COOKED_BEEF)); // Drop 0 or 1 emerald
-
+        drops.add(new ItemStack(dropsCookedMeat.get() ? Items.COOKED_BEEF : Items.BEEF, 3));
         // Add an iron axe with a chance to enchant it
         ItemStack leather = new ItemStack(Items.LEATHER);
         drops.add(leather);

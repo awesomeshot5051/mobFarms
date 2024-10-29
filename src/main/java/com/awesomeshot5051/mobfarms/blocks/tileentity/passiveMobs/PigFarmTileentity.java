@@ -33,6 +33,8 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import java.util.Collections;
 import java.util.List;
 
+import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.dropsCookedMeat;
+
 public class PigFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
     // Update the loot table for pigs instead of iron golems
@@ -109,7 +111,7 @@ public class PigFarmTileentity extends VillagerTileentity implements ITickableBl
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(PIG_LOOT_TABLE);
 
-        return Collections.singletonList(new ItemStack(Items.COOKED_PORKCHOP, 3));
+        return Collections.singletonList(new ItemStack(dropsCookedMeat.get() ? Items.COOKED_PORKCHOP : Items.PORKCHOP, 3));
     }
 
     public Container getOutputInventory() {

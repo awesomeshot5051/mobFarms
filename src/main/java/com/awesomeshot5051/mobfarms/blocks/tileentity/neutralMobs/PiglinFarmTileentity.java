@@ -20,6 +20,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -29,6 +30,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class PiglinFarmTileentity extends VillagerTileentity implements ITickabl
 
     // Update the loot table for piglins instead of iron golems
     private static final ResourceKey<LootTable> PIGLIN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/piglin"));
-
+    public boolean isSword=true;
     protected NonNullList<ItemStack> inventory;
     protected long timer;
     protected ItemStackHandler itemHandler;
@@ -65,7 +67,7 @@ public class PiglinFarmTileentity extends VillagerTileentity implements ITickabl
     public void tick() {
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.CREEPER_PRIMED);
-
+        isSword=!isSword;
         timer++;
         setChanged();
 
@@ -98,7 +100,7 @@ public class PiglinFarmTileentity extends VillagerTileentity implements ITickabl
         if (!(level instanceof ServerLevel serverWorld)) {
             return Collections.emptyList();
         }
-
+        List<ItemStack> drops = new ArrayList<>();
         LootParams.Builder builder = new LootParams.Builder(serverWorld)
                 .withParameter(LootContextParams.THIS_ENTITY, new Piglin(EntityType.PIGLIN, level)) // Change to Piglin
                 .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
@@ -107,8 +109,8 @@ public class PiglinFarmTileentity extends VillagerTileentity implements ITickabl
         LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(PIGLIN_LOOT_TABLE);
-
-        return lootTable.getRandomItems(lootContext);
+        if (serverWorld.random.nextDouble() < .085) drops.add(new ItemStack(isSword ? Items.GOLDEN_SWORD : Items.CROSSBOW));
+        return drops;
     }
 
     public Container getOutputInventory() {

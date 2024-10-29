@@ -4,6 +4,10 @@ import de.maxhenkel.corelib.config.ConfigBase;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ServerConfig extends ConfigBase {
+    //meat dropping mobs
+    public final ModConfigSpec.BooleanValue dropsCookedMeat;
+
+
     //passive mobs
     public final ModConfigSpec.IntValue chickenSpawnTime;
     public final ModConfigSpec.IntValue codSpawnTime;
@@ -62,6 +66,11 @@ public class ServerConfig extends ConfigBase {
 
     public ServerConfig(ModConfigSpec.Builder builder) {
         super(builder);
+
+
+        dropsCookedMeat = builder
+                .comment("Whether the mob drops cooked meat")
+                .define("dropsCookedMeat", true); // defaulting to false
 
 
         //passive mobs
