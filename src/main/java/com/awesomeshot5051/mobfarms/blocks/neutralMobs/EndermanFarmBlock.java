@@ -42,7 +42,7 @@ import java.util.List;
 public class EndermanFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public EndermanFarmBlock() {
-        super(Properties.of().mapColor(MapColor.GRASS).strength(2.5F).sound(SoundType.GRASS).noOcclusion()); // Adjusted for enderman farm
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion()); // Adjusted for enderman farm
     }
 
     @Override

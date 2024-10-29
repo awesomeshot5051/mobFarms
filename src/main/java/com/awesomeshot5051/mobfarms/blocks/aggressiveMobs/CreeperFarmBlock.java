@@ -38,11 +38,12 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Properties;
 
 public class CreeperFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public CreeperFarmBlock() {
-        super(Properties.of().mapColor(MapColor.GRASS).strength(2.5F).sound(SoundType.GRASS).noOcclusion()); // Adjusted for creeper farm
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion()); // Adjusted for creeper farm
     }
 
     @Override

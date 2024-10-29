@@ -42,7 +42,7 @@ import java.util.List;
 public class TropicalFishFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public TropicalFishFarmBlock() {
-        super(Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD).noOcclusion());
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion());
     }
 
     @Override

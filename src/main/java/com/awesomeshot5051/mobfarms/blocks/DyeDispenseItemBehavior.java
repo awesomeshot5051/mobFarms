@@ -9,30 +9,36 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
 
 public class DyeDispenseItemBehavior extends DefaultDispenseItemBehavior {
-   public ItemStack execute(BlockSource blockSource, ItemStack item) {
-/*  19 */     if (!(item.getItem() instanceof DyeItem))
-/*  20 */       return super.execute(blockSource, item); 
-/*  23 */     ServerLevel serverLevel = blockSource.level();
-/*  24 */     Direction direction = (Direction)blockSource.state().getValue((Property)DispenserBlock.FACING);
-/*  25 */     BlockPos pos = blockSource.pos().relative(direction);
-/*  26 */     BlockState state = serverLevel.getBlockState(pos);
-/*  29 */     if (state.getBlock() instanceof SheepFarmBlock) {
-/*  30 */       DyeColor dyeColor = ((DyeItem)item.getItem()).getDyeColor();
-/*  31 */       ((SheepFarmBlock)state.getBlock()).dyeBlock(state, (Level)serverLevel, dyeColor, pos);
-/*  32 */       item.shrink(1);
-     } else {
-/*  34 */       return super.execute(blockSource, item);
-     } 
-/*  37 */     return item;
-   }
-   
-   protected void playSound(BlockSource blockSource) {
-/*  42 */     blockSource.level().levelEvent(1000, blockSource.pos(), 0);
-   }
+
+    @Override
+    public ItemStack execute(BlockSource blockSource, ItemStack item) {
+        if (!(item.getItem() instanceof DyeItem)) {
+            return super.execute(blockSource, item); // Call default behavior for non-dye items
+        }
+
+        ServerLevel serverLevel = blockSource.level();
+        Direction direction = blockSource.state().getValue(DispenserBlock.FACING);
+        BlockPos pos = blockSource.pos().relative(direction);
+        BlockState state = serverLevel.getBlockState(pos);
+
+        // Check if the block at the position is a SheepFarmBlock
+        if (state.getBlock() instanceof SheepFarmBlock) {
+            DyeColor dyeColor = ((DyeItem) item.getItem()).getDyeColor();
+            ((SheepFarmBlock) state.getBlock()).dyeBlock(state, serverLevel, dyeColor, pos);
+            item.shrink(1); // Remove one dye item from the dispenser
+        } else {
+            return super.execute(blockSource, item); // Call default behavior if it's not a SheepFarmBlock
+        }
+
+        return item;
+    }
+
+    @Override
+    protected void playSound(BlockSource blockSource) {
+        blockSource.level().levelEvent(1000, blockSource.pos(), 0); // Sound for item dispense
+    }
 }

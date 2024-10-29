@@ -42,7 +42,7 @@ import java.util.List;
 public class ShulkerFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public ShulkerFarmBlock() {
-        super(Properties.of().mapColor(MapColor.GRASS).strength(2.5F).sound(SoundType.GRASS).noOcclusion()); // Adjusted for shulker farm
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion()); // Adjusted for shulker farm
     }
 
     @Override

@@ -46,7 +46,7 @@ public class ZombieFarmRenderer extends RendererBase<ZombieFarmTileentity> {
             matrixStack.translate(0.5D, 1D / 16D, 0.5D);
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
             matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
+            matrixStack.scale(.05F, .05F, .05F);
             zombieRenderer.render(zombie, 0F, 1F, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }

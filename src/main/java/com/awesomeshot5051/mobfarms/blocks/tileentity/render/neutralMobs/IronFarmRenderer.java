@@ -1,9 +1,9 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs;
 
+import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.IronFarmTileentity;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.IronFarmTileentity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.IronGolemRenderer;
@@ -57,16 +57,16 @@ public class IronFarmRenderer extends RendererBase<IronFarmTileentity> {
 
         Direction direction = Direction.SOUTH;
 
-        if (farm.getVillagerEntity() != null) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(-5D / 16D, 0D, -5D / 16D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(90));
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
-            getVillagerRenderer().render(farm.getVillagerEntity(), 0F, 1F, matrixStack, buffer, combinedLight);
-            matrixStack.popPose();
-        }
+//        if (farm.getVillagerEntity() != null) {
+//            matrixStack.pushPose();
+//            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
+//            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
+//            matrixStack.translate(-5D / 16D, 0D, -5D / 16D);
+//            matrixStack.mulPose(Axis.YP.rotationDegrees(90));
+//            matrixStack.scale(0.3F, 0.3F, 0.3F);
+//            getVillagerRenderer().render(farm.getVillagerEntity(), 0F, 1F, matrixStack, buffer, combinedLight);
+//            matrixStack.popPose();
+//        }
 
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 1D / 16D, 0.5D);

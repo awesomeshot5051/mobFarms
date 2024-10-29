@@ -9,16 +9,18 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.Block;
 
 public abstract class ModContainerBase extends ContainerBase {
-   protected ContainerLevelAccess access;
-   
-   public ModContainerBase(MenuType containerType, int id, Container playerInventory, Container inventory, ContainerLevelAccess access) {
-/*  16 */     super(containerType, id, playerInventory, inventory);
-     this.access = access;
-   }
-   
-   public abstract Block getBlock();
-   
-   public boolean stillValid(Player player) {
-/*  24 */     return (super.stillValid(player) && AbstractContainerMenu.stillValid(this.access, player, getBlock()));
-   }
+
+    protected ContainerLevelAccess access;
+
+    public ModContainerBase(MenuType containerType, int id, Container playerInventory, Container inventory, ContainerLevelAccess access) {
+        super(containerType, id, playerInventory, inventory);
+        this.access = access;
+    }
+
+    public abstract Block getBlock();
+
+    @Override
+    public boolean stillValid(Player player) {
+        return super.stillValid(player) && AbstractContainerMenu.stillValid(access, player, getBlock());
+    }
 }

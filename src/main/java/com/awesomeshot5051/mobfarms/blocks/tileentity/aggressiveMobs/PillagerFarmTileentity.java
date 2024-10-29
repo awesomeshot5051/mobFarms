@@ -1,145 +1,179 @@
-/*    0 */ package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
-/*    0 */ 
-/*    0 */ import com.awesomeshot5051.mobfarms.Main;
-/*    0 */ import com.awesomeshot5051.mobfarms.OutputItemHandler;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.PillagerFarmBlock;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-/*    0 */ import com.awesomeshot5051.mobfarms.items.MobFarmClass;
-/*    0 */ import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-/*    0 */ import de.maxhenkel.corelib.inventory.ItemListInventory;
-/*    0 */ import java.util.ArrayList;
-/*    0 */ import java.util.Collections;
-/*    0 */ import java.util.List;
-/*    0 */ import net.minecraft.core.BlockPos;
-/*    0 */ import net.minecraft.core.HolderLookup;
-/*    0 */ import net.minecraft.core.NonNullList;
-/*    0 */ import net.minecraft.core.registries.Registries;
-/*    0 */ import net.minecraft.nbt.CompoundTag;
-/*    0 */ import net.minecraft.resources.ResourceKey;
-/*    0 */ import net.minecraft.resources.ResourceLocation;
-/*    0 */ import net.minecraft.server.level.ServerLevel;
-/*    0 */ import net.minecraft.util.RandomSource;
-/*    0 */ import net.minecraft.world.Container;
-/*    0 */ import net.minecraft.world.ContainerHelper;
-/*    0 */ import net.minecraft.world.Difficulty;
-/*    0 */ import net.minecraft.world.DifficultyInstance;
-/*    0 */ import net.minecraft.world.entity.EntityType;
-/*    0 */ import net.minecraft.world.entity.EquipmentSlot;
-/*    0 */ import net.minecraft.world.item.ItemStack;
-/*    0 */ import net.minecraft.world.item.Items;
-/*    0 */ import net.minecraft.world.level.ItemLike;
-/*    0 */ import net.minecraft.world.level.Level;
-/*    0 */ import net.minecraft.world.level.ServerLevelAccessor;
-/*    0 */ import net.minecraft.world.level.block.entity.BlockEntityType;
-/*    0 */ import net.minecraft.world.level.block.state.BlockState;
-/*    0 */ import net.minecraft.world.level.storage.loot.LootTable;
-/*    0 */ import net.neoforged.neoforge.items.IItemHandler;
-/*    0 */ import net.neoforged.neoforge.items.ItemStackHandler;
-/*    0 */ 
-/*    0 */ public class PillagerFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-/*   39 */   private static final ResourceKey<LootTable> PILLAGER_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/pillager"));
-/*    0 */   
-/*    0 */   protected NonNullList<ItemStack> inventory;
-/*    0 */   
-/*    0 */   protected long timer;
-/*    0 */   
-/*    0 */   protected ItemStackHandler itemHandler;
-/*    0 */   
-/*    0 */   protected OutputItemHandler outputItemHandler;
-/*    0 */   
-/*    0 */   public PillagerFarmTileentity(BlockPos pos, BlockState state) {
-/*   48 */     super((BlockEntityType)ModTileEntities.PILLAGER_FARM.get(), ((PillagerFarmBlock)ModBlocks.PILLAGER_FARM.get()).defaultBlockState(), pos, state);
-/*   49 */     this.inventory = NonNullList.withSize(4, ItemStack.EMPTY);
-/*   50 */     this.itemHandler = new ItemStackHandler(this.inventory);
-/*   51 */     this.outputItemHandler = new OutputItemHandler(this.inventory);
-/*    0 */   }
-/*    0 */   
-/*    0 */   public static int getPillagerSpawnTime() {
-/*   55 */     return ((Integer)Main.SERVER_CONFIG.pillagerSpawnTime.get()).intValue() - 80;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public static int getPillagerExplodeTime() {
-/*   59 */     return getPillagerSpawnTime() + 80;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public long getTimer() {
-/*   63 */     return this.timer;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public void tick() {
-/*   71 */     this.timer++;
-/*   72 */     setChanged();
-/*   74 */     if (this.timer == getPillagerSpawnTime()) {
-/*   77 */       sync();
-/*   82 */     } else if (this.timer >= getPillagerExplodeTime()) {
-/*   85 */       for (ItemStack drop : getDrops()) {
-/*   86 */         for (int i = 0; i < this.itemHandler.getSlots(); i++) {
-/*   87 */           drop = this.itemHandler.insertItem(i, drop, false);
-/*   88 */           if (drop.isEmpty())
-/*    0 */             break; 
-/*    0 */         } 
-/*    0 */       } 
-/*   94 */       this.timer = 0L;
-/*   95 */       sync();
-/*    0 */     } 
-/*    0 */   }
-/*    0 */   
-/*    0 */   private List<ItemStack> getDrops() {
-/*    0 */     ServerLevel serverWorld;
-/*  100 */     Level level = this.level;
-/*  100 */     if (level instanceof ServerLevel) {
-/*  100 */       serverWorld = (ServerLevel)level;
-/*    0 */     } else {
-/*  101 */       return Collections.emptyList();
-/*    0 */     } 
-/*  104 */     List<ItemStack> drops = new ArrayList<>();
-/*  107 */     int emeraldCount = 0;
-/*  108 */     if (serverWorld.getDifficulty() == Difficulty.EASY) {
-/*  109 */       emeraldCount = serverWorld.random.nextInt(2);
-/*  110 */     } else if (serverWorld.getDifficulty() == Difficulty.NORMAL) {
-/*  111 */       emeraldCount = serverWorld.random.nextInt(3);
-/*  112 */     } else if (serverWorld.getDifficulty() == Difficulty.HARD) {
-/*  113 */       emeraldCount = serverWorld.random.nextInt(6);
-/*    0 */     } 
-/*  117 */     if (emeraldCount > 0)
-/*  118 */       drops.add(new ItemStack((ItemLike)Items.EMERALD, emeraldCount)); 
-/*  122 */     if (serverWorld.random.nextFloat() < 0.12F) {
-/*  123 */       ItemStack crossbow = new ItemStack((ItemLike)Items.CROSSBOW);
-/*  126 */       MobFarmClass mobFarmClass = new MobFarmClass(EntityType.PILLAGER, (Level)serverWorld);
-/*  127 */       RandomSource random = RandomSource.create();
-/*  134 */       DifficultyInstance difficultyInstance = new DifficultyInstance(serverWorld.getDifficulty(), serverWorld.getDayTime(), 0L, serverWorld.getMoonBrightness());
-/*  138 */       mobFarmClass.enchantSpawnedEquipment((ServerLevelAccessor)serverWorld, EquipmentSlot.MAINHAND, random, 1.0F, difficultyInstance, this, 0);
-/*  141 */       drops.add(crossbow);
-/*    0 */     } 
-/*  146 */     return drops;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public Container getOutputInventory() {
-/*  151 */     return (Container)new ItemListInventory(this.inventory, this::setChanged);
-/*    0 */   }
-/*    0 */   
-/*    0 */   protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-/*  155 */     super.saveAdditional(compound, provider);
-/*  157 */     ContainerHelper.saveAllItems(compound, this.inventory, false, provider);
-/*  158 */     compound.putLong("Timer", this.timer);
-/*    0 */   }
-/*    0 */   
-/*    0 */   protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-/*  163 */     ContainerHelper.loadAllItems(compound, this.inventory, provider);
-/*  164 */     this.timer = compound.getLong("Timer");
-/*  165 */     super.loadAdditional(compound, provider);
-/*    0 */   }
-/*    0 */   
-/*    0 */   public IItemHandler getItemHandler() {
-/*  169 */     return (IItemHandler)this.outputItemHandler;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public void setItem(int slot, ItemStack itemStack) {
-/*  174 */     if (slot >= 0 && slot < this.inventory.size()) {
-/*  175 */       this.inventory.set(slot, itemStack);
-/*  176 */       setChanged();
-/*    0 */     } 
-/*    0 */   }
-/*    0 */ }
+package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
+
+import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.OutputItemHandler;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
+import com.awesomeshot5051.mobfarms.items.MobFarmClass;
+import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
+import de.maxhenkel.corelib.inventory.ItemListInventory;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class PillagerFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
+
+    private static final ResourceKey<LootTable> PILLAGER_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/pillager"));
+
+    protected NonNullList<ItemStack> inventory;
+    protected long timer;
+
+    protected ItemStackHandler itemHandler;
+    protected OutputItemHandler outputItemHandler;
+
+    public PillagerFarmTileentity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.PILLAGER_FARM.get(), ModBlocks.PILLAGER_FARM.get().defaultBlockState(), pos, state);
+        inventory = NonNullList.withSize(4, ItemStack.EMPTY);
+        itemHandler = new ItemStackHandler(inventory);
+        outputItemHandler = new OutputItemHandler(inventory);
+    }
+
+    public static int getPillagerSpawnTime() {
+        return Main.SERVER_CONFIG.pillagerSpawnTime.get() - 20 * 4;
+    }
+
+    public static int getPillagerExplodeTime() {
+        return getPillagerSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    }
+
+    public long getTimer() {
+        return timer;
+    }
+
+    @Override
+    public void tick() {
+        // No villager entity is needed
+//        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.PILLAGER_PRIMED);
+
+        timer++;
+        setChanged();
+
+        if (timer == getPillagerSpawnTime()) {
+//            // Play pillager spawn sound
+//            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.PILLAGER_PRIMED);
+            sync();
+//        } else if (timer > getPillagerSpawnTime() && timer < getPillagerExplodeTime()) {
+//            if (timer % 20L == 0L) {
+//                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.PILLAGER_HURT);
+//            }
+        } else if (timer >= getPillagerExplodeTime()) {
+            // Play pillager death/explosion sound
+//            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.PILLAGER_DEATH);
+            for (ItemStack drop : getDrops()) {
+                for (int i = 0; i < itemHandler.getSlots(); i++) {
+                    drop = itemHandler.insertItem(i, drop, false);
+                    if (drop.isEmpty()) {
+                        break;
+                    }
+                }
+            }
+
+            timer = 0L;
+            sync();
+        }
+    }
+
+    private List<ItemStack> getDrops() {
+        if (!(level instanceof ServerLevel serverWorld)) {
+            return Collections.emptyList();
+        }
+
+        List<ItemStack> drops = new ArrayList<>();
+
+        // Add emeralds with a chance based on difficulty
+        int emeraldCount = 0;
+        if (serverWorld.getDifficulty() == Difficulty.EASY) {
+            emeraldCount = serverWorld.random.nextInt(2); // 0-1 emeralds
+        } else if (serverWorld.getDifficulty() == Difficulty.NORMAL) {
+            emeraldCount = serverWorld.random.nextInt(3); // 0-2 emeralds
+        } else if (serverWorld.getDifficulty() == Difficulty.HARD) {
+            emeraldCount = serverWorld.random.nextInt(6); // 0-5 emeralds
+        }
+
+        // Add emeralds to drops
+        if (emeraldCount > 0) {
+            drops.add(new ItemStack(Items.EMERALD, emeraldCount));
+        }
+
+        // Add a crossbow with a chance to be enchanted
+        if (serverWorld.random.nextFloat() < 0.12F) { // 12% chance
+            ItemStack crossbow = new ItemStack(Items.CROSSBOW);
+
+            // Create a new instance of MobFarmClass for enchanting
+            MobFarmClass mobFarmClass = new MobFarmClass(EntityType.PILLAGER, serverWorld);
+            RandomSource random = RandomSource.create();
+
+            // Get a specific difficulty instance
+            DifficultyInstance difficultyInstance = new DifficultyInstance(
+                    serverWorld.getDifficulty(),
+                    serverWorld.getDayTime(),
+                    0L,
+                    serverWorld.getMoonBrightness()
+            );
+
+            // Enchant the crossbow
+            mobFarmClass.enchantSpawnedEquipment(serverWorld, EquipmentSlot.MAINHAND, random, 1.0F, difficultyInstance, this, 0);
+
+            // After enchanting, add the crossbow to the drops
+            drops.add(crossbow);
+        }
+
+        // Add other drops like the ominous banner or Bad Omen effect if necessary...
+
+        return drops;
+    }
+
+
+    public Container getOutputInventory() {
+        return new ItemListInventory(inventory, this::setChanged);
+    }
+    @Override
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
+        super.saveAdditional(compound, provider);
+
+        ContainerHelper.saveAllItems(compound, inventory, false, provider);
+        compound.putLong("Timer", timer);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
+        ContainerHelper.loadAllItems(compound, inventory, provider);
+        timer = compound.getLong("Timer");
+        super.loadAdditional(compound, provider);
+    }
+
+    public IItemHandler getItemHandler() {
+        return outputItemHandler;
+    }
+
+    // Add the setItem method
+    public void setItem(int slot, ItemStack itemStack) {
+        if (slot >= 0 && slot < inventory.size()) {
+            inventory.set(slot, itemStack);
+            setChanged(); // Notify that the inventory has changed
+        }
+    }
+}

@@ -42,7 +42,7 @@ import java.util.List;
 public class SkeletonFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public SkeletonFarmBlock() {
-        super(Properties.of().mapColor(MapColor.GRASS).strength(2.5F).sound(SoundType.GRASS).noOcclusion()); // Adjusted for skeleton farm
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion()); // Adjusted for skeleton farm
     }
 
     @Override

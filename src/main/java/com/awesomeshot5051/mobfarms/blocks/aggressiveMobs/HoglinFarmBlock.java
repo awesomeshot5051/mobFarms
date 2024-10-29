@@ -42,7 +42,7 @@ import java.util.List;
 public class HoglinFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public HoglinFarmBlock() {
-        super(Properties.of().mapColor(MapColor.GRASS).strength(2.5F).sound(SoundType.GRASS).noOcclusion()); // Adjusted for hoglin farm
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion()); // Adjusted for hoglin farm
     }
 
     @Override

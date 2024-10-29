@@ -42,7 +42,7 @@ import java.util.List;
 public class IllusionerFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public IllusionerFarmBlock() {
-        super(Properties.of().mapColor(MapColor.GRASS).strength(2.5F).sound(SoundType.GRASS).noOcclusion()); // Adjusted for illusioner farm
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion()); // Adjusted for illusioner farm
     }
 
     @Override

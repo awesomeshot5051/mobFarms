@@ -9,27 +9,35 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 
 public abstract class InputOutputContainer extends ModContainerBase {
-   public InputOutputContainer(MenuType type, int id, Inventory playerInventory, Container inputInventory, Container outputInventory, ContainerLevelAccess access) {
-/*  14 */     super(type, id, (Container)playerInventory, (Container)null, access);
-     int i;
-/*  16 */     for (i = 0; i < 4; i++)
-       addSlot(getInputSlot(inputInventory, i, 52 + i * 18, 20)); 
-/*  20 */     for (i = 0; i < 4; i++)
-/*  21 */       addSlot((Slot)new LockedSlot(outputInventory, i, 52 + i * 18, 51, true, false)); 
-/*  24 */     addPlayerInventorySlots();
-   }
-   
-   public InputOutputContainer(MenuType type, int id, Inventory playerInventory) {
-/*  28 */     this(type, id, playerInventory, (Container)new SimpleContainer(4), (Container)new SimpleContainer(4), ContainerLevelAccess.NULL);
-   }
-   
-   public int getInvOffset() {
-/*  33 */     return -2;
-   }
-   
-   public int getInventorySize() {
-/*  38 */     return 8;
-   }
-   
-   public abstract Slot getInputSlot(Container paramContainer, int paramInt1, int paramInt2, int paramInt3);
+
+    public InputOutputContainer(MenuType type, int id, Inventory playerInventory, Container inputInventory, Container outputInventory, ContainerLevelAccess access) {
+        super(type, id, playerInventory, null, access);
+
+        for (int i = 0; i < 4; i++) {
+            addSlot(getInputSlot(inputInventory, i, 52 + i * 18, 20));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            addSlot(new LockedSlot(outputInventory, i, 52 + i * 18, 51, true, false));
+        }
+
+        addPlayerInventorySlots();
+    }
+
+    public InputOutputContainer(MenuType type, int id, Inventory playerInventory) {
+        this(type, id, playerInventory, new SimpleContainer(4), new SimpleContainer(4), ContainerLevelAccess.NULL);
+    }
+
+    @Override
+    public int getInvOffset() {
+        return -2;
+    }
+
+    @Override
+    public int getInventorySize() {
+        return 8;
+    }
+
+    public abstract Slot getInputSlot(Container inventory, int id, int x, int y);
+
 }

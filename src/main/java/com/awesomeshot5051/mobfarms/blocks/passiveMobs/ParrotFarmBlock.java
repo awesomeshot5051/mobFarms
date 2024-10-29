@@ -42,7 +42,7 @@ import java.util.List;
 public class ParrotFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     public ParrotFarmBlock() {
-        super(Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD).noOcclusion());
+        super(Properties.of().mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion());
     }
 
     @Override

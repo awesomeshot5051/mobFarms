@@ -1,118 +1,137 @@
-/*    0 */ package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
-/*    0 */ 
-/*    0 */ import com.awesomeshot5051.mobfarms.Main;
-/*    0 */ import com.awesomeshot5051.mobfarms.OutputItemHandler;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.GuardianFarmBlock;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-/*    0 */ import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-/*    0 */ import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-/*    0 */ import de.maxhenkel.corelib.inventory.ItemListInventory;
-/*    0 */ import java.util.Collections;
-/*    0 */ import java.util.List;
-/*    0 */ import net.minecraft.core.BlockPos;
-/*    0 */ import net.minecraft.core.HolderLookup;
-/*    0 */ import net.minecraft.core.NonNullList;
-/*    0 */ import net.minecraft.core.registries.Registries;
-/*    0 */ import net.minecraft.nbt.CompoundTag;
-/*    0 */ import net.minecraft.resources.ResourceKey;
-/*    0 */ import net.minecraft.resources.ResourceLocation;
-/*    0 */ import net.minecraft.server.level.ServerLevel;
-/*    0 */ import net.minecraft.world.Container;
-/*    0 */ import net.minecraft.world.ContainerHelper;
-/*    0 */ import net.minecraft.world.entity.EntityType;
-/*    0 */ import net.minecraft.world.entity.monster.Guardian;
-/*    0 */ import net.minecraft.world.item.ItemStack;
-/*    0 */ import net.minecraft.world.level.Level;
-/*    0 */ import net.minecraft.world.level.block.entity.BlockEntityType;
-/*    0 */ import net.minecraft.world.level.block.state.BlockState;
-/*    0 */ import net.minecraft.world.level.storage.loot.LootParams;
-/*    0 */ import net.minecraft.world.level.storage.loot.LootTable;
-/*    0 */ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-/*    0 */ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-/*    0 */ import net.minecraft.world.phys.Vec3;
-/*    0 */ import net.neoforged.neoforge.items.IItemHandler;
-/*    0 */ import net.neoforged.neoforge.items.ItemStackHandler;
-/*    0 */ 
-/*    0 */ public class GuardianFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-/*   37 */   private static final ResourceKey<LootTable> GUARDIAN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/guardian"));
-/*    0 */   
-/*    0 */   protected NonNullList<ItemStack> inventory;
-/*    0 */   
-/*    0 */   protected long timer;
-/*    0 */   
-/*    0 */   protected ItemStackHandler itemHandler;
-/*    0 */   
-/*    0 */   protected OutputItemHandler outputItemHandler;
-/*    0 */   
-/*    0 */   public GuardianFarmTileentity(BlockPos pos, BlockState state) {
-/*   46 */     super((BlockEntityType)ModTileEntities.GUARDIAN_FARM.get(), ((GuardianFarmBlock)ModBlocks.GUARDIAN_FARM.get()).defaultBlockState(), pos, state);
-/*   47 */     this.inventory = NonNullList.withSize(4, ItemStack.EMPTY);
-/*   48 */     this.itemHandler = new ItemStackHandler(this.inventory);
-/*   49 */     this.outputItemHandler = new OutputItemHandler(this.inventory);
-/*    0 */   }
-/*    0 */   
-/*    0 */   public static int getGuardianSpawnTime() {
-/*   53 */     return ((Integer)Main.SERVER_CONFIG.guardianSpawnTime.get()).intValue() - 80;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public static int getGuardianExplodeTime() {
-/*   57 */     return getGuardianSpawnTime() + 80;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public long getTimer() {
-/*   61 */     return this.timer;
-/*    0 */   }
-/*    0 */   
-/*    0 */   public void tick() {
-/*   69 */     this.timer++;
-/*   70 */     setChanged();
-/*   72 */     if (this.timer == getGuardianSpawnTime()) {
-/*   75 */       sync();
-/*   80 */     } else if (this.timer >= getGuardianExplodeTime()) {
-/*   83 */       for (ItemStack drop : getDrops()) {
-/*   84 */         for (int i = 0; i < this.itemHandler.getSlots(); i++) {
-/*   85 */           drop = this.itemHandler.insertItem(i, drop, false);
-/*   86 */           if (drop.isEmpty())
-/*    0 */             break; 
-/*    0 */         } 
-/*    0 */       } 
-/*   92 */       this.timer = 0L;
-/*   93 */       sync();
-/*    0 */     } 
-/*    0 */   }
-/*    0 */   
-/*    0 */   private List<ItemStack> getDrops() {
-/*    0 */     ServerLevel serverWorld;
-/*   98 */     Level level = this.level;
-/*   98 */     if (level instanceof ServerLevel) {
-/*   98 */       serverWorld = (ServerLevel)level;
-/*    0 */     } else {
-/*   99 */       return Collections.emptyList();
-/*    0 */     } 
-/*  105 */     LootParams.Builder builder = (new LootParams.Builder(serverWorld)).withParameter(LootContextParams.THIS_ENTITY, new Guardian(EntityType.GUARDIAN, this.level)).withParameter(LootContextParams.ORIGIN, new Vec3(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ())).withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().explosion(null));
-/*  107 */     LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
-/*  109 */     LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(GUARDIAN_LOOT_TABLE);
-/*  111 */     return (List<ItemStack>)lootTable.getRandomItems(lootContext);
-/*    0 */   }
-/*    0 */   
-/*    0 */   public Container getOutputInventory() {
-/*  115 */     return (Container)new ItemListInventory(this.inventory, this::setChanged);
-/*    0 */   }
-/*    0 */   
-/*    0 */   protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-/*  120 */     super.saveAdditional(compound, provider);
-/*  122 */     ContainerHelper.saveAllItems(compound, this.inventory, false, provider);
-/*  123 */     compound.putLong("Timer", this.timer);
-/*    0 */   }
-/*    0 */   
-/*    0 */   protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-/*  128 */     ContainerHelper.loadAllItems(compound, this.inventory, provider);
-/*  129 */     this.timer = compound.getLong("Timer");
-/*  130 */     super.loadAdditional(compound, provider);
-/*    0 */   }
-/*    0 */   
-/*    0 */   public IItemHandler getItemHandler() {
-/*  134 */     return (IItemHandler)this.outputItemHandler;
-/*    0 */   }
-/*    0 */ }
+package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
+
+import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.OutputItemHandler;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
+import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
+import de.maxhenkel.corelib.inventory.ItemListInventory;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Guardian;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.Collections;
+import java.util.List;
+
+public class GuardianFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
+
+    private static final ResourceKey<LootTable> GUARDIAN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/guardian"));
+
+    protected NonNullList<ItemStack> inventory;
+    protected long timer;
+
+    protected ItemStackHandler itemHandler;
+    protected OutputItemHandler outputItemHandler;
+
+    public GuardianFarmTileentity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.GUARDIAN_FARM.get(), ModBlocks.GUARDIAN_FARM.get().defaultBlockState(), pos, state);
+        inventory = NonNullList.withSize(4, ItemStack.EMPTY);
+        itemHandler = new ItemStackHandler(inventory);
+        outputItemHandler = new OutputItemHandler(inventory);
+    }
+
+    public static int getGuardianSpawnTime() {
+        return Main.SERVER_CONFIG.guardianSpawnTime.get() - 20 * 4;
+    }
+
+    public static int getGuardianExplodeTime() {
+        return getGuardianSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    }
+
+    public long getTimer() {
+        return timer;
+    }
+
+    @Override
+    public void tick() {
+        // No villager entity is needed
+//        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.GUARDIAN_PRIMED);
+
+        timer++;
+        setChanged();
+
+        if (timer == getGuardianSpawnTime()) {
+//            // Play guardian spawn sound
+//            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.GUARDIAN_PRIMED);
+            sync();
+//        } else if (timer > getGuardianSpawnTime() && timer < getGuardianExplodeTime()) {
+//            if (timer % 20L == 0L) {
+//                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.GUARDIAN_HURT);
+//            }
+        } else if (timer >= getGuardianExplodeTime()) {
+            // Play guardian death/explosion sound
+//            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.GUARDIAN_DEATH);
+            for (ItemStack drop : getDrops()) {
+                for (int i = 0; i < itemHandler.getSlots(); i++) {
+                    drop = itemHandler.insertItem(i, drop, false);
+                    if (drop.isEmpty()) {
+                        break;
+                    }
+                }
+            }
+
+            timer = 0L;
+            sync();
+        }
+    }
+
+    private List<ItemStack> getDrops() {
+        if (!(level instanceof ServerLevel serverWorld)) {
+            return Collections.emptyList();
+        }
+
+        LootParams.Builder builder = new LootParams.Builder(serverWorld)
+                .withParameter(LootContextParams.THIS_ENTITY, new Guardian(EntityType.GUARDIAN, level))
+                .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
+                .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().explosion(null));
+
+        LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
+
+        LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(GUARDIAN_LOOT_TABLE);
+
+        return lootTable.getRandomItems(lootContext);
+    }
+
+    public Container getOutputInventory() {
+        return new ItemListInventory(inventory, this::setChanged);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
+        super.saveAdditional(compound, provider);
+
+        ContainerHelper.saveAllItems(compound, inventory, false, provider);
+        compound.putLong("Timer", timer);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
+        ContainerHelper.loadAllItems(compound, inventory, provider);
+        timer = compound.getLong("Timer");
+        super.loadAdditional(compound, provider);
+    }
+
+    public IItemHandler getItemHandler() {
+        return outputItemHandler;
+    }
+
+}
