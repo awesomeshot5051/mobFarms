@@ -54,6 +54,10 @@ public class ModBlocks {
     public static final DeferredHolder<Block, GuardianFarmBlock> GUARDIAN_FARM = BLOCK_REGISTER.registerBlock("guardian_farm", GuardianFarmBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredHolder<Block, HoglinFarmBlock> HOGLIN_FARM = BLOCK_REGISTER.registerBlock("hoglin_farm", HoglinFarmBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredHolder<Block, IllusionerFarmBlock> ILLUSIONER_FARM = BLOCK_REGISTER.registerBlock("illusioner_farm", IllusionerFarmBlock::new, BlockBehaviour.Properties.of());
+
+
+
+
     public static final DeferredHolder<Block, MagmaCubeFarmBlock> MAGMA_CUBE_FARM = BLOCK_REGISTER.registerBlock("magma_cube_farm", MagmaCubeFarmBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredHolder<Block, PhantomFarmBlock> PHANTOM_FARM = BLOCK_REGISTER.registerBlock("phantom_farm", PhantomFarmBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredHolder<Block, PillagerFarmBlock> PILLAGER_FARM = BLOCK_REGISTER.registerBlock("pillager_farm", PillagerFarmBlock::new, BlockBehaviour.Properties.of());
