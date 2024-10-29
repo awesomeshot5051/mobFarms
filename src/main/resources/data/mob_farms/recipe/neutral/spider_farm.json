@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "SEN"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "E": {
+      "item": "minecraft:stone"
+    },
+    "N": {
+      "item": "minecraft:spider_eye"
+    }
+  },
+  "result": {
+    "id": "mob_farms:spider_farm",
+    "count": 1
+  }
+}

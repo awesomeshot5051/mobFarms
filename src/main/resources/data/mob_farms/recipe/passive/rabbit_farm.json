@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "RSO"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "R": {
+      "item": "minecraft:rabbit_hide"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "O": {
+      "item": "minecraft:rabbit_foot"
+    }
+  },
+  "result": {
+    "id": "mob_farms:rabbit_farm",
+    "count": 1
+  }
+}

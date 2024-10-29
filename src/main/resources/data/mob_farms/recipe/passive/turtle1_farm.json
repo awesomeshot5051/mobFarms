@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "TSU"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "T": {
+      "item": "minecraft:turtle_scute"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "U": {
+      "item": "minecraft:seagrass"
+    }
+  },
+  "result": {
+    "id": "mob_farms:turtle_farm",
+    "count": 1
+  }
+}

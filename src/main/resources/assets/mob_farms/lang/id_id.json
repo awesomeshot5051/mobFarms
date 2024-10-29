@@ -1,0 +1,20 @@
+{
+  "item.mob_farms.villager": "Penduduk",
+  "item.mob_farms.baby_villager": "Bayi Penduduk",
+  "block.mob_farms.trader": "Pedagang",
+  "block.mob_farms.farmer": "Pertani",
+  "block.mob_farms.breeder": "Pengembang Biak",
+  "block.mob_farms.converter": "Konverter",
+  "block.mob_farms.iron_farm": "Pertanian Besi",
+  "gui.mob_farms.food_items": "Food Items",
+  "gui.mob_farms.output_items": "Output",
+  "gui.mob_farms.input_villagers": "Masukkan Penduduk",
+  "gui.mob_farms.output_villagers": "Keluaran Penduduk",
+  "gui.mob_farms.output": "Keluaran Item",
+  "itemGroup.mob_farms": "Penduduk Dimudahkan",
+  "tooltip.mob_farms.villager_profession": "%s (%s)",
+  "tooltip.mob_farms.zombie_villager_profession": "%s (%s)",
+  "jei.mob_farms.breeding": "Pembiakan",
+  "jei.mob_farms.converting": "Mengkonversi",
+  "category.mob_farms": "Penduduk Dimudahkan"
+}
