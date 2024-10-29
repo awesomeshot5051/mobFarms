@@ -1,5 +1,5 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs;
-
+//TODO make it so that whether the meat is cooked is modifiable in-game.
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.OutputItemHandler;
 import com.awesomeshot5051.mobfarms.ServerConfig;
