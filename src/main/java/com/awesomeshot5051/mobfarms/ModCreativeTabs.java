@@ -50,6 +50,7 @@ public class ModCreativeTabs {
 
                     //aggressive mobs
                     output.accept(new ItemStack(ModBlocks.BLAZE_FARM.get()));
+                    output.accept(new ItemStack(ModBlocks.CREAKING_FARM.get()));
                     output.accept(new ItemStack(ModBlocks.CREEPER_FARM.get()));
                     output.accept(new ItemStack(ModBlocks.DROWNED_FARM.get()));
                     output.accept(new ItemStack(ModBlocks.ELDER_GUARDIAN_FARM.get()));

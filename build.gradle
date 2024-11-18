@@ -109,6 +109,7 @@ dependencies {
     compileOnly "maven.modrinth:jei:${jei_version}"
     compileOnly "maven.modrinth:the-one-probe:${top_version}"
     compileOnly "maven.modrinth:jade:${jade_version}"
+    implementation "curse.maven:jade-324717:${jade_id}"
     jarJar(implementation("de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}")) {
 //    jarJar(implementation("de.maxhenkel.corelib:corelib:1.21.1-${corelib_version}")) {
 //        version {
@@ -118,9 +119,6 @@ dependencies {
 //            strictly "[${corelib_version}]"
 //            prefer "${corelib_version}" // The version actually used in your dev workspace
 //        }
-//    implementation "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}"
-//        compileOnly "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}:javadoc"
-//    implementation 'net.neoforged:JarJarSelector:0.4.2'
         compileOnly "de.maxhenkel.corelib:corelib:1.21.1-${corelib_version}:javadoc"
     }
 }

@@ -44,6 +44,7 @@ public class ModItems {
     public static final DeferredHolder<Item, BlockItem> ZOMBIFIED_PIGLIN_FARM = ITEM_REGISTER.registerSimpleBlockItem(ModBlocks.ZOMBIFIED_PIGLIN_FARM);
     //aggressive mobs
     public static final DeferredHolder<Item, BlockItem> BLAZE_FARM = ITEM_REGISTER.registerSimpleBlockItem(ModBlocks.BLAZE_FARM);
+    public static final DeferredHolder<Item, BlockItem> CREAKING_FARM = ITEM_REGISTER.registerSimpleBlockItem(ModBlocks.CREAKING_FARM);
     public static final DeferredHolder<Item, BlockItem> CREEPER_FARM = ITEM_REGISTER.registerSimpleBlockItem(ModBlocks.CREEPER_FARM);
     public static final DeferredHolder<Item, BlockItem> DROWNED_FARM = ITEM_REGISTER.registerSimpleBlockItem(ModBlocks.DROWNED_FARM);
     public static final DeferredHolder<Item, BlockItem> ELDER_GUARDIAN_FARM = ITEM_REGISTER.registerSimpleBlockItem(ModBlocks.ELDER_GUARDIAN_FARM);

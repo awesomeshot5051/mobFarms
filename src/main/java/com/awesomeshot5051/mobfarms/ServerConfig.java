@@ -34,6 +34,7 @@ public class ServerConfig extends ConfigBase {
 
     //aggressive mobs
     public final ModConfigSpec.IntValue blazeSpawnTime;
+    public final ModConfigSpec.IntValue creakingSpawnTime;
     public final ModConfigSpec.IntValue creeperSpawnTime;
     public final ModConfigSpec.IntValue drownedSpawnTime;
     public final ModConfigSpec.IntValue elderGuardianSpawnTime;
@@ -146,6 +147,9 @@ public class ServerConfig extends ConfigBase {
                 .comment("The time in ticks the blaze farm takes to spawn a blaze")
                 .defineInRange("blaze_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
 
+        creakingSpawnTime = builder
+                .comment("The time in ticks the creaking farm takes to spawn a creaking")
+                .defineInRange("creaking_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
         creeperSpawnTime = builder
                 .comment("The time in ticks the creeper farm takes to spawn a creeper")
                 .defineInRange("creeper_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);

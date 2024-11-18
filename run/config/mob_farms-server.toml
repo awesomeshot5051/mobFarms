@@ -278,3 +278,9 @@
 	#If the villager reputation should be the same for every player
 	#This affects the prices of cured/converted villagers and the prices of the auto trader
 	universal_reputation = true
+
+[creaking_farm]
+	#The time in ticks the creaking farm takes to spawn a creaking
+	# Default: 60
+	# Range: 60 ~ 60
+	spawn_time = 60

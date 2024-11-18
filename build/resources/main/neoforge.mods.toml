@@ -1,13 +1,13 @@
 modLoader = "javafml"
 loaderVersion = "*"
-license = "All rights reserved"
+license = "MIT"
 #issueTrackerURL = "https://github.com/henkelmax/easy-villagers/issues"
 [[mods]]
 modId = "mob_farms"
-#version = "1.21.2-1.0.0"
+#version = "1.21.3-1.2.0"
 displayName = "Mob Farms"
-#updateJSONURL = "https://update.maxhenkel.de/neoforge/mob_farms"
-#displayURL = "https://www.curseforge.com/minecraft/mc-mods/easy-villagers"
+updateJSONURL = "https://awesomeshot5051.github.io/Mod-Website/"
+displayURL = "https://awesomeshot5051.github.io/Mod-Website/"
 logoFile = "../assets/mob_farms/textures/gui/icons/icon.png"
 authors = "awesomeshot5051"
 description = '''Mod Farms'''

@@ -130,6 +130,7 @@ public void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
 
 // Aggressive mobs
     event.registerItem(new CustomRenderItemExtension(new BlazeFarmItemRenderer()), ModItems.BLAZE_FARM);
+    event.registerItem(new CustomRenderItemExtension(new CreakingFarmItemRenderer()), ModItems.CREAKING_FARM);
     event.registerItem(new CustomRenderItemExtension(new CreeperFarmItemRenderer()), ModItems.CREEPER_FARM);
     event.registerItem(new CustomRenderItemExtension(new DrownedFarmItemRenderer()), ModItems.DROWNED_FARM);
     event.registerItem(new CustomRenderItemExtension(new ElderGuardianFarmItemRenderer()), ModItems.ELDER_GUARDIAN_FARM);

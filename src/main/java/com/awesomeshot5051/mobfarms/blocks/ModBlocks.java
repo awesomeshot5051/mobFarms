@@ -46,6 +46,7 @@ public class ModBlocks {
 
     // Aggressive Mobs
     public static final DeferredHolder<Block, BlazeFarmBlock> BLAZE_FARM = BLOCK_REGISTER.registerBlock("blaze_farm", BlazeFarmBlock::new, BlockBehaviour.Properties.of());
+    public static final DeferredHolder<Block, CreakingFarmBlock> CREAKING_FARM = BLOCK_REGISTER.registerBlock("creaking_farm", CreakingFarmBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredHolder<Block, CreeperFarmBlock> CREEPER_FARM = BLOCK_REGISTER.registerBlock("creeper_farm", CreeperFarmBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredHolder<Block, DrownedFarmBlock> DROWNED_FARM = BLOCK_REGISTER.registerBlock("drowned_farm", DrownedFarmBlock::new, BlockBehaviour.Properties.of());
     public static final DeferredHolder<Block, ElderGuardianFarmBlock> ELDER_GUARDIAN_FARM = BLOCK_REGISTER.registerBlock("elder_guardian_farm", ElderGuardianFarmBlock::new, BlockBehaviour.Properties.of());

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "/S/"
+  ],
+  "key": {
+    "#": "minecraft:glass_pane",
+    "L": "minecraft:lava_bucket",
+    "S": "minecraft:stone",
+    "/": "minecraft:creaking_heart"
+  },
+  "result": {
+    "id": "mob_farms:creaking_farm",
+    "count": 1
+  }
+}

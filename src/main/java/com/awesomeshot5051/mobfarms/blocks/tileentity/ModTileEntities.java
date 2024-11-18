@@ -168,6 +168,7 @@ public class ModTileEntities {
 //
 //        //aggressive mobs
         BlockEntityRenderers.register(ModTileEntities.BLAZE_FARM.get(), BlazeFarmRenderer::new);
+        BlockEntityRenderers.register(ModTileEntities.CREAKING_FARM.get(), CreakingFarmRenderer::new);
         BlockEntityRenderers.register(ModTileEntities.CREEPER_FARM.get(), CreeperFarmRenderer::new);
         BlockEntityRenderers.register(ModTileEntities.DROWNED_FARM.get(), DrownedFarmRenderer::new);
         BlockEntityRenderers.register(ModTileEntities.ELDER_GUARDIAN_FARM.get(), ElderGuardianFarmRenderer::new);
@@ -224,6 +225,7 @@ public class ModTileEntities {
 //
 //        //aggressive mobs
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BLAZE_FARM.get(), (object, context) -> object.getItemHandler());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CREAKING_FARM.get(), (object, context) -> object.getItemHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CREEPER_FARM.get(), (object, context) -> object.getItemHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, DROWNED_FARM.get(), (object, context) -> object.getItemHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ELDER_GUARDIAN_FARM.get(), (object, context) -> object.getItemHandler());
@@ -252,6 +254,10 @@ public class ModTileEntities {
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlazeFarmTileentity>> BLAZE_FARM = BLOCK_ENTITY_REGISTER.register("blaze_farm", () ->
             new BlockEntityType<>(BlazeFarmTileentity::new, ModBlocks.BLAZE_FARM.get())
+    );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreakingFarmTileentity>> CREAKING_FARM = BLOCK_ENTITY_REGISTER.register("creaking_farm", () ->
+            new BlockEntityType<>(CreakingFarmTileentity::new, ModBlocks.CREAKING_FARM.get())
     );
     //
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreeperFarmTileentity>> CREEPER_FARM = BLOCK_ENTITY_REGISTER.register("creeper_farm", () ->
