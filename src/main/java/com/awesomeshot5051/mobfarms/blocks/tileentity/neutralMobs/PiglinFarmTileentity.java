@@ -20,6 +20,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -65,7 +66,9 @@ public class PiglinFarmTileentity extends VillagerTileentity implements ITickabl
     public void tick() {
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.CREEPER_PRIMED);
-
+        if (!level.dimension().equals(Level.NETHER)) {
+            return; // Do nothing if not in the Nether
+        }
         timer++;
         setChanged();
 

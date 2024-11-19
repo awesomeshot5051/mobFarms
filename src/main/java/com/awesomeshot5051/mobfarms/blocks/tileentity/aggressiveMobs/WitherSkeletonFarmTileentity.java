@@ -22,6 +22,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.WitherSkeleton;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -67,7 +68,9 @@ public class WitherSkeletonFarmTileentity extends VillagerTileentity implements 
     public void tick() {
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.WITHERSKELETON_PRIMED);
-
+        if (!level.dimension().equals(Level.NETHER)) {
+            return; // Do nothing if not in the Nether
+        }
         timer++;
         setChanged();
 

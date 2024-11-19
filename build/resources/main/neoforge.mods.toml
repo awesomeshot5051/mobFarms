@@ -4,7 +4,7 @@ license = "All rights reserved"
 #issueTrackerURL = "https://github.com/henkelmax/easy-villagers/issues"
 [[mods]]
 modId = "mob_farms"
-#version = "1.21.2-1.0.0"
+#version = "1.21.3-1.0.1"
 displayName = "Mob Farms"
 #updateJSONURL = "https://update.maxhenkel.de/neoforge/mob_farms"
 #displayURL = "https://www.curseforge.com/minecraft/mc-mods/easy-villagers"
@@ -20,7 +20,7 @@ side = "BOTH"
 [[dependencies.mob_farms]]
 modId = "minecraft"
 type = "required"
-versionRange = "1.21.2"
+versionRange = "1.21.3"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.mob_farms]]

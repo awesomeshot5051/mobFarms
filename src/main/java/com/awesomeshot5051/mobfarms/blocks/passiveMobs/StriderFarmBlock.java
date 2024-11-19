@@ -6,6 +6,8 @@ import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.StriderFarmTil
 import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
 import com.awesomeshot5051.mobfarms.gui.OutputContainer;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -44,6 +46,17 @@ public class StriderFarmBlock extends BlockBase implements EntityBlock {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         StriderFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new StriderFarmTileentity(BlockPos.ZERO, ModBlocks.STRIDER_FARM.get().defaultBlockState()));
+        if (Screen.hasShiftDown()) {
+            components.add(Component.literal("Must be in the ")
+                    .withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("Nether").withStyle(ChatFormatting.DARK_RED))
+                    .append(Component.literal(" to work.").withStyle(ChatFormatting.GRAY)));
+        } else {
+            components.add(Component.literal("Hold ").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("Shift").withStyle(ChatFormatting.RED))
+                    .append(Component.literal(" for more info.").withStyle(ChatFormatting.GRAY)));
+        }
+
     }
 
     @Override

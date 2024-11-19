@@ -6,6 +6,8 @@ import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.BlazeFarmTi
 import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
 import com.awesomeshot5051.mobfarms.gui.OutputContainer;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -39,22 +41,22 @@ public class BlazeFarmBlock extends BlockBase implements EntityBlock {
         super(properties);
     }
 
-//    @Override
-//    public Item toItem() {
-//        return new CustomRendererBlockItem(this, new Item.Properties()) {
-//            @OnlyIn(Dist.CLIENT)
-//            @Override
-//            public ItemRenderer createItemRenderer() {
-//                return new BlazeFarmItemRenderer(); // Custom blaze farm renderer
-//            }
-//        };
-//    }
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         BlazeFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new BlazeFarmTileentity(BlockPos.ZERO, ModBlocks.BLAZE_FARM.get().defaultBlockState()));
-        // Removed villager-related tooltip information
+        if (Screen.hasShiftDown()) {
+            components.add(Component.literal("Must be in the ")
+                    .withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("Nether").withStyle(ChatFormatting.DARK_RED))
+                    .append(Component.literal(" to work.").withStyle(ChatFormatting.GRAY)));
+        } else {
+            components.add(Component.literal("Hold ").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("Shift").withStyle(ChatFormatting.RED))
+                    .append(Component.literal(" for more info.").withStyle(ChatFormatting.GRAY)));
+        }
+
     }
 
     @Override

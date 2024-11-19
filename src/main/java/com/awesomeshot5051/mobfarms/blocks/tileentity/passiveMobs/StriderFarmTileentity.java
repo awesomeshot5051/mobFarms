@@ -20,6 +20,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -70,7 +71,9 @@ public class StriderFarmTileentity extends VillagerTileentity implements ITickab
 //            if (advanceAge()) {
 //                sync();
 //            }
-
+        if (!level.dimension().equals(Level.NETHER)) {
+            return; // Do nothing if not in the Nether
+        }
         timer++;
         setChanged();
 

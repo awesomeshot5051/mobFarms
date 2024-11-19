@@ -6,6 +6,8 @@ import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.ShulkerFarm
 import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
 import com.awesomeshot5051.mobfarms.gui.OutputContainer;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -44,7 +46,17 @@ public class ShulkerFarmBlock extends BlockBase implements EntityBlock {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         ShulkerFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new ShulkerFarmTileentity(BlockPos.ZERO, ModBlocks.SHULKER_FARM.get().defaultBlockState()));
-        // Removed villager-related tooltip information
+        if (Screen.hasShiftDown()) {
+            components.add(Component.literal("Must be in the ")
+                    .withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("End").withStyle(ChatFormatting.LIGHT_PURPLE))
+                    .append(Component.literal(" to work.").withStyle(ChatFormatting.GRAY)));
+        } else {
+            components.add(Component.literal("Hold ").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("Shift").withStyle(ChatFormatting.RED))
+                    .append(Component.literal(" for more info.").withStyle(ChatFormatting.GRAY)));
+        }
+
     }
 
     @Override

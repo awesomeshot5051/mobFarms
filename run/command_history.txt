@@ -1,9 +1,4 @@
 /kill @e[type=item]
-/time set night
-/kill @e[type=minecraft:skeleton]
-/kill @e[type=item]
-/kill @e[type=minecraft:skeleton]
-/kill @e[type=item]
 /summon skeleton ~ ~ ~ {NoAI:1b,OnGround:1b,PersistenceRequired:1b,Silent:1b}
 /
 /summon skeleton ~ ~ ~ {NoAI:1b,OnGround:1b,PersistenceRequired:1b,Silent:1b}
@@ -48,3 +43,8 @@
 /tick rate 20
 /tick rate 10000
 /tick rate 2000
+/execute at Dev in minecraft:the_end run tp 0 150 0
+/kill @e[type=minecraft:end_crystal]
+/kill @e[type=minecraft:ender_dragon]
+/tick rate 100
+/execute at Dev in minecraft:the_nether run tp 0 150 0
