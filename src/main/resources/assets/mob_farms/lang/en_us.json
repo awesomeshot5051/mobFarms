@@ -92,5 +92,6 @@
   "tooltip.mobfarms.strider_farm.shift": "Must be in the Nether to work",
   "tooltip.mobfarms.strider_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
   "tooltip.mobfarms.ghast_farm.shift": "Must be in the Nether to work",
-  "tooltip.mobfarms.ghast_farm.hint": "Hold \u00A74Shift\u00A7r for more info."
+  "tooltip.mobfarms.ghast_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "config.jade.plugin_mob_farms.villager": "Villager"
 }
