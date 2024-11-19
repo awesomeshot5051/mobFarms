@@ -10,6 +10,8 @@ import de.maxhenkel.corelib.block.IItemBlock;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
 import de.maxhenkel.corelib.client.CustomRendererBlockItem;
 import de.maxhenkel.corelib.client.ItemRenderer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -60,7 +62,13 @@ public class ShulkerFarmBlock extends BlockBase implements EntityBlock, IItemBlo
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         ShulkerFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new ShulkerFarmTileentity(BlockPos.ZERO, ModBlocks.SHULKER_FARM.get().defaultBlockState()));
-        // Removed villager-related tooltip information
+        if (Screen.hasShiftDown()) {
+            components.add(Component.translatable("tooltip.mobfarms.shulker_farm.shift")
+                    .withStyle(ChatFormatting.GRAY));
+        } else {
+            components.add(Component.translatable("tooltip.mobfarms.shulker_farm.hint")
+                    .withStyle(ChatFormatting.YELLOW));
+        }
     }
 
     @Override

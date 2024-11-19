@@ -10,6 +10,8 @@ import de.maxhenkel.corelib.block.IItemBlock;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
 import de.maxhenkel.corelib.client.CustomRendererBlockItem;
 import de.maxhenkel.corelib.client.ItemRenderer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -60,6 +62,14 @@ public class GhastFarmBlock extends BlockBase implements EntityBlock, IItemBlock
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         GhastFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new GhastFarmTileentity(BlockPos.ZERO, ModBlocks.GHAST_FARM.get().defaultBlockState()));
+        // Check if the player is holding Shift
+        if (Screen.hasShiftDown()) {
+            components.add(Component.translatable("tooltip.mobfarms.ghast_farm.shift")
+                    .withStyle(ChatFormatting.GRAY));
+        } else {
+            components.add(Component.translatable("tooltip.mobfarms.ghast_farm.hint")
+                    .withStyle(ChatFormatting.YELLOW));
+        }
         // Removed villager-related tooltip information
     }
 

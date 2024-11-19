@@ -20,6 +20,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -63,6 +64,9 @@ public class GhastFarmTileentity extends VillagerTileentity implements ITickable
 
     @Override
     public void tick() {
+        if (!level.dimension().equals(Level.NETHER)) {
+            return; // Do nothing if not in the Nether
+        }
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.GHAST_PRIMED);
 

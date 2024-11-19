@@ -77,7 +77,20 @@
   "key.mob_farms.pick_up": "Pick Up",
   "key.mob_farms.cycle_trades": "Cycle Trades",
   "category.mob_farms": "Mob Farms",
-  "config.jade.plugin_mob_farms.villager": "Villager",
-  "config.jade.plugin_mob_farms.converter": "Converter",
-  "config.jade.plugin_mob_farms.breeder": "Breeder"
+  "tooltip.mobfarms.hoglin_farm.shift": "Must be in the Nether to work",
+  "tooltip.mobfarms.hoglin_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "tooltip.mobfarms.wither_skeleton_farm.shift": "Must be in the Nether to work",
+  "tooltip.mobfarms.wither_skeleton_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "tooltip.mobfarms.shulker_farm.shift": "Must be in the End to work",
+  "tooltip.mobfarms.shulker_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "tooltip.mobfarms.magma_cube_farm.shift": "Must be in the Nether to work",
+  "tooltip.mobfarms.magma_cube_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "tooltip.mobfarms.blaze_farm.shift": "Must be in the Nether to work",
+  "tooltip.mobfarms.blaze_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "tooltip.mobfarms.piglin_farm.shift": "Must be in the Nether to work",
+  "tooltip.mobfarms.piglin_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "tooltip.mobfarms.strider_farm.shift": "Must be in the Nether to work",
+  "tooltip.mobfarms.strider_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
+  "tooltip.mobfarms.ghast_farm.shift": "Must be in the Nether to work",
+  "tooltip.mobfarms.ghast_farm.hint": "Hold \u00A74Shift\u00A7r for more info."
 }

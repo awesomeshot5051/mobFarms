@@ -10,6 +10,8 @@ import de.maxhenkel.corelib.block.IItemBlock;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
 import de.maxhenkel.corelib.client.CustomRendererBlockItem;
 import de.maxhenkel.corelib.client.ItemRenderer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -60,7 +62,13 @@ public class MagmaCubeFarmBlock extends BlockBase implements EntityBlock, IItemB
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         MagmaCubeFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new MagmaCubeFarmTileentity(BlockPos.ZERO, ModBlocks.MAGMA_CUBE_FARM.get().defaultBlockState()));
-        // Removed villager-related tooltip information
+        if (Screen.hasShiftDown()) {
+            components.add(Component.translatable("tooltip.mobfarms.magma_cube_farm.shift")
+                    .withStyle(ChatFormatting.GRAY));
+        } else {
+            components.add(Component.translatable("tooltip.mobfarms.magma_cube_farm.hint")
+                    .withStyle(ChatFormatting.YELLOW));
+        }
     }
 
     @Override

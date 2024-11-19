@@ -19,6 +19,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -61,7 +62,9 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
     public void tick() {
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.BLAZE_PRIMED);
-
+        if (!level.dimension().equals(Level.NETHER)) {
+            return; // Do nothing if not in the Nether
+        }
         timer++;
         setChanged();
 

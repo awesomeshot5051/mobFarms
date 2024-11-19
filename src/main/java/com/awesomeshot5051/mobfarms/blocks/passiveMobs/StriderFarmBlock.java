@@ -10,6 +10,8 @@ import de.maxhenkel.corelib.block.IItemBlock;
 import de.maxhenkel.corelib.blockentity.SimpleBlockEntityTicker;
 import de.maxhenkel.corelib.client.CustomRendererBlockItem;
 import de.maxhenkel.corelib.client.ItemRenderer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -60,6 +62,13 @@ public class StriderFarmBlock extends BlockBase implements EntityBlock, IItemBlo
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         StriderFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new StriderFarmTileentity(BlockPos.ZERO, ModBlocks.STRIDER_FARM.get().defaultBlockState()));
+        if (Screen.hasShiftDown()) {
+            components.add(Component.translatable("tooltip.mobfarms.strider_farm.shift")
+                    .withStyle(ChatFormatting.GRAY));
+        } else {
+            components.add(Component.translatable("tooltip.mobfarms.strider_farm.hint")
+                    .withStyle(ChatFormatting.YELLOW));
+        }
     }
 
     @Override
