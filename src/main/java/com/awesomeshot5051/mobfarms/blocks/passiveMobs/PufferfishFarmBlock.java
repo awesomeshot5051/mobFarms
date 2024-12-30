@@ -22,10 +22,12 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -35,59 +37,59 @@ import java.util.List;
 
 public class PufferfishFarmBlock extends BlockBase implements EntityBlock {
 
-  public PufferfishFarmBlock(Properties properties) {
-    super(properties);
-  }
-
-
-  @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
-    super.appendHoverText(stack, context, components, tooltipFlag);
-    PufferfishFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new PufferfishFarmTileentity(BlockPos.ZERO, ModBlocks.PUFFERFISH_FARM.get().defaultBlockState()));
-  }
-
-  @Override
-  protected InteractionResult useItemOn(ItemStack heldItem, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-    BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-    if (!(tileEntity instanceof PufferfishFarmTileentity farm)) {
-      return super.useItemOn(heldItem, state, worldIn, pos, player, handIn, hit);
+    public PufferfishFarmBlock(Properties properties) {
+        super(properties.mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion());
     }
 
-    player.openMenu(new MenuProvider() {
-      @Override
-      public Component getDisplayName() {
-        return Component.translatable(state.getBlock().getDescriptionId());
-      }
 
-      @Nullable
-      @Override
-      public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return new OutputContainer(id, playerInventory, farm.getOutputInventory(), ContainerLevelAccess.create(worldIn, pos), ModBlocks.PUFFERFISH_FARM::get);
-      }
-    });
-      return InteractionResult.SUCCESS;
-  }
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
+        super.appendHoverText(stack, context, components, tooltipFlag);
+        PufferfishFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new PufferfishFarmTileentity(BlockPos.ZERO, ModBlocks.PUFFERFISH_FARM.get().defaultBlockState()));
+    }
 
-  @Nullable
-  @Override
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level1, BlockState state, BlockEntityType<T> type) {
-    return new SimpleBlockEntityTicker<>();
-  }
+    @Override
+    protected InteractionResult useItemOn(ItemStack heldItem, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+        if (!(tileEntity instanceof PufferfishFarmTileentity farm)) {
+            return super.useItemOn(heldItem, state, worldIn, pos, player, handIn, hit);
+        }
 
-  @Nullable
-  @Override
-  public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new PufferfishFarmTileentity(blockPos, blockState);
-  }
+        player.openMenu(new MenuProvider() {
+            @Override
+            public Component getDisplayName() {
+                return Component.translatable(state.getBlock().getDescriptionId());
+            }
 
-  @Override
-  public RenderShape getRenderShape(BlockState state) {
-    return RenderShape.MODEL;
-  }
+            @Nullable
+            @Override
+            public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+                return new OutputContainer(id, playerInventory, farm.getOutputInventory(), ContainerLevelAccess.create(worldIn, pos), ModBlocks.PUFFERFISH_FARM::get);
+            }
+        });
+        return InteractionResult.SUCCESS;
+    }
 
-  @OnlyIn(Dist.CLIENT)
-  @Override
-  public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
-    return 1F;
-  }
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level1, BlockState state, BlockEntityType<T> type) {
+        return new SimpleBlockEntityTicker<>();
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new PufferfishFarmTileentity(blockPos, blockState);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
+        return 1F;
+    }
 }

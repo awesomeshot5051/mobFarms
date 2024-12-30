@@ -3,6 +3,8 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.OutputItemHandler;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
 import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
@@ -110,7 +112,7 @@ public class IllusionerFarmTileentity extends VillagerTileentity implements ITic
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(ILLUSIONER_LOOT_TABLE);
         drops.addAll(lootTable.getRandomItems(lootContext));
-            drops.add(new ItemStack(Items.DIAMOND));
+        drops.add(new ItemStack(Items.DIAMOND));
 
         return drops;
     }

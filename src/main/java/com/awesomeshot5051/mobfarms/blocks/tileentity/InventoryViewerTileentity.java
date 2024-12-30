@@ -3,6 +3,8 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity;
 import de.maxhenkel.corelib.blockentity.IServerTickableBlockEntity;
 import de.maxhenkel.corelib.inventory.ItemListInventory;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 //import com.awesomeshot5051.mobfarms.blocks.// VillagerBlockBase;
 import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
 import com.awesomeshot5051.mobfarms.gui.ModItemStackHandler;
@@ -42,4 +44,4 @@ public class InventoryViewerTileentity extends VillagerTileentity implements ISe
         }
         return new ModItemStackHandler(ve.getInventory().getItems(), this);
     }
-    }
+}

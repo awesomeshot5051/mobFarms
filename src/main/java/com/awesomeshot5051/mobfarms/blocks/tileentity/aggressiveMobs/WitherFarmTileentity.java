@@ -3,6 +3,8 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.OutputItemHandler;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
 import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
@@ -108,6 +110,7 @@ public class WitherFarmTileentity extends VillagerTileentity implements ITickabl
 
         return drops;
     }
+
     public Container getOutputInventory() {
         return new ItemListInventory(inventory, this::setChanged);
     }

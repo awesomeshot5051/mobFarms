@@ -2,6 +2,8 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity;
 
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.*;
@@ -134,6 +136,7 @@ public class ModTileEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EvokerFarmTileentity>> EVOKER_FARM = BLOCK_ENTITY_REGISTER.register("evoker_farm", () ->
             new BlockEntityType<>(EvokerFarmTileentity::new, ModBlocks.EVOKER_FARM.get())
     );
+
     @OnlyIn(Dist.CLIENT)
     public static void clientSetup() {
         if (!Main.CLIENT_CONFIG.renderBlockContents.get()) {
@@ -247,7 +250,9 @@ public class ModTileEntities {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ZOGLIN_FARM.get(), (object, context) -> object.getItemHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ZOMBIE_FARM.get(), (object, context) -> object.getItemHandler());
 
-    }    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GhastFarmTileentity>> GHAST_FARM = BLOCK_ENTITY_REGISTER.register("ghast_farm", () ->
+    }
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GhastFarmTileentity>> GHAST_FARM = BLOCK_ENTITY_REGISTER.register("ghast_farm", () ->
             new BlockEntityType<>(GhastFarmTileentity::new, ModBlocks.GHAST_FARM.get())
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlazeFarmTileentity>> BLAZE_FARM = BLOCK_ENTITY_REGISTER.register("blaze_farm", () ->
@@ -310,8 +315,6 @@ public class ModTileEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ZombieFarmTileentity>> ZOMBIE_FARM = BLOCK_ENTITY_REGISTER.register("zombie_farm", () ->
             new BlockEntityType<>(ZombieFarmTileentity::new, ModBlocks.ZOMBIE_FARM.get())
     );
-
-
 
 
     public static void init(IEventBus eventBus) {

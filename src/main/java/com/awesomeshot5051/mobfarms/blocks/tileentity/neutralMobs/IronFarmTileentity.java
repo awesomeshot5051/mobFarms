@@ -3,6 +3,8 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs;
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.OutputItemHandler;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
 import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
@@ -66,37 +68,37 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
     public void tick() {
 //        EasyVillagerEntity v = getVillagerEntity();
 //        if (v != null) {
-            // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.VILLAGER_AMBIENT);
-            // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
+        // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.VILLAGER_AMBIENT);
+        // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
 
 //            if (advanceAge()) {
 //                sync();
 //            }
 
-            timer++;
-            setChanged();
+        timer++;
+        setChanged();
 
-            if (timer == getGolemSpawnTime()) {
-                // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
-                sync();
-            } else if (timer > getGolemSpawnTime() && timer < getGolemKillTime()) {
-                if (timer % 20L == 0L) {
-                    // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_HURT);
-                }
-            } else if (timer >= getGolemKillTime()) {
-                // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_DEATH);
-                for (ItemStack drop : getDrops()) {
-                    for (int i = 0; i < itemHandler.getSlots(); i++) {
-                        drop = itemHandler.insertItem(i, drop, false);
-                        if (drop.isEmpty()) {
-                            break;
-                        }
+        if (timer == getGolemSpawnTime()) {
+            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
+            sync();
+        } else if (timer > getGolemSpawnTime() && timer < getGolemKillTime()) {
+            if (timer % 20L == 0L) {
+                // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_HURT);
+            }
+        } else if (timer >= getGolemKillTime()) {
+            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_DEATH);
+            for (ItemStack drop : getDrops()) {
+                for (int i = 0; i < itemHandler.getSlots(); i++) {
+                    drop = itemHandler.insertItem(i, drop, false);
+                    if (drop.isEmpty()) {
+                        break;
                     }
                 }
-
-                timer = 0L;
-                sync();
             }
+
+            timer = 0L;
+            sync();
+        }
 //        }
     }
 

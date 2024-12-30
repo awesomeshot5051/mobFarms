@@ -3,6 +3,8 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs;
 import com.awesomeshot5051.mobfarms.Main;
 import com.awesomeshot5051.mobfarms.OutputItemHandler;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
 import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;

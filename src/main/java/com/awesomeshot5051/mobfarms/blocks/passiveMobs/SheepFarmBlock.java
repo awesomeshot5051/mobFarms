@@ -21,12 +21,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -38,7 +40,7 @@ public class SheepFarmBlock extends BlockBase implements EntityBlock {
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
 
     public SheepFarmBlock(Properties properties) {
-        super(properties);
+        super(properties.mapColor(MapColor.METAL).strength(2.5F).sound(SoundType.METAL).noOcclusion());
         this.registerDefaultState(this.defaultBlockState().setValue(COLOR, DyeColor.WHITE)); // Default to white
     }
 
