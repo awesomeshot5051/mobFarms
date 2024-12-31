@@ -109,7 +109,7 @@ dependencies {
     compileOnly "maven.modrinth:jei:${jei_version}"
     compileOnly "maven.modrinth:the-one-probe:${top_version}"
     compileOnly "maven.modrinth:jade:${jade_version}"
-    jarJar(implementation("de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}")) {
+    jarJar(implementation("de.maxhenkel.corelib:corelib:1.21.3-${corelib_version}")) {
 //    jarJar(implementation("de.maxhenkel.corelib:corelib:1.21.1-${corelib_version}")) {
 //        version {
 //            // The version range your mod is actually compatible with.
@@ -121,7 +121,7 @@ dependencies {
 //    implementation "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}"
 //        compileOnly "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}:javadoc"
 //    implementation 'net.neoforged:JarJarSelector:0.4.2'
-        compileOnly "de.maxhenkel.corelib:corelib:1.21.1-${corelib_version}:javadoc"
+        compileOnly "de.maxhenkel.corelib:corelib:1.21.3-${corelib_version}:javadoc"
     }
 }
 
