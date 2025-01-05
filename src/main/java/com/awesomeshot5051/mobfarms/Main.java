@@ -1,29 +1,28 @@
 package com.awesomeshot5051.mobfarms;
 
 //import com.awesomeshot5051.mobfarms.advancements.MobFarmsTriggerInstance;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.WitherFarmBlock;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-import com.awesomeshot5051.mobfarms.events.BlockEvents;
-import com.awesomeshot5051.mobfarms.events.GuiEvents;
-import com.awesomeshot5051.mobfarms.events.ModSoundEvents;
-import com.awesomeshot5051.mobfarms.gui.Containers;
-import com.awesomeshot5051.mobfarms.integration.IMC;
-import com.awesomeshot5051.mobfarms.items.ModItems;
-import com.awesomeshot5051.mobfarms.loottable.ModLootTables;
-import de.maxhenkel.corelib.CommonRegistry;
-import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.common.NeoForge;
-import org.apache.logging.log4j.LogManager;
+
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.data.recipe.recipe.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.events.*;
+import com.awesomeshot5051.mobfarms.gui.*;
+import com.awesomeshot5051.mobfarms.integration.*;
+import com.awesomeshot5051.mobfarms.items.*;
+import com.awesomeshot5051.mobfarms.loottable.*;
+import de.maxhenkel.corelib.*;
+import net.minecraft.server.level.*;
+import net.neoforged.api.distmarker.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.fml.config.*;
+import net.neoforged.fml.event.lifecycle.*;
+import net.neoforged.fml.loading.*;
+import net.neoforged.neoforge.common.*;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
 
 @Mod(Main.MODID)
 public class Main {
@@ -50,6 +49,9 @@ public class Main {
         Containers.init(eventBus);
         ModCreativeTabs.init(eventBus);
         ModLootTables.init(eventBus);
+        ModRecipes.registerRecipes(eventBus);
+        ModRecipes.registerTypes(eventBus);
+        ModDataComponents.register(eventBus);
 
         SERVER_CONFIG = CommonRegistry.registerConfig(MODID, ModConfig.Type.SERVER, ServerConfig.class);
         CLIENT_CONFIG = CommonRegistry.registerConfig(MODID, ModConfig.Type.CLIENT, ClientConfig.class);

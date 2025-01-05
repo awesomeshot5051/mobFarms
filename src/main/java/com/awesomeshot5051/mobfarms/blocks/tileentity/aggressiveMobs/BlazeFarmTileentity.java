@@ -1,33 +1,27 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
 
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.OutputItemHandler;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-import de.maxhenkel.corelib.inventory.ItemListInventory;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
+import de.maxhenkel.corelib.blockentity.*;
+import de.maxhenkel.corelib.inventory.*;
+import it.unimi.dsi.fastutil.objects.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.*;
+import net.minecraft.server.level.*;
+import net.minecraft.world.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.storage.loot.*;
+import net.neoforged.neoforge.items.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class BlazeFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
@@ -38,20 +32,58 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
 
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
+    public ItemStack swordType;
 
     public BlazeFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.BLAZE_FARM.get(), ModBlocks.BLAZE_FARM.get().defaultBlockState(), pos, state);
         inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
+        swordType = new ItemStack(Items.WOODEN_SWORD);
     }
 
-    public static int getBlazeSpawnTime() {
-        return Main.SERVER_CONFIG.blazeSpawnTime.get() - 20 * 4;
+    public static double getBlazeSpawnTime(BlazeFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.blazeSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
     }
 
-    public static int getBlazeExplodeTime() {
-        return getBlazeSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    public static double getBlazeKillTime(BlazeFarmTileentity farm) {
+
+
+        // Iterate through the enchantments
+
+        if (farm.getSwordType().isEnchanted()) {
+            ItemEnchantments enchantments = farm.getSwordType().getTagEnchantments();
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+                if (entry.getKey().is(ResourceLocation.withDefaultNamespace(
+                        "sharpness"
+                ))) {
+                    SwordEnchantments.toggleEnchantment(Enchantments.SHARPNESS, true);
+                }
+            }
+        }
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getBlazeSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 6.4) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
+                                                6.4);
     }
 
     public long getTimer() {
@@ -62,21 +94,22 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
     public void tick() {
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.BLAZE_PRIMED);
+        assert level != null;
         if (!level.dimension().equals(Level.NETHER)) {
             return; // Do nothing if not in the Nether
         }
         timer++;
         setChanged();
 
-        if (timer == getBlazeSpawnTime()) {
+        if (timer == getBlazeSpawnTime(this)) {
 //            // Play blaze spawn sound
 //            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.BLAZE_PRIMED);
             sync();
-//        } else if (timer > getBlazeSpawnTime() && timer < getBlazeExplodeTime()) {
+//        } else if (timer > getBlazeSpawnTime() && timer < getBlazeKillTime()) {
 //            if (timer % 20L == 0L) {
 //                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.BLAZE_HURT);
 //            }
-        } else if (timer >= getBlazeExplodeTime()) {
+        } else if (timer >= getBlazeKillTime(this)) {
             // Play blaze death/explosion sound
 //            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.BLAZE_DEATH);
             for (ItemStack drop : getDrops()) {
@@ -121,7 +154,12 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         super.saveAdditional(compound, provider);
-
+        if (swordType != null) {
+            CompoundTag swordTypeTag = new CompoundTag();
+            swordTypeTag.putString("id", BuiltInRegistries.ITEM.getKey(swordType.getItem()).toString()); // Save the item ID
+            swordTypeTag.putInt("count", swordType.getCount()); // Save the count
+            compound.put("SwordType", swordTypeTag); // Add the tag to the main compound
+        }
         ContainerHelper.saveAllItems(compound, inventory, false, provider);
         compound.putLong("Timer", timer);
     }
@@ -129,6 +167,14 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         ContainerHelper.loadAllItems(compound, inventory, provider);
+        if (compound.contains("SwordType")) {
+            SyncableTileentity.loadSwordType(compound, provider).ifPresent(stack -> this.swordType = stack);
+
+        }
+        if (swordType == null) {
+// If no pickType is saved, set a default one (e.g., Stone Pickaxe)
+            swordType = new ItemStack(Items.WOODEN_SWORD);
+        }
         timer = compound.getLong("Timer");
         super.loadAdditional(compound, provider);
     }

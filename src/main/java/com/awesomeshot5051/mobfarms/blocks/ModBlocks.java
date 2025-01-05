@@ -1,18 +1,17 @@
 package com.awesomeshot5051.mobfarms.blocks;
 
-import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.neutralMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.passiveMobs.*;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.core.registries.*;
+import net.minecraft.world.level.block.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
 
 public class ModBlocks {
 
-    private static final DeferredRegister<Block> BLOCK_REGISTER = DeferredRegister.create(BuiltInRegistries.BLOCK, Main.MODID);
+    public static final DeferredRegister<Block> BLOCK_REGISTER = DeferredRegister.create(BuiltInRegistries.BLOCK, Main.MODID);
 
     // Passive Mobs
     public static final DeferredHolder<Block, ChickenFarmBlock> CHICKEN_FARM = BLOCK_REGISTER.register("chicken_farm", ChickenFarmBlock::new);
@@ -70,6 +69,7 @@ public class ModBlocks {
 
 
     public static final DeferredHolder<Block, InventoryViewerBlock> INVENTORY_VIEWER = BLOCK_REGISTER.register("inventory_viewer", InventoryViewerBlock::new);
+
     public static void init(IEventBus eventBus) {
         BLOCK_REGISTER.register(eventBus);
     }

@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.stream.*;
 
 public class UpgradeRecipe extends ShapedRecipe {
-    public static final DataComponentType<ItemContainerContents> pickTypeComponent = ModDataComponents.SWORD_TYPE.get();
+    public static final DataComponentType<ItemContainerContents> swordTypeComponent = ModDataComponents.SWORD_TYPE.get();
 
     public final ShapedRecipePattern pattern;
     final String group;
@@ -140,7 +140,7 @@ public class UpgradeRecipe extends ShapedRecipe {
                 }
             }
         }
-        result2.set(pickTypeComponent, pickContents);
+        result2.set(swordTypeComponent, pickContents);
         super.assemble(craftingInput, registries);
         return result2;
     }

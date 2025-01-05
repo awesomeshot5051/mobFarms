@@ -57,16 +57,18 @@ public class CustomBlockRecipe extends ShapedRecipe {
 
     @Override
     public @NotNull ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider registries) {
-        ItemStack pickStack = craftingInput.getItem(4);
-        ItemStack oreStack = craftingInput.getItem(7);
+        ItemStack swordStack = craftingInput.getItem(4);
+//        ItemStack oreStack = craftingInput.getItem(7);
         List<ItemStack> itemStacks = new ArrayList<>();
         itemStacks.add(getResultItem(registries));
         // Set the pick type in the result item's data
-        swordContents = ItemContainerContents.fromItems(Collections.singletonList(pickStack));
-//            BlockRendererBase.setPickaxeType(Block.byItem(result.getItem().getDefaultInstance().getItem()), pickStack);
+        swordContents = ItemContainerContents.fromItems(Collections.singletonList(swordStack));
+//            BlockRendererBase.setPickaxeType(Block.byItem(result.getItem().getDefaultInstance().getItem()), swordStack);
         result2 = getResultItem(registries).copy(); // Copy the result item to avoid modifying the original
-        // Example: Setting the pickaxe type
-//            NonNullList<ItemStack> p_00115 = NonNullList.withSize(1, pickStack);
+        if (craftingInput.getItem(4).isEnchanted()) {
+            Main.LOGGER.info("The sword has an enchantment of {}", craftingInput.getItem(4).getTagEnchantments());
+        }
+        //            NonNullList<ItemStack> p_00115 = NonNullList.withSize(1, swordStack);
 //            ContainerHelper.saveAllItems(new CompoundTag(), p_00115, registries);
 //            PickTypeData.getOrCreate(result);
         result2.set(swordTypeComponent, swordContents);

@@ -1,6 +1,6 @@
 package com.awesomeshot5051.mobfarms.data.recipe.recipe;
 
-import com.awesomeshot5051.resourceFarm.*;
+import com.awesomeshot5051.mobfarms.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.crafting.*;
@@ -11,7 +11,7 @@ import java.util.function.*;
 
 
 public class ModRecipes {
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, "resource_farms");
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Main.MODID);
     public static final Supplier<RecipeSerializer<CustomBlockRecipe>> SHAPED_SERIALIZER =
             RECIPE_SERIALIZERS.register("shaped_serializer", CustomBlockRecipe.Serializer::new);
     public static final Supplier<RecipeSerializer<CustomShapelessBlockRecipe>> SHAPELESS_SERIALIZER =

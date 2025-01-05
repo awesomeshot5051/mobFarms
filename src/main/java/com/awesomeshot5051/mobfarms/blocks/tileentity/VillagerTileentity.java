@@ -1,14 +1,15 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity;
 
 //import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
-import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
-import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.entity.*;
+import net.minecraft.core.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.block.state.*;
+
+import javax.annotation.*;
 
 public class VillagerTileentity extends FakeWorldTileentity {
 
@@ -19,6 +20,7 @@ public class VillagerTileentity extends FakeWorldTileentity {
         super(type, defaultState, pos, state);
         villager = ItemStack.EMPTY;
     }
+
 
     public boolean hasVillager() {
         return !villager.isEmpty();
@@ -32,8 +34,13 @@ public class VillagerTileentity extends FakeWorldTileentity {
         return villagerEntity;
     }
 
-        protected void onAddVillager(EasyVillagerEntity villager) {
 
+    protected void onAddVillager(EasyVillagerEntity villager) {
+
+    }
+
+    public ItemStack getSwordType() {
+        return ItemStack.EMPTY;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.awesomeshot5051.mobfarms;
 
-import de.maxhenkel.corelib.config.ConfigBase;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import de.maxhenkel.corelib.config.*;
+import net.neoforged.neoforge.common.*;
 
 public class ServerConfig extends ConfigBase {
     //meat dropping mobs
@@ -75,7 +75,7 @@ public class ServerConfig extends ConfigBase {
 
         //passive mobs
         chickenSpawnTime = builder.comment("The time in ticks the chicken farm takes to spawn a chicken")
-                .defineInRange("chicken_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("chicken_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         codSpawnTime = builder.comment("The time in ticks the cod farm takes to spawn a cod")
                 .defineInRange("cod_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
@@ -153,7 +153,7 @@ public class ServerConfig extends ConfigBase {
         //aggressive mobs
         blazeSpawnTime = builder
                 .comment("The time in ticks the blaze farm takes to spawn a blaze")
-                .defineInRange("blaze_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("blaze_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         creeperSpawnTime = builder
                 .comment("The time in ticks the creeper farm takes to spawn a creeper")

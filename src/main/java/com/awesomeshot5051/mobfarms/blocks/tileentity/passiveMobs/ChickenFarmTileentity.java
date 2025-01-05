@@ -1,45 +1,33 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs;
 //TODO make it so that whether the meat is cooked is modifiable in-game.
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.OutputItemHandler;
-import com.awesomeshot5051.mobfarms.ServerConfig;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-import de.maxhenkel.corelib.inventory.ItemListInventory;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
 
-import java.util.Collections;
-import java.util.List;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.enums.*;
+import de.maxhenkel.corelib.blockentity.*;
+import de.maxhenkel.corelib.inventory.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.*;
+import net.minecraft.server.level.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.storage.loot.*;
+import net.minecraft.world.level.storage.loot.parameters.*;
+import net.minecraft.world.phys.*;
+import net.neoforged.neoforge.items.*;
 
-import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.dropsCookedMeat;
+import java.util.*;
+
+import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.*;
 
 public class ChickenFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-
+    public ItemStack swordType;
     // Update the loot table for chickens instead of iron golems
     private static final ResourceKey<LootTable> CHICKEN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/chicken"));
     protected NonNullList<ItemStack> inventory;
@@ -52,14 +40,33 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
         inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
+        swordType = new ItemStack(Items.WOODEN_SWORD);
     }
 
-    public static int getChickenSpawnTime() {
-        return Main.SERVER_CONFIG.chickenSpawnTime.get() - 20 * 10;
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
     }
 
-    public static int getChickenKillTime() {
-        return getChickenSpawnTime() + 20 * 10;
+    public static double getChickenSpawnTime(ChickenFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.chickenSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
+    }
+
+    public static double getChickenKillTime(ChickenFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return getChickenSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (20 * 6.4) :
+                sword.equals(SwordType.DIAMOND) ? (20 * 5.6) :
+                        sword.equals(SwordType.IRON) ? (20 * 4.8) :
+                                sword.equals(SwordType.STONE) ? (20 * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (20 * 6.4) :
+                                                6.4);
     }
 
     public long getTimer() {
@@ -74,7 +81,7 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
         timer++;
         setChanged();
 
-        if (timer == getChickenSpawnTime()) {
+        if (timer == getChickenSpawnTime(this)) {
 //            // Play creeper spawn sound
 //            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.CREEPER_PRIMED);
             sync();
@@ -82,7 +89,7 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
 //            if (timer % 20L == 0L) {
 //                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.CREEPER_HURT);
 //            }
-        } else if (timer >= getChickenKillTime()) {
+        } else if (timer >= getChickenKillTime(this)) {
             // Play creeper death/explosion sound
 //            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.CREEPER_DEATH);
             for (ItemStack drop : getDrops()) {
