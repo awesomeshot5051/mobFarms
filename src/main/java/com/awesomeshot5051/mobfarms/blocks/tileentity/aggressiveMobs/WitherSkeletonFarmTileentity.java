@@ -1,42 +1,31 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
 
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.OutputItemHandler;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-import de.maxhenkel.corelib.inventory.ItemListInventory;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.WitherSkeleton;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import de.maxhenkel.corelib.blockentity.*;
+import de.maxhenkel.corelib.inventory.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.*;
+import net.minecraft.server.level.*;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.storage.loot.*;
+import net.neoforged.neoforge.items.*;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class WitherSkeletonFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-
+    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> WITHERSKELETON_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/wither_skeleton"));
 
     protected NonNullList<ItemStack> inventory;
@@ -44,6 +33,7 @@ public class WitherSkeletonFarmTileentity extends VillagerTileentity implements 
 
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
+    public ItemStack swordType;
 
     public WitherSkeletonFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.WITHER_SKELETON_FARM.get(), ModBlocks.WITHER_SKELETON_FARM.get().defaultBlockState(), pos, state);
@@ -105,24 +95,25 @@ public class WitherSkeletonFarmTileentity extends VillagerTileentity implements 
             return Collections.emptyList();
         }
 
-        LootParams.Builder builder = new LootParams.Builder(serverWorld)
-                .withParameter(LootContextParams.THIS_ENTITY, new WitherSkeleton(EntityType.WITHER_SKELETON, level))
-                .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
-                .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().explosion(null));
 
-        LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
+        int dropCount = serverWorld.random.nextIntBetweenInclusive(0, 1);
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING)) {
+            dropCount = serverWorld.random.nextIntBetweenInclusive(2, 8);
+        }
 
-        LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(WITHERSKELETON_LOOT_TABLE);
 
         // Get the regular drops from the loot table
-        List<ItemStack> drops = lootTable.getRandomItems(lootContext);
+        List<ItemStack> drops = new ArrayList<>();
 
         // Add a 6% chance to drop a Wither Skeleton Skull
         RandomSource random = serverWorld.getRandom(); // Get a random source from the server world
-        if (random.nextFloat() < 0.06f) { // 6% chance
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING) ? serverWorld.random.nextFloat() >= .055 : serverWorld.random.nextFloat() >= .025) { // 6% chance
             drops.add(new ItemStack(Items.WITHER_SKELETON_SKULL)); // Replace with your item reference
         }
-
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING) ? serverWorld.random.nextFloat() >= .115 : serverWorld.random.nextFloat() >= .085) {
+            drops.add(new ItemStack(Items.STONE_SWORD));
+        }
+        drops.add(new ItemStack(Items.BONE, dropCount));
         return drops;
     }
 
@@ -133,7 +124,12 @@ public class WitherSkeletonFarmTileentity extends VillagerTileentity implements 
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         super.saveAdditional(compound, provider);
-
+        if (swordType != null) {
+            CompoundTag swordTypeTag = new CompoundTag();
+            swordTypeTag.putString("id", BuiltInRegistries.ITEM.getKey(swordType.getItem()).toString()); // Save the item ID
+            swordTypeTag.putInt("count", swordType.getCount()); // Save the count
+            compound.put("SwordType", swordTypeTag); // Add the tag to the main compound
+        }
         ContainerHelper.saveAllItems(compound, inventory, false, provider);
         compound.putLong("Timer", timer);
     }
@@ -141,6 +137,14 @@ public class WitherSkeletonFarmTileentity extends VillagerTileentity implements 
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         ContainerHelper.loadAllItems(compound, inventory, provider);
+        if (compound.contains("SwordType")) {
+            SyncableTileentity.loadSwordType(compound, provider).ifPresent(stack -> this.swordType = stack);
+
+        }
+        if (swordType == null) {
+// If no pickType is saved, set a default one (e.g., Stone Pickaxe)
+            swordType = new ItemStack(Items.WOODEN_SWORD);
+        }
         timer = compound.getLong("Timer");
         super.loadAdditional(compound, provider);
     }

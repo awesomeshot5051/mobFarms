@@ -1,53 +1,49 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs;
 
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.OutputItemHandler;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-import de.maxhenkel.corelib.inventory.ItemListInventory;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import de.maxhenkel.corelib.blockentity.*;
+import de.maxhenkel.corelib.inventory.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.*;
+import net.minecraft.server.level.*;
+import net.minecraft.world.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.storage.loot.*;
+import net.neoforged.neoforge.items.*;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class IronFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
     private static final ResourceKey<LootTable> GOLEM_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/iron_golem"));
-
+    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     protected NonNullList<ItemStack> inventory;
 
     protected long timer;
 
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
+    public ItemStack swordType;
 
     public IronFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.IRON_FARM.get(), ModBlocks.IRON_FARM.get().defaultBlockState(), pos, state);
         inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public static int getGolemSpawnTime() {
@@ -66,37 +62,37 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
     public void tick() {
 //        EasyVillagerEntity v = getVillagerEntity();
 //        if (v != null) {
-            // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.VILLAGER_AMBIENT);
-            // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
+        // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.VILLAGER_AMBIENT);
+        // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
 
 //            if (advanceAge()) {
 //                sync();
 //            }
 
-            timer++;
-            setChanged();
+        timer++;
+        setChanged();
 
-            if (timer == getGolemSpawnTime()) {
-                // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
-                sync();
-            } else if (timer > getGolemSpawnTime() && timer < getGolemKillTime()) {
-                if (timer % 20L == 0L) {
-                    // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_HURT);
-                }
-            } else if (timer >= getGolemKillTime()) {
-                // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_DEATH);
-                for (ItemStack drop : getDrops()) {
-                    for (int i = 0; i < itemHandler.getSlots(); i++) {
-                        drop = itemHandler.insertItem(i, drop, false);
-                        if (drop.isEmpty()) {
-                            break;
-                        }
+        if (timer == getGolemSpawnTime()) {
+            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
+            sync();
+        } else if (timer > getGolemSpawnTime() && timer < getGolemKillTime()) {
+            if (timer % 20L == 0L) {
+                // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_HURT);
+            }
+        } else if (timer >= getGolemKillTime()) {
+            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.IRON_GOLEM_DEATH);
+            for (ItemStack drop : getDrops()) {
+                for (int i = 0; i < itemHandler.getSlots(); i++) {
+                    drop = itemHandler.insertItem(i, drop, false);
+                    if (drop.isEmpty()) {
+                        break;
                     }
                 }
-
-                timer = 0L;
-                sync();
             }
+
+            timer = 0L;
+            sync();
+        }
 //        }
     }
 
@@ -105,16 +101,15 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
             return Collections.emptyList();
         }
 
-        LootParams.Builder builder = new LootParams.Builder(serverWorld)
-                .withParameter(LootContextParams.THIS_ENTITY, new IronGolem(EntityType.IRON_GOLEM, level))
-                .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
-                .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().lava());
-
-        LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
+        List<ItemStack> drops = new ArrayList<>();
+        int dropCount = serverWorld.random.nextIntBetweenInclusive(1, 3);
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING)) {
+            dropCount = serverWorld.random.nextIntBetweenInclusive(4, 8);
+        }
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(GOLEM_LOOT_TABLE);
 
-        return lootTable.getRandomItems(lootContext);
+        return drops;
     }
 
     public Container getOutputInventory() {
@@ -124,7 +119,12 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         super.saveAdditional(compound, provider);
-
+        if (swordType != null) {
+            CompoundTag swordTypeTag = new CompoundTag();
+            swordTypeTag.putString("id", BuiltInRegistries.ITEM.getKey(swordType.getItem()).toString()); // Save the item ID
+            swordTypeTag.putInt("count", swordType.getCount()); // Save the count
+            compound.put("SwordType", swordTypeTag); // Add the tag to the main compound
+        }
         ContainerHelper.saveAllItems(compound, inventory, false, provider);
         compound.putLong("Timer", timer);
     }
@@ -132,6 +132,14 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         ContainerHelper.loadAllItems(compound, inventory, provider);
+        if (compound.contains("SwordType")) {
+            SyncableTileentity.loadSwordType(compound, provider).ifPresent(stack -> this.swordType = stack);
+
+        }
+        if (swordType == null) {
+// If no pickType is saved, set a default one (e.g., Stone Pickaxe)
+            swordType = new ItemStack(Items.WOODEN_SWORD);
+        }
         timer = compound.getLong("Timer");
         super.loadAdditional(compound, provider);
     }

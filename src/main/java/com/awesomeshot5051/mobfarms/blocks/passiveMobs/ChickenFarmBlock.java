@@ -113,6 +113,7 @@ public class ChickenFarmBlock extends BlockBase implements EntityBlock, IItemBlo
         return new SimpleBlockEntityTicker<>(); // Keeps default behavior
     }
 
+   
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

@@ -4,6 +4,7 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs;
 import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
 import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
@@ -16,6 +17,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.parameters.*;
@@ -24,16 +26,18 @@ import net.neoforged.neoforge.items.*;
 
 import java.util.*;
 
-import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.*;
+import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class ChickenFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
     public ItemStack swordType;
+    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     // Update the loot table for chickens instead of iron golems
     private static final ResourceKey<LootTable> CHICKEN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/chicken"));
     protected NonNullList<ItemStack> inventory;
     protected long timer;
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
+    public ItemStack swordType;
 
     public ChickenFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.CHICKEN_FARM.get(), ModBlocks.CHICKEN_FARM.get().defaultBlockState(), pos, state);
@@ -61,11 +65,18 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
 
     public static double getChickenKillTime(ChickenFarmTileentity farm) {
         SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
-        return getChickenSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (20 * 6.4) :
-                sword.equals(SwordType.DIAMOND) ? (20 * 5.6) :
-                        sword.equals(SwordType.IRON) ? (20 * 4.8) :
-                                sword.equals(SwordType.STONE) ? (20 * 6.4) :
-                                        sword.equals(SwordType.WOODEN) ? (20 * 6.4) :
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getChickenSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 6.4) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
                                                 6.4);
     }
 
@@ -116,11 +127,12 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
                 .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
                 .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().lava());
 
-        LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
-
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(CHICKEN_LOOT_TABLE);
-
-        return Collections.singletonList(new ItemStack(dropsCookedMeat.get() ? Items.COOKED_CHICKEN : Items.CHICKEN, 3));
+        int dropCount = serverWorld.random.nextIntBetweenInclusive(1, 3);
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING)) {
+            dropCount = serverWorld.random.nextIntBetweenInclusive(4, 8);
+        }
+        return Collections.singletonList(new ItemStack(SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.FIRE_ASPECT) ? Items.COOKED_CHICKEN : Items.CHICKEN, dropCount));
 
     }
 

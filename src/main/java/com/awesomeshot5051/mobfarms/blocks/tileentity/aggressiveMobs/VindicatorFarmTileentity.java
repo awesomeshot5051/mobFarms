@@ -1,35 +1,29 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs;
 
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.OutputItemHandler;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-import de.maxhenkel.corelib.inventory.ItemListInventory;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import de.maxhenkel.corelib.blockentity.*;
+import de.maxhenkel.corelib.inventory.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.*;
+import net.minecraft.server.level.*;
+import net.minecraft.world.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.storage.loot.*;
+import net.neoforged.neoforge.items.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class VindicatorFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-
+    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> VINDICATOR_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/vindicator"));
 
     protected NonNullList<ItemStack> inventory;
@@ -37,6 +31,7 @@ public class VindicatorFarmTileentity extends VillagerTileentity implements ITic
 
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
+    public ItemStack swordType;
 
     public VindicatorFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.VINDICATOR_FARM.get(), ModBlocks.VINDICATOR_FARM.get().defaultBlockState(), pos, state);
@@ -96,10 +91,15 @@ public class VindicatorFarmTileentity extends VillagerTileentity implements ITic
         }
 
         List<ItemStack> drops = new ArrayList<>();
+        int dropCount = serverWorld.random.nextIntBetweenInclusive(0, 1);
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING)) {
+            dropCount = serverWorld.random.nextIntBetweenInclusive(0, 4);
+        }
+
 
         // Add emeralds with a 50% chance
         if (serverWorld.random.nextFloat() < 0.5F) { // 50% chance
-            drops.add(new ItemStack(Items.EMERALD, serverWorld.random.nextInt(2))); // Drop 0 or 1 emerald
+            drops.add(new ItemStack(Items.EMERALD, dropCount)); // Drop 0 or 1 emerald
         }
 
         // Add an iron axe with a chance to enchant it
@@ -116,7 +116,12 @@ public class VindicatorFarmTileentity extends VillagerTileentity implements ITic
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         super.saveAdditional(compound, provider);
-
+        if (swordType != null) {
+            CompoundTag swordTypeTag = new CompoundTag();
+            swordTypeTag.putString("id", BuiltInRegistries.ITEM.getKey(swordType.getItem()).toString()); // Save the item ID
+            swordTypeTag.putInt("count", swordType.getCount()); // Save the count
+            compound.put("SwordType", swordTypeTag); // Add the tag to the main compound
+        }
         ContainerHelper.saveAllItems(compound, inventory, false, provider);
         compound.putLong("Timer", timer);
     }
@@ -124,6 +129,14 @@ public class VindicatorFarmTileentity extends VillagerTileentity implements ITic
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         ContainerHelper.loadAllItems(compound, inventory, provider);
+        if (compound.contains("SwordType")) {
+            SyncableTileentity.loadSwordType(compound, provider).ifPresent(stack -> this.swordType = stack);
+
+        }
+        if (swordType == null) {
+// If no pickType is saved, set a default one (e.g., Stone Pickaxe)
+            swordType = new ItemStack(Items.WOODEN_SWORD);
+        }
         timer = compound.getLong("Timer");
         super.loadAdditional(compound, provider);
     }

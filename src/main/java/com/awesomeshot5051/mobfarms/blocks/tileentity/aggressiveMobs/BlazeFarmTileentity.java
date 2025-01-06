@@ -7,7 +7,6 @@ import com.awesomeshot5051.mobfarms.datacomponents.*;
 import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
-import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.nbt.*;
@@ -23,8 +22,10 @@ import net.neoforged.neoforge.items.*;
 
 import java.util.*;
 
-public class BlazeFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
+import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
+public class BlazeFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
+    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> BLAZE_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/blaze"));
 
     protected NonNullList<ItemStack> inventory;
@@ -59,23 +60,13 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
     }
 
     public static double getBlazeKillTime(BlazeFarmTileentity farm) {
-
-
         // Iterate through the enchantments
-
-        if (farm.getSwordType().isEnchanted()) {
-            ItemEnchantments enchantments = farm.getSwordType().getTagEnchantments();
-            for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
-                if (entry.getKey().is(ResourceLocation.withDefaultNamespace(
-                        "sharpness"
-                ))) {
-                    SwordEnchantments.toggleEnchantment(Enchantments.SHARPNESS, true);
-                }
-            }
-        }
         SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
         int baseValue = 20;
-        if (SwordEnchantments.getEnchantmentStatus(Enchantments.SHARPNESS)) {
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.SHARPNESS)) {
             baseValue = 10;
         }
         return getBlazeSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 6.4) :
@@ -134,11 +125,12 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
         // Chance to drop blaze rod
         double dropChance = 0.5; // 50% chance to drop blaze rod
         List<ItemStack> drops = new ArrayList<>();
-
-        if (serverWorld.random.nextDouble() < dropChance) {
-            int dropCount = serverWorld.random.nextIntBetweenInclusive(1, 4);
-            drops.add(new ItemStack(Items.BLAZE_ROD, dropCount)); // Drop 1 blaze rod
+        int dropCount = 0;
+        dropCount = serverWorld.random.nextIntBetweenInclusive(1, 4);
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING)) {
+            dropCount = serverWorld.random.nextIntBetweenInclusive(3, 6);
         }
+        drops.add(new ItemStack(Items.BLAZE_ROD, dropCount)); // Drop 1 blaze rod
 
         // Optionally, you can add other items to drop here if needed
         // drops.add(new ItemStack(Items.SOME_OTHER_ITEM, 1));

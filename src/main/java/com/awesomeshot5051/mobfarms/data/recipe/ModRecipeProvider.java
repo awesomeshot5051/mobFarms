@@ -43,7 +43,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.STONE)
                 .unlockedBy("has_blaze_rod", has(Items.BLAZE_ROD))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Main.MODID, convertToRegistryName(ModBlocks.BLAZE_FARM.get().getDescriptionId()) + "_recipe"));
-
+CustomShapedRecipeBuilder.shaped(RecipeCategory.MISC,Mo)
     }
 
     private String convertToRegistryName(String block) {

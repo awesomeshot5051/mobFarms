@@ -1,40 +1,31 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs;
 //TODO make it so that whether the meat is cooked is modifiable in-game.
 
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.OutputItemHandler;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.ModTileEntities;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
-import de.maxhenkel.corelib.blockentity.ITickableBlockEntity;
-import de.maxhenkel.corelib.inventory.ItemListInventory;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Cod;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import de.maxhenkel.corelib.blockentity.*;
+import de.maxhenkel.corelib.inventory.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.*;
+import net.minecraft.server.level.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.storage.loot.*;
+import net.minecraft.world.level.storage.loot.parameters.*;
+import net.minecraft.world.phys.*;
+import net.neoforged.neoforge.items.*;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import static com.awesomeshot5051.mobfarms.blocks.passiveMobs.DoesDropCooked.dropsCookedMeat;
+import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class CodFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
@@ -45,6 +36,7 @@ public class CodFarmTileentity extends VillagerTileentity implements ITickableBl
     protected long timer;
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
+    public ItemStack swordType;
 
     public CodFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.COD_FARM.get(), ModBlocks.COD_FARM.get().defaultBlockState(), pos, state);
@@ -98,6 +90,8 @@ public class CodFarmTileentity extends VillagerTileentity implements ITickableBl
         }
     }
 
+    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+
     private List<ItemStack> getDrops() {
         if (!(level instanceof ServerLevel serverWorld)) {
             return Collections.emptyList();
@@ -108,11 +102,14 @@ public class CodFarmTileentity extends VillagerTileentity implements ITickableBl
                 .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
                 .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().lava());
 
-        LootParams lootContext = builder.create(LootContextParamSets.ENTITY);
+        int dropCount = serverWorld.random.nextIntBetweenInclusive(1, 3);
+        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING)) {
+            dropCount = serverWorld.random.nextIntBetweenInclusive(4, 8);
+        }
 
         LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(COD_LOOT_TABLE);
 
-        return Collections.singletonList(new ItemStack(dropsCookedMeat.get() ? Items.COOKED_COD : Items.COD, 3));
+        return Collections.singletonList(new ItemStack(SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.FIRE_ASPECT) ? Items.COOKED_COD : Items.COD, 3));
     }
 
     public Container getOutputInventory() {
