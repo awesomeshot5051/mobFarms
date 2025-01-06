@@ -3,7 +3,7 @@ package com.awesomeshot5051.mobfarms.blocks.passiveMobs;
 import com.awesomeshot5051.mobfarms.blocks.BlockBase;
 import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.GlowSquidFarmTileentity;
-import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
 import com.awesomeshot5051.mobfarms.gui.OutputContainer;
 import com.awesomeshot5051.mobfarms.items.render.passiveMobs.GlowSquidFarmItemRenderer;
 import de.maxhenkel.corelib.block.IItemBlock;
@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,6 +23,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
@@ -38,6 +40,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static net.minecraft.world.item.BlockItem.updateCustomBlockEntityTag;
 
 public class GlowSquidFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
@@ -96,7 +100,7 @@ public class GlowSquidFarmBlock extends BlockBase implements EntityBlock, IItemB
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof farmTileEntity) {
+        if (blockEntity instanceof GlowSquidFarmTileentity farmTileEntity) {
             ItemContainerContents swordType = stack.get(ModDataComponents.SWORD_TYPE);
             if (swordType != null) {
                 farmTileEntity.swordType = swordType.getStackInSlot(0);

@@ -1,0 +1,24 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "P": {
+      "item": "minecraft:pufferfish"
+    },
+    "S": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:pufferfish_farm"
+  }
+}

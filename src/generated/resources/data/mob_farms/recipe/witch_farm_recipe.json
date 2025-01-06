@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "G": {
+      "item": "minecraft:glass_bottle"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "GSR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:witch_farm"
+  }
+}

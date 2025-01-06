@@ -4,6 +4,7 @@ import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
 import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
 import net.minecraft.core.*;
@@ -23,7 +24,7 @@ import java.util.*;
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class PhantomFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> PHANTOM_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/phantom"));
 
     protected NonNullList<ItemStack> inventory;
@@ -40,12 +41,43 @@ public class PhantomFarmTileentity extends VillagerTileentity implements ITickab
         outputItemHandler = new OutputItemHandler(inventory);
     }
 
-    public static int getPhantomSpawnTime() {
-        return Main.SERVER_CONFIG.phantomSpawnTime.get() - 20 * 4;
+    public static double getPhantomSpawnTime(PhantomFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.phantomSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
     }
 
-    public static int getPhantomExplodeTime() {
-        return getPhantomSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    public static double getPhantomExplodeTime(PhantomFarmTileentity farm) {
+        // Iterate through the enchantments
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getPhantomSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 3.2) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
+                                                6.4); // 30 seconds spawn time + 10 seconds kill time
+    }
+
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {
@@ -60,7 +92,7 @@ public class PhantomFarmTileentity extends VillagerTileentity implements ITickab
         timer++;
         setChanged();
 
-        if (timer == getPhantomSpawnTime()) {
+        if (timer == getPhantomSpawnTime(this)) {
 //            // Play phantom spawn sound
 //            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.PHANTOM_PRIMED);
             sync();
@@ -68,7 +100,7 @@ public class PhantomFarmTileentity extends VillagerTileentity implements ITickab
 //            if (timer % 20L == 0L) {
 //                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.PHANTOM_HURT);
 //            }
-        } else if (timer >= getPhantomExplodeTime()) {
+        } else if (timer >= getPhantomExplodeTime(this)) {
             // Play phantom death/explosion sound
 //            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.PHANTOM_DEATH);
             for (ItemStack drop : getDrops()) {

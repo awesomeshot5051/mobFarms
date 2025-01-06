@@ -1,17 +1,17 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.GhastFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.GhastRenderer;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Ghast;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.*;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.*;
 
 public class GhastFarmRenderer extends RendererBase<GhastFarmTileentity> {
 
@@ -41,7 +41,7 @@ public class GhastFarmRenderer extends RendererBase<GhastFarmTileentity> {
 
         Direction direction = Direction.SOUTH;
 
-        if (farm.getTimer() >= GhastFarmTileentity.getGhastSpawnTime() && farm.getTimer() < GhastFarmTileentity.getGhastExplodeTime()) {
+        if (farm.getTimer() >= GhastFarmTileentity.getGhastSpawnTime(farm) && farm.getTimer() < GhastFarmTileentity.getGhastExplodeTime(farm)) {
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1D / 16D, 0.5D);
             matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));

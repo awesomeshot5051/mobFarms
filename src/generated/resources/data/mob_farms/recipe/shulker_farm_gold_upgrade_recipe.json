@@ -1,0 +1,21 @@
+{
+  "type": "mob_farms:upgrade_serializer",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "mob_farms:shulker_farm"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GFG",
+    " G "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:shulker_farm"
+  }
+}

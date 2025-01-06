@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "N": {
+      "item": "minecraft:stone"
+    },
+    "S": {
+      "item": "minecraft:shulker_box"
+    },
+    "U": {
+      "item": "minecraft:shulker_shell"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "SNU"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:shulker_farm"
+  }
+}

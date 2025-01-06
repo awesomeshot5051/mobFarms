@@ -1,0 +1,27 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "C": {
+      "item": "minecraft:cod"
+    },
+    "O": {
+      "item": "minecraft:cooked_cod"
+    },
+    "S": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "CSO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:cod_farm"
+  }
+}

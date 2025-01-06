@@ -1,19 +1,18 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.IronFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.IronGolemRenderer;
-import net.minecraft.client.renderer.entity.ZombieRenderer;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Zombie;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.monster.*;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.*;
 
 public class IronFarmRenderer extends RendererBase<IronFarmTileentity> {
 
@@ -77,12 +76,8 @@ public class IronFarmRenderer extends RendererBase<IronFarmTileentity> {
         zombieRenderer.render(zombie, 0F, 1F, matrixStack, buffer, combinedLight);
         matrixStack.popPose();
 
-        if (farm.getTimer() >= IronFarmTileentity.getGolemSpawnTime() && farm.getTimer() < IronFarmTileentity.getGolemKillTime()) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
+        if (farm.getTimer() >= IronFarmTileentity.getGolemSpawnTime(farm) && farm.getTimer() < IronFarmTileentity.getGolemKillTime(farm)) {
+            renderMob(matrixStack);
             if (farm.getTimer() % 20 < 10) {
                 ironGolem.hurtTime = 20;
             } else {

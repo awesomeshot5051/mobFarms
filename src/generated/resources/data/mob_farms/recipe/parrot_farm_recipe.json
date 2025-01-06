@@ -1,0 +1,24 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "S": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "FSF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:parrot_farm"
+  }
+}

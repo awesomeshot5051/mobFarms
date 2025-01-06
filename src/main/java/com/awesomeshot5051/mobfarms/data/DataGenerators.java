@@ -1,7 +1,7 @@
 package com.awesomeshot5051.mobfarms.data;
 
 import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.data.recipe.*;
+import com.awesomeshot5051.mobfarms.data.providers.recipe.*;
 import net.minecraft.core.*;
 import net.minecraft.data.*;
 import net.neoforged.bus.api.*;

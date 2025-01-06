@@ -1,0 +1,27 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "B": {
+      "item": "minecraft:beef"
+    },
+    "S": {
+      "tag": "minecraft:swords"
+    },
+    "X": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "BSX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:cow_farm"
+  }
+}

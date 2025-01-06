@@ -30,14 +30,14 @@ import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class ChickenFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
     public ItemStack swordType;
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     // Update the loot table for chickens instead of iron golems
     private static final ResourceKey<LootTable> CHICKEN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/chicken"));
     protected NonNullList<ItemStack> inventory;
     protected long timer;
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
-    public ItemStack swordType;
+
 
     public ChickenFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.CHICKEN_FARM.get(), ModBlocks.CHICKEN_FARM.get().defaultBlockState(), pos, state);
@@ -69,7 +69,7 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
             farm.setEnchantmentStatus(farm);
         }
         int baseValue = 20;
-        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.SHARPNESS)) {
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
             baseValue = 10;
         }
         return getChickenSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 6.4) :
@@ -78,6 +78,12 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
                                 sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
                                         sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
                                                 6.4);
+    }
+
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {
@@ -132,7 +138,7 @@ public class ChickenFarmTileentity extends VillagerTileentity implements ITickab
         if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.LOOTING)) {
             dropCount = serverWorld.random.nextIntBetweenInclusive(4, 8);
         }
-        return Collections.singletonList(new ItemStack(SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.FIRE_ASPECT) ? Items.COOKED_CHICKEN : Items.CHICKEN, dropCount));
+        return Collections.singletonList(new ItemStack(SwordEnchantments.getEnchantmentStatus(this.swordEnchantments, Enchantments.FIRE_ASPECT) ? Items.COOKED_CHICKEN : Items.CHICKEN, dropCount));
 
     }
 

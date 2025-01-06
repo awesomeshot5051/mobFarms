@@ -1,0 +1,41 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": [
+      {
+        "item": "minecraft:diamond_sword"
+      },
+      {
+        "item": "minecraft:iron_sword"
+      },
+      {
+        "item": "minecraft:golden_sword"
+      },
+      {
+        "item": "minecraft:netherite_sword"
+      },
+      {
+        "item": "minecraft:stone_sword"
+      }
+    ],
+    "O": {
+      "item": "minecraft:stone"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "###",
+    "#L#",
+    "SOS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:strider_farm"
+  }
+}

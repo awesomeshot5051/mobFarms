@@ -1,17 +1,16 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.WitherFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.WitherBossRenderer;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.boss.wither.*;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.*;
 
 public class WitherFarmRenderer extends RendererBase<WitherFarmTileentity> {
 
@@ -41,12 +40,10 @@ public class WitherFarmRenderer extends RendererBase<WitherFarmTileentity> {
 
         Direction direction = Direction.SOUTH;
 
-        if (farm.getTimer() >= WitherFarmTileentity.getWitherSpawnTime() && farm.getTimer() < WitherFarmTileentity.getWitherExplodeTime()) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
+        if (farm.getTimer() >= WitherFarmTileentity.getWitherSpawnTime(farm) && farm.getTimer() < WitherFarmTileentity.getWitherExplodeTime(farm)) {
+            renderMob(matrixStack);
+            // Adjust the scaling factor here
+            matrixStack.scale(0.6F, 0.6F, 0.6F); // Change to 0.09F
             witherRenderer.render(wither, 0F, 1F, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }

@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "E": {
+      "item": "minecraft:stone"
+    },
+    "L": {
+      "tag": "minecraft:swords"
+    },
+    "N": {
+      "item": "minecraft:spider_eye"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "###",
+    "#L#",
+    "SEN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:spider_farm"
+  }
+}

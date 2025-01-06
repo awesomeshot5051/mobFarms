@@ -4,6 +4,7 @@ import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
 import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
 import net.minecraft.core.*;
@@ -24,7 +25,7 @@ import java.util.*;
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class MagmaCubeFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> MAGMACUBE_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/magma_cube"));
 
     protected NonNullList<ItemStack> inventory;
@@ -41,12 +42,43 @@ public class MagmaCubeFarmTileentity extends VillagerTileentity implements ITick
         outputItemHandler = new OutputItemHandler(inventory);
     }
 
-    public static int getMagmaCubeSpawnTime() {
-        return Main.SERVER_CONFIG.magmaCubeSpawnTime.get() - 20 * 4;
+    public static double getMagmaCubeSpawnTime(MagmaCubeFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.magmaCubeSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
     }
 
-    public static int getMagmaCubeExplodeTime() {
-        return getMagmaCubeSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    public static double getMagmaCubeExplodeTime(MagmaCubeFarmTileentity farm) {
+        // Iterate through the enchantments
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getMagmaCubeSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 3.2) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
+                                                6.4); // 30 seconds spawn time + 10 seconds kill time
+    }
+
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {
@@ -64,7 +96,7 @@ public class MagmaCubeFarmTileentity extends VillagerTileentity implements ITick
         timer++;
         setChanged();
 
-        if (timer == getMagmaCubeSpawnTime()) {
+        if (timer == getMagmaCubeSpawnTime(this)) {
 //            // Play magmaCube spawn sound
 //            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.MAGMACUBE_PRIMED);
             sync();
@@ -72,7 +104,7 @@ public class MagmaCubeFarmTileentity extends VillagerTileentity implements ITick
 //            if (timer % 20L == 0L) {
 //                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.MAGMACUBE_HURT);
 //            }
-        } else if (timer >= getMagmaCubeExplodeTime()) {
+        } else if (timer >= getMagmaCubeExplodeTime(this)) {
             // Play magmaCube death/explosion sound
 //            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.MAGMACUBE_DEATH);
             for (ItemStack drop : getDrops()) {

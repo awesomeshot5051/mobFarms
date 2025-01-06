@@ -1,0 +1,27 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "B": {
+      "item": "minecraft:beef"
+    },
+    "R": {
+      "item": "minecraft:red_mushroom"
+    },
+    "S": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "BSR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:mooshroom_farm"
+  }
+}

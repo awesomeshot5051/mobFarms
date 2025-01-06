@@ -1,0 +1,35 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "P": [
+      {
+        "item": "minecraft:porkchop"
+      },
+      {
+        "item": "minecraft:cooked_porkchop"
+      }
+    ],
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "Y": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "YSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:hoglin_farm"
+  }
+}

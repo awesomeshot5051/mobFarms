@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "A": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "P": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "PSA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:elder_guardian_farm"
+  }
+}

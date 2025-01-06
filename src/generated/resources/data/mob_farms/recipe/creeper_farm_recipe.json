@@ -1,0 +1,44 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:gunpowder"
+    },
+    "F": [
+      {
+        "item": "minecraft:wooden_sword"
+      },
+      {
+        "item": "minecraft:stone_sword"
+      },
+      {
+        "item": "minecraft:iron_sword"
+      },
+      {
+        "item": "minecraft:golden_sword"
+      },
+      {
+        "item": "minecraft:diamond_sword"
+      },
+      {
+        "item": "minecraft:netherite_sword"
+      }
+    ],
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GFG",
+    "BSB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:creeper_farm"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "mob_farms:upgrade_serializer",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "F": {
+      "item": "mob_farms:zoglin_farm"
+    }
+  },
+  "pattern": [
+    " D ",
+    "DFD",
+    " D "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:zoglin_farm"
+  }
+}

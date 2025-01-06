@@ -5,7 +5,7 @@ package com.awesomeshot5051.mobfarms;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
-import com.awesomeshot5051.mobfarms.data.recipe.recipe.*;
+import com.awesomeshot5051.mobfarms.data.providers.recipe.recipe.*;
 import com.awesomeshot5051.mobfarms.datacomponents.*;
 import com.awesomeshot5051.mobfarms.events.*;
 import com.awesomeshot5051.mobfarms.gui.*;

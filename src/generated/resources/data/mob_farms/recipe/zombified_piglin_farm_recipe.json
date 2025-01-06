@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "L": {
+      "tag": "minecraft:swords"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#L#",
+    "gSG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:zombified_piglin_farm"
+  }
+}

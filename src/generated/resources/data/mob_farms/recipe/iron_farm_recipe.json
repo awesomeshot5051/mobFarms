@@ -1,0 +1,27 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "minecraft:planks"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "tag": "minecraft:swords"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GLG",
+    "ISI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:iron_farm"
+  }
+}

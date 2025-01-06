@@ -25,15 +25,13 @@ import java.util.*;
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class BlazeFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> BLAZE_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/blaze"));
-
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public ItemStack swordType;
     protected NonNullList<ItemStack> inventory;
     protected long timer;
-
     protected ItemStackHandler itemHandler;
     protected OutputItemHandler outputItemHandler;
-    public ItemStack swordType;
 
     public BlazeFarmTileentity(BlockPos pos, BlockState state) {
         super(ModTileEntities.BLAZE_FARM.get(), ModBlocks.BLAZE_FARM.get().defaultBlockState(), pos, state);
@@ -41,6 +39,7 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
         swordType = new ItemStack(Items.WOODEN_SWORD);
+//        this.swordEnchantments = initializeSwordEnchantments();
     }
 
     public static double getBlazeSpawnTime(BlazeFarmTileentity farm) {
@@ -54,11 +53,6 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
                                                         : 1);
     }
 
-    @Override
-    public ItemStack getSwordType() {
-        return swordType;
-    }
-
     public static double getBlazeKillTime(BlazeFarmTileentity farm) {
         // Iterate through the enchantments
         SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
@@ -66,15 +60,26 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
             farm.setEnchantmentStatus(farm);
         }
         int baseValue = 20;
-        if (SwordEnchantments.getEnchantmentStatus(swordEnchantments, Enchantments.SHARPNESS)) {
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
             baseValue = 10;
         }
-        return getBlazeSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 6.4) :
+        return getBlazeSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 3.2) :
                 sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
                         sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
                                 sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
                                         sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
                                                 6.4);
+    }
+
+
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {

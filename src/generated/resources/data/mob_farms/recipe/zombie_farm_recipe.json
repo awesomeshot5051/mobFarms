@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "R": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "Z": {
+      "item": "minecraft:zombie_head"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "RSZ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:zombie_farm"
+  }
+}

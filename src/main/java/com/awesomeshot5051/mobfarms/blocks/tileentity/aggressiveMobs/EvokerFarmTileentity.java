@@ -4,6 +4,7 @@ import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
 import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
 import net.minecraft.core.*;
@@ -27,7 +28,7 @@ import java.util.*;
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class EvokerFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> EVOKER_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/evoker"));
 
     protected NonNullList<ItemStack> inventory;
@@ -44,12 +45,42 @@ public class EvokerFarmTileentity extends VillagerTileentity implements ITickabl
         outputItemHandler = new OutputItemHandler(inventory);
     }
 
-    public static int getEvokerSpawnTime() {
-        return Main.SERVER_CONFIG.evokerSpawnTime.get() - 20 * 4;
+    public static double getEvokerSpawnTime(EvokerFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.evokerSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
     }
 
-    public static int getEvokerExplodeTime() {
-        return getEvokerSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    public static double getEvokerExplodeTime(EvokerFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getEvokerSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 3.2) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
+                                                6.4); // 30 seconds spawn time + 10 seconds kill time
+    }
+
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {
@@ -64,7 +95,7 @@ public class EvokerFarmTileentity extends VillagerTileentity implements ITickabl
         timer++;
         setChanged();
 
-        if (timer == getEvokerSpawnTime()) {
+        if (timer == getEvokerSpawnTime(this)) {
 //            // Play evoker spawn sound
 //            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.EVOKER_PRIMED);
             sync();
@@ -72,7 +103,7 @@ public class EvokerFarmTileentity extends VillagerTileentity implements ITickabl
 //            if (timer % 20L == 0L) {
 //                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.EVOKER_HURT);
 //            }
-        } else if (timer >= getEvokerExplodeTime()) {
+        } else if (timer >= getEvokerExplodeTime(this)) {
             // Play evoker death/explosion sound
 //            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.EVOKER_DEATH);
             for (ItemStack drop : getDrops()) {

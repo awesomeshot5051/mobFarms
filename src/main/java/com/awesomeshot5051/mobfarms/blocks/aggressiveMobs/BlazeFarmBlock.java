@@ -104,21 +104,7 @@ public class BlazeFarmBlock extends BlockBase implements EntityBlock, IItemBlock
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level1, BlockState state, BlockEntityType<T> type) {
         return new SimpleBlockEntityTicker<>(); // Keeps default behavior
     }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        super.setPlacedBy(level, pos, state, placer, stack);
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof farmTileEntity) {
-            ItemContainerContents swordType = stack.get(ModDataComponents.SWORD_TYPE);
-            if (swordType != null) {
-                farmTileEntity.swordType = swordType.getStackInSlot(0);
-                farmTileEntity.setChanged();
-                updateCustomBlockEntityTag(level, placer instanceof Player ? (Player) placer : null, pos, swordType.getStackInSlot(0));
-                level.sendBlockUpdated(pos, state, state, 3);
-            }
-        }
-    }
+    
 
     @Nullable
     @Override

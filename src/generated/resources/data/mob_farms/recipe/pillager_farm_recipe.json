@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "O": {
+      "item": "minecraft:ominous_bottle"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "ESO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:pillager_farm"
+  }
+}

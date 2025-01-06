@@ -1,17 +1,17 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.GoatFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.GoatRenderer;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.goat.Goat;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.goat.*;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.*;
 
 public class GoatFarmRenderer extends RendererBase<GoatFarmTileentity> {
 
@@ -61,12 +61,8 @@ public class GoatFarmRenderer extends RendererBase<GoatFarmTileentity> {
         matrixStack.scale(0.3F, 0.3F, 0.3F);
         matrixStack.popPose();
 
-        if (farm.getTimer() >= GoatFarmTileentity.getGoatSpawnTime() && farm.getTimer() < GoatFarmTileentity.getGoatKillTime()) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
+        if (farm.getTimer() >= GoatFarmTileentity.getGoatSpawnTime(farm) && farm.getTimer() < GoatFarmTileentity.getGoatKillTime(farm)) {
+            renderMob(matrixStack);
             if (farm.getTimer() % 20 < 10) {
                 goat.hurtTime = 20;
             } else {

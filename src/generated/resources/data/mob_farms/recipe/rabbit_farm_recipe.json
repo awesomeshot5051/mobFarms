@@ -1,0 +1,32 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "K": [
+      {
+        "item": "minecraft:rabbit_foot"
+      },
+      {
+        "item": "minecraft:rabbit_hide"
+      }
+    ],
+    "R": {
+      "item": "minecraft:rabbit"
+    },
+    "S": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "RSK"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:rabbit_farm"
+  }
+}

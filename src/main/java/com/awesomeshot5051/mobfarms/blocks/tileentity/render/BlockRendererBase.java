@@ -30,6 +30,7 @@ public class BlockRendererBase<T extends FakeWorldTileentity> implements BlockEn
 
     @Override
     public int getViewDistance() {
-        return Main.CLIENT_CONFIG.blockRenderDistance.get();
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.CLIENT_CONFIG.blockRenderDistance.get();
     }
 }

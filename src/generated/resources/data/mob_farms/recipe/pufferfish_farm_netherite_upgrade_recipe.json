@@ -1,0 +1,21 @@
+{
+  "type": "mob_farms:upgrade_serializer",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "mob_farms:pufferfish_farm"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    " N ",
+    "NFN",
+    " N "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:pufferfish_farm"
+  }
+}

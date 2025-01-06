@@ -1,19 +1,18 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.SquidFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import net.minecraft.client.model.SquidModel;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.SquidRenderer;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Squid;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.model.geom.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.*;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.*;
 
 public class SquidFarmRenderer extends RendererBase<SquidFarmTileentity> {
 
@@ -38,18 +37,14 @@ public class SquidFarmRenderer extends RendererBase<SquidFarmTileentity> {
         SquidRenderer squidRenderer = squidRendererCache.get();
         if (squidRenderer == null) {
             SquidModel<Squid> squidModel = new SquidModel<>(createEntityRenderer().bakeLayer(ModelLayers.SQUID));
-            squidRenderer = new SquidRenderer(createEntityRenderer(),squidModel);
+            squidRenderer = new SquidRenderer(createEntityRenderer(), squidModel);
             squidRendererCache = new WeakReference<>(squidRenderer);
         }
 
         Direction direction = Direction.SOUTH;
 
-        if (farm.getTimer() >= SquidFarmTileentity.getSquidSpawnTime() && farm.getTimer() < SquidFarmTileentity.getSquidKillTime()) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
+        if (farm.getTimer() >= SquidFarmTileentity.getSquidSpawnTime(farm) && farm.getTimer() < SquidFarmTileentity.getSquidKillTime(farm)) {
+            renderMob(matrixStack);
             squidRenderer.render(squid, 0F, 1F, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }

@@ -78,76 +78,76 @@ public class ServerConfig extends ConfigBase {
                 .defineInRange("chicken_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         codSpawnTime = builder.comment("The time in ticks the cod farm takes to spawn a cod")
-                .defineInRange("cod_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("cod_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         cowSpawnTime = builder.comment("The time in ticks the cow farm takes to spawn a cow")
-                .defineInRange("cow_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("cow_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         glowSquidSpawnTime = builder.comment("The time in ticks the glow squid farm takes to spawn a glow squid")
-                .defineInRange("glow_squid_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("glow_squid_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         horseSpawnTime = builder.comment("The time in ticks the horse farm takes to spawn a horse")
-                .defineInRange("horse_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("horse_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         mooshroomSpawnTime = builder.comment("The time in ticks the mooshroom farm takes to spawn a mooshroom")
-                .defineInRange("mooshroom_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("mooshroom_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         parrotSpawnTime = builder.comment("The time in ticks the parrot farm takes to spawn a parrot")
-                .defineInRange("parrot_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("parrot_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         pigSpawnTime = builder.comment("The time in ticks the pig farm takes to spawn a pig")
-                .defineInRange("pig_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("pig_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         pufferfishSpawnTime = builder.comment("The time in ticks the pufferfish farm takes to spawn a pufferfish")
-                .defineInRange("pufferfish_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("pufferfish_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         rabbitSpawnTime = builder.comment("The time in ticks the rabbit farm takes to spawn a rabbit")
-                .defineInRange("rabbit_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("rabbit_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         salmonSpawnTime = builder.comment("The time in ticks the salmon farm takes to spawn a salmon")
-                .defineInRange("salmon_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("salmon_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         sheepSpawnTime = builder.comment("The time in ticks the sheep farm takes to spawn a sheep")
-                .defineInRange("sheep_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("sheep_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         snowGolemSpawnTime = builder.comment("The time in ticks the snow golem farm takes to spawn a snow golem")
-                .defineInRange("snow_golem_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("snow_golem_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         squidSpawnTime = builder.comment("The time in ticks the squid farm takes to spawn a squid")
-                .defineInRange("squid_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("squid_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         striderSpawnTime = builder.comment("The time in ticks the strider farm takes to spawn a strider")
-                .defineInRange("strider_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("strider_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         tropicalFishSpawnTime = builder.comment("The time in ticks the tropical fish farm takes to spawn a tropical fish")
-                .defineInRange("tropical_fish_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("tropical_fish_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         turtleSpawnTime = builder.comment("The time in ticks the turtle farm takes to spawn a turtle")
-                .defineInRange("turtle_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("turtle_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         //neutral mobs
         endermanSpawnTime = builder
                 .comment("The time in ticks the enderman farm takes to spawn an enderman")
-                .defineInRange("enderman_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("enderman_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         goatSpawnTime = builder
                 .comment("The time in ticks the goat farm takes to spawn a goat")
-                .defineInRange("goat_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("goat_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         golemSpawnTime = builder
                 .comment("The time in ticks the iron farm takes to spawn an iron golem")
-                .defineInRange("iron_golem_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("iron_golem_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         piglinSpawnTime = builder
                 .comment("The time in ticks the piglin farm takes to spawn a piglin")
-                .defineInRange("piglin_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("piglin_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         spiderSpawnTime = builder
                 .comment("The time in ticks the spider farm takes to spawn a spider")
-                .defineInRange("spider_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("spider_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
         zombifiedPiglinSpawnTime = builder
                 .comment("The time in ticks the zombified piglin farm takes to spawn a zombified piglin")
-                .defineInRange("zombified_piglin_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("zombified_piglin_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
 
         //aggressive mobs
@@ -157,94 +157,94 @@ public class ServerConfig extends ConfigBase {
 
         creeperSpawnTime = builder
                 .comment("The time in ticks the creeper farm takes to spawn a creeper")
-                .defineInRange("creeper_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("creeper_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         drownedSpawnTime = builder
                 .comment("The time in ticks the drowned farm takes to spawn a drowned")
-                .defineInRange("drowned_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("drowned_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         elderGuardianSpawnTime = builder
                 .comment("The time in ticks the elder guardian farm takes to spawn an elder guardian")
-                .defineInRange("elder_guardian_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("elder_guardian_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         evokerSpawnTime = builder
                 .comment("The time in ticks the evoker farm takes to spawn an evoker")
-                .defineInRange("evoker_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("evoker_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         ghastSpawnTime = builder
                 .comment("The time in ticks the ghast farm takes to spawn a ghast")
-                .defineInRange("ghast_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("ghast_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         guardianSpawnTime = builder
                 .comment("The time in ticks the guardian farm takes to spawn a guardian")
-                .defineInRange("guardian_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("guardian_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         hoglinSpawnTime = builder
                 .comment("The time in ticks the hoglin farm takes to spawn a hoglin")
-                .defineInRange("hoglin_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("hoglin_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         illusionerSpawnTime = builder
                 .comment("The time in ticks the illusioner farm takes to spawn an illusioner")
-                .defineInRange("illusioner_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("illusioner_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         magmaCubeSpawnTime = builder
                 .comment("The time in ticks the magma cube farm takes to spawn a magma cube")
-                .defineInRange("magma_cube_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("magma_cube_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         phantomSpawnTime = builder
                 .comment("The time in ticks the phantom farm takes to spawn a phantom")
-                .defineInRange("phantom_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("phantom_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         pillagerSpawnTime = builder
                 .comment("The time in ticks the pillager farm takes to spawn a pillager")
-                .defineInRange("pillager_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("pillager_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         ravagerSpawnTime = builder
                 .comment("The time in ticks the ravager farm takes to spawn a ravager")
-                .defineInRange("ravager_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("ravager_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         shulkerSpawnTime = builder
                 .comment("The time in ticks the shulker farm takes to spawn a shulker")
-                .defineInRange("shulker_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("shulker_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         skeletonSpawnTime = builder
                 .comment("The time in ticks the skeleton farm takes to spawn a skeleton")
-                .defineInRange("skeleton_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("skeleton_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         slimeSpawnTime = builder
                 .comment("The time in ticks the slime farm takes to spawn a slime")
-                .defineInRange("slime_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("slime_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         vexSpawnTime = builder
                 .comment("The time in ticks the vex farm takes to spawn a vex")
-                .defineInRange("vex_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("vex_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         vindicatorSpawnTime = builder
                 .comment("The time in ticks the vindicator farm takes to spawn a vindicator")
-                .defineInRange("vindicator_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("vindicator_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         wardenSpawnTime = builder
                 .comment("The time in ticks the warden farm takes to spawn a warden")
-                .defineInRange("warden_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("warden_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         witchSpawnTime = builder
                 .comment("The time in ticks the witch farm takes to spawn a witch")
-                .defineInRange("witch_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("witch_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         witherSkeletonSpawnTime = builder
                 .comment("The time in ticks the wither skeleton farm takes to spawn a wither skeleton")
-                .defineInRange("wither_skeleton_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("wither_skeleton_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
         witherSpawnTime = builder
                 .comment("The time in ticks the wither skeleton farm takes to spawn a wither skeleton")
-                .defineInRange("wither_skeleton_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("wither_skeleton_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         zoglinSpawnTime = builder
                 .comment("The time in ticks the zoglin farm takes to spawn a zoglin")
-                .defineInRange("zoglin_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("zoglin_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         zombieSpawnTime = builder
                 .comment("The time in ticks the zombie farm takes to spawn a zombie")
-                .defineInRange("zombie_farm.spawn_time", 20 * 3, 20 * 3, 20 * 3);
+                .defineInRange("zombie_farm.spawn_time", 20 * 30, 20 * 30, 20 * 30);
 
         universalReputation = builder
                 .comment(

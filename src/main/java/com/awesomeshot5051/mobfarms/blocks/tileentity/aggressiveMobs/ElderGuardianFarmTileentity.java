@@ -4,6 +4,7 @@ import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
 import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
 import net.minecraft.core.*;
@@ -12,14 +13,10 @@ import net.minecraft.nbt.*;
 import net.minecraft.resources.*;
 import net.minecraft.server.level.*;
 import net.minecraft.world.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.storage.loot.*;
-import net.minecraft.world.level.storage.loot.parameters.*;
-import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.items.*;
 
 import java.util.*;
@@ -27,7 +24,7 @@ import java.util.*;
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class ElderGuardianFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> ELDERGUARDIAN_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/elder_guardian"));
 
     protected NonNullList<ItemStack> inventory;
@@ -44,12 +41,51 @@ public class ElderGuardianFarmTileentity extends VillagerTileentity implements I
         outputItemHandler = new OutputItemHandler(inventory);
     }
 
-    public static int getElderGuardianSpawnTime() {
-        return Main.SERVER_CONFIG.elderGuardianSpawnTime.get() - 20 * 4;
+    public static double getElderGuardianSpawnTime(ElderGuardianFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.blazeSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
     }
 
-    public static int getElderGuardianExplodeTime() {
-        return getElderGuardianSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    public static double getElderGuardianExplodeTime(ElderGuardianFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        // Iterate through the enchantments
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getElderGuardianSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 3.2) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
+                                                6.4); // 30 seconds spawn time + 10 seconds kill time
+    }
+
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {
@@ -64,7 +100,7 @@ public class ElderGuardianFarmTileentity extends VillagerTileentity implements I
         timer++;
         setChanged();
 
-        if (timer == getElderGuardianSpawnTime()) {
+        if (timer == getElderGuardianSpawnTime(this)) {
 //            // Play elderGuardian spawn sound
 //            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ELDERGUARDIAN_PRIMED);
             sync();
@@ -72,7 +108,7 @@ public class ElderGuardianFarmTileentity extends VillagerTileentity implements I
 //            if (timer % 20L == 0L) {
 //                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ELDERGUARDIAN_HURT);
 //            }
-        } else if (timer >= getElderGuardianExplodeTime()) {
+        } else if (timer >= getElderGuardianExplodeTime(this)) {
             // Play elderGuardian death/explosion sound
 //            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ELDERGUARDIAN_DEATH);
             for (ItemStack drop : getDrops()) {
@@ -94,10 +130,6 @@ public class ElderGuardianFarmTileentity extends VillagerTileentity implements I
             return Collections.emptyList();
         }
 
-        LootParams.Builder builder = new LootParams.Builder(serverWorld)
-                .withParameter(LootContextParams.THIS_ENTITY, new ElderGuardian(EntityType.ELDER_GUARDIAN, level))
-                .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
-                .withParameter(LootContextParams.DAMAGE_SOURCE, serverWorld.damageSources().explosion(null));
 
         List<ItemStack> drops = new ArrayList<>();
         int dropCount = serverWorld.random.nextIntBetweenInclusive(1, 3);

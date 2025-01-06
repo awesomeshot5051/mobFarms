@@ -1,17 +1,16 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.SkeletonFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.SkeletonRenderer;
-import net.minecraft.core.Direction;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Skeleton;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.*;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.*;
 
 public class SkeletonFarmRenderer extends RendererBase<SkeletonFarmTileentity> {
 
@@ -41,12 +40,8 @@ public class SkeletonFarmRenderer extends RendererBase<SkeletonFarmTileentity> {
 
         Direction direction = Direction.SOUTH;
 
-        if (farm.getTimer() >= SkeletonFarmTileentity.getSkeletonSpawnTime() && farm.getTimer() < SkeletonFarmTileentity.getSkeletonExplodeTime()) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
+        if (farm.getTimer() >= SkeletonFarmTileentity.getSkeletonSpawnTime(farm) && farm.getTimer() < SkeletonFarmTileentity.getSkeletonExplodeTime(farm)) {
+            renderMob(matrixStack);
             skeletonRenderer.render(skeleton, 0F, 1F, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }

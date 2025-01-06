@@ -4,6 +4,7 @@ import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
 import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
 import net.minecraft.core.*;
@@ -23,7 +24,7 @@ import java.util.*;
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
 public class RavagerFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     private static final ResourceKey<LootTable> RAVAGER_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/ravager"));
 
     protected NonNullList<ItemStack> inventory;
@@ -40,12 +41,43 @@ public class RavagerFarmTileentity extends VillagerTileentity implements ITickab
         outputItemHandler = new OutputItemHandler(inventory);
     }
 
-    public static int getRavagerSpawnTime() {
-        return Main.SERVER_CONFIG.ravagerSpawnTime.get() - 20 * 4;
+    public static double getRavagerSpawnTime(RavagerFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.ravagerSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
     }
 
-    public static int getRavagerExplodeTime() {
-        return getRavagerSpawnTime() + 20 * 4; // 30 seconds spawn time + 10 seconds kill time
+    public static double getRavagerExplodeTime(RavagerFarmTileentity farm) {
+        // Iterate through the enchantments
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getRavagerSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 3.2) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
+                                                6.4); // 30 seconds spawn time + 10 seconds kill time
+    }
+
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {
@@ -60,7 +92,7 @@ public class RavagerFarmTileentity extends VillagerTileentity implements ITickab
         timer++;
         setChanged();
 
-        if (timer == getRavagerSpawnTime()) {
+        if (timer == getRavagerSpawnTime(this)) {
 //            // Play ravager spawn sound
 //            BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.RAVAGER_PRIMED);
             sync();
@@ -68,7 +100,7 @@ public class RavagerFarmTileentity extends VillagerTileentity implements ITickab
 //            if (timer % 20L == 0L) {
 //                BlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.RAVAGER_HURT);
 //            }
-        } else if (timer >= getRavagerExplodeTime()) {
+        } else if (timer >= getRavagerExplodeTime(this)) {
             // Play ravager death/explosion sound
 //            // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.RAVAGER_DEATH);
             for (ItemStack drop : getDrops()) {

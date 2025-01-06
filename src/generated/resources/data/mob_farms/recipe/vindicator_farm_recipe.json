@@ -1,0 +1,40 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "E": [
+      {
+        "item": "minecraft:emerald"
+      },
+      {
+        "item": "minecraft:enchanted_book"
+      }
+    ],
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "I": [
+      {
+        "item": "minecraft:iron_shovel"
+      },
+      {
+        "item": "minecraft:iron_axe"
+      }
+    ],
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "ISE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:vindicator_farm"
+  }
+}

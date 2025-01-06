@@ -5,6 +5,7 @@ import com.awesomeshot5051.mobfarms.*;
 import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
 import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.inventory.*;
 import net.minecraft.core.*;
@@ -26,7 +27,7 @@ import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 public class TropicalFishFarmTileentity extends VillagerTileentity implements ITickableBlockEntity {
 
     private static final ResourceKey<LootTable> TROPICAL_FISH_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.withDefaultNamespace("entities/tropical_fish"));
-    public static Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
+    public Map<ResourceKey<Enchantment>, Boolean> swordEnchantments = initializeSwordEnchantments();
     protected NonNullList<ItemStack> inventory;
 
     protected long timer;
@@ -42,12 +43,43 @@ public class TropicalFishFarmTileentity extends VillagerTileentity implements IT
         outputItemHandler = new OutputItemHandler(inventory);
     }
 
-    public static int getTropicalFishSpawnTime() {
-        return Main.SERVER_CONFIG.tropicalFishSpawnTime.get() - 20 * 10;
+    public static double getTropicalFishSpawnTime(TropicalFishFarmTileentity farm) {
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        return (double) Main.SERVER_CONFIG.tropicalFishSpawnTime.get() /
+                (sword.equals(SwordType.NETHERITE) ? 30 :
+                        sword.equals(SwordType.DIAMOND) ? 25 :
+                                sword.equals(SwordType.GOLDEN) ? 20 :
+                                        sword.equals(SwordType.IRON) ? 15 :
+                                                sword.equals(SwordType.STONE) ? 10
+                                                        : 1);
     }
 
-    public static int getTropicalFishKillTime() {
-        return getTropicalFishSpawnTime() + 20 * 10;
+    public static double getTropicalFishKillTime(TropicalFishFarmTileentity farm) {
+        // Iterate through the enchantments
+        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
+        if (farm.getSwordType().isEnchanted()) {
+            farm.setEnchantmentStatus(farm);
+        }
+        int baseValue = 20;
+        if (SwordEnchantments.getEnchantmentStatus(farm.swordEnchantments, Enchantments.SHARPNESS)) {
+            baseValue = 10;
+        }
+        return getTropicalFishSpawnTime(farm) + (sword.equals(SwordType.NETHERITE) ? (baseValue * 3.2) :
+                sword.equals(SwordType.DIAMOND) ? (baseValue * 5.6) :
+                        sword.equals(SwordType.IRON) ? (baseValue * 4.8) :
+                                sword.equals(SwordType.STONE) ? (baseValue * 6.4) :
+                                        sword.equals(SwordType.WOODEN) ? (baseValue * 6.4) :
+                                                6.4);
+    }
+
+    @Override
+    public ItemStack getSwordType() {
+        return swordType;
+    }
+
+    @Override
+    protected Map<ResourceKey<Enchantment>, Boolean> getEnchantments() {
+        return swordEnchantments;
     }
 
     public long getTimer() {
@@ -66,14 +98,10 @@ public class TropicalFishFarmTileentity extends VillagerTileentity implements IT
         timer++;
         setChanged();
 
-        if (timer == getTropicalFishSpawnTime()) {
+        if (timer == getTropicalFishSpawnTime(this)) {
             // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);
             sync();
-        } else if (timer > getTropicalFishSpawnTime() && timer < getTropicalFishKillTime()) {
-            if (timer % 20L == 0L) {
-                // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.TROPICAL_FISH_HURT);
-            }
-        } else if (timer >= getTropicalFishKillTime()) {
+        } else if (timer >= getTropicalFishKillTime(this)) {
             // VillagerBlockBase.playVillagerSound(level, getBlockPos(), SoundEvents.TROPICAL_FISH_DEATH);
             for (ItemStack drop : getDrops()) {
                 for (int i = 0; i < itemHandler.getSlots(); i++) {

@@ -1,0 +1,27 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "M": {
+      "item": "minecraft:stone"
+    },
+    "S": {
+      "item": "minecraft:sculk_catalyst"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "SMS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:warden_farm"
+  }
+}

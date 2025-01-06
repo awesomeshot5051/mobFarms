@@ -1,0 +1,26 @@
+{
+  "type": "mob_farms:upgrade_serializer",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "mob_farms:blaze_farm"
+    },
+    "S": [
+      {
+        "item": "minecraft:cobblestone"
+      },
+      {
+        "item": "minecraft:cobbled_deepslate"
+      }
+    ]
+  },
+  "pattern": [
+    " S ",
+    "SFS",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:blaze_farm"
+  }
+}

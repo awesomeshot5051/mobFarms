@@ -43,11 +43,7 @@ public class ChickenFarmRenderer extends RendererBase<ChickenFarmTileentity> {
         Direction direction = Direction.SOUTH;
 
         if (farm.getTimer() >= ChickenFarmTileentity.getChickenSpawnTime(farm) && farm.getTimer() < ChickenFarmTileentity.getChickenKillTime(farm)) {
-            matrixStack.pushPose();
-            matrixStack.translate(0.5D, 1D / 16D, 0.5D);
-            matrixStack.mulPose(Axis.YP.rotationDegrees(-direction.toYRot()));
-            matrixStack.translate(0D, 0D, 3D / 16D);
-            matrixStack.scale(0.3F, 0.3F, 0.3F);
+           renderMob(matrixStack);
             chickenRenderer.render(chicken, 0F, 1F, matrixStack, buffer, combinedLight);
             matrixStack.popPose();
         }

@@ -1,0 +1,27 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "C": {
+      "item": "minecraft:cooked_porkchop"
+    },
+    "P": {
+      "item": "minecraft:porkchop"
+    },
+    "S": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "PSC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:pig_farm"
+  }
+}

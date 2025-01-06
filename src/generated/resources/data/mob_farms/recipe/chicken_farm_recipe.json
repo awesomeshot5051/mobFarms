@@ -1,0 +1,35 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_pane"
+    },
+    "C": [
+      {
+        "item": "minecraft:chicken"
+      },
+      {
+        "item": "minecraft:cooked_chicken"
+      }
+    ],
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "L": {
+      "tag": "minecraft:swords"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#L#",
+    "CSF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:chicken_farm"
+  }
+}
