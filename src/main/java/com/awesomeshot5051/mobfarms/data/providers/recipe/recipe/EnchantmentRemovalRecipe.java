@@ -1,22 +1,30 @@
 package com.awesomeshot5051.mobfarms.data.providers.recipe.recipe;
 
-import com.awesomeshot5051.mobfarms.datacomponents.*;
-import com.awesomeshot5051.mobfarms.items.*;
-import com.mojang.serialization.*;
-import com.mojang.serialization.codecs.*;
-import net.minecraft.core.*;
-import net.minecraft.core.component.*;
-import net.minecraft.network.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
+import com.awesomeshot5051.mobfarms.datacomponents.ModDataComponents;
+import com.awesomeshot5051.mobfarms.items.ModItems;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.item.enchantment.*;
-import net.minecraft.world.level.block.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import static com.awesomeshot5051.mobfarms.blocks.ModBlocks.*;
 
@@ -112,7 +120,7 @@ public class EnchantmentRemovalRecipe extends ShapelessRecipe {
         List<ItemStack> ingredient = input.items();
         ItemContainerContents swordContents = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));   // Placeholder for pick contents
         // Check the first and last ingredients for the SWORD_TYPE component
-        ItemStack farm = new ItemStack(Items.AIR);
+        farm = new ItemStack(Items.AIR);
         for (ItemStack ingrnt : ingredient) {
             if (farmBlocks.contains(ingrnt.getItem())) {
                 swordContents = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(ingrnt.getOrDefault(ModDataComponents.SWORD_TYPE, swordContents)).copyOne()));
