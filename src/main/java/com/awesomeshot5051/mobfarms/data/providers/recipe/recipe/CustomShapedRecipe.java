@@ -26,7 +26,6 @@ public class CustomShapedRecipe extends ShapedRecipe {
     final CraftingBookCategory category;
     final boolean showNotification;
     final ItemStack result;
-    private ItemContainerContents swordContents;
     private ItemStack result2;
 
     public CustomShapedRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result, boolean showNotification) {
@@ -64,7 +63,7 @@ public class CustomShapedRecipe extends ShapedRecipe {
         List<ItemStack> itemStacks = new ArrayList<>();
         itemStacks.add(getResultItem(registries));
         // Set the pick type in the result item's data
-        swordContents = ItemContainerContents.fromItems(Collections.singletonList(swordStack));
+        ItemContainerContents swordContents = ItemContainerContents.fromItems(Collections.singletonList(swordStack));
 //            BlockRendererBase.setPickaxeType(Block.byItem(result.getItem().getDefaultInstance().getItem()), swordStack);
         result2 = getResultItem(registries).copy(); // Copy the result item to avoid modifying the original
         if (craftingInput.getItem(4).isEnchanted()) {
@@ -73,8 +72,8 @@ public class CustomShapedRecipe extends ShapedRecipe {
         //            NonNullList<ItemStack> p_00115 = NonNullList.withSize(1, swordStack);
 //            ContainerHelper.saveAllItems(new CompoundTag(), p_00115, registries);
 //            PickTypeData.getOrCreate(result);
-        result2.set(swordTypeComponent, swordContents);
-        result2.set(DataComponents.STORED_ENCHANTMENTS,enchantments);
+        result2.set(ModDataComponents.SWORD_TYPE, swordContents);
+        result2.set(DataComponents.STORED_ENCHANTMENTS, enchantments);
 //        result.set(ModDataComponents.SWORD_TYPE, swordContents);
 
 //        Main.LOGGER.debug("The pick type is...: {}", Objects.requireNonNull(result.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0));

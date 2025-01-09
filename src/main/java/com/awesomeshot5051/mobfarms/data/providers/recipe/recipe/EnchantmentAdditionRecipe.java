@@ -1,25 +1,38 @@
 package com.awesomeshot5051.mobfarms.data.providers.recipe.recipe;
 
-import com.awesomeshot5051.mobfarms.datacomponents.*;
-import com.awesomeshot5051.mobfarms.items.*;
-import com.mojang.serialization.*;
-import com.mojang.serialization.codecs.*;
-import net.minecraft.core.*;
-import net.minecraft.core.component.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.network.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.tags.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
+import com.awesomeshot5051.mobfarms.datacomponents.ModDataComponents;
+import com.awesomeshot5051.mobfarms.items.ModItems;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.item.enchantment.*;
-import net.minecraft.world.level.*;
-import org.jetbrains.annotations.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-import static com.awesomeshot5051.mobfarms.data.providers.recipe.recipe.CustomShapedRecipe.*;
+import static com.awesomeshot5051.mobfarms.data.providers.recipe.recipe.CustomShapedRecipe.swordTypeComponent;
 
 public class EnchantmentAdditionRecipe extends ShapelessRecipe {
     final String group;
@@ -88,13 +101,20 @@ public class EnchantmentAdditionRecipe extends ShapelessRecipe {
         // Retrieve the ItemStack (e.g., from swordContents)
         ItemStack swordStack = swordContents.getStackInSlot(0);
         ItemEnchantments enchantments2 = swordStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
-        Holder<Enchantment> holder = storedEnchantments.keySet().stream().toList().getFirst();
+//        Holder<Enchantment> holder = storedEnchantments.keySet().stream().toList().getFirst();
         boolean isCompatible = checkEnchantmentCompatibility(storedEnchantments.toImmutable(), swordEnchantables, swordStack) && isCompatible(storedEnchantments, swordStack);
 
         if (!isCompatible) {
             return new ItemStack(Items.AIR);
         }
-        swordStack.enchant(holder, storedEnchantments.getLevel(holder));
+        for (Holder<Enchantment> holder : storedEnchantments.keySet()) {
+            // Get the enchantment level
+            int level = storedEnchantments.getLevel(holder);
+
+            // Apply the enchantment to the swordStack
+            swordStack.enchant(holder, level);
+        }
+
         enchantments2 = swordStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
 //        Holder<Enchantment> holder = enchantments2.keySet().stream().toList().getFirst();
 //        storedEnchantments.keySet().add(holder);

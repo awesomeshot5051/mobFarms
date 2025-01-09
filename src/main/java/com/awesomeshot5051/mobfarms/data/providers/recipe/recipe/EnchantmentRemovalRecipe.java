@@ -1,6 +1,7 @@
 package com.awesomeshot5051.mobfarms.data.providers.recipe.recipe;
 
 import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.items.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import net.minecraft.core.*;
@@ -10,11 +11,14 @@ import net.minecraft.network.codec.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.*;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.block.*;
+import net.neoforged.neoforge.registries.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-import static com.awesomeshot5051.mobfarms.items.ModItems.*;
+import static com.awesomeshot5051.mobfarms.blocks.ModBlocks.*;
 
 
 public class EnchantmentRemovalRecipe extends ShapelessRecipe {
@@ -36,58 +40,58 @@ public class EnchantmentRemovalRecipe extends ShapelessRecipe {
         this.isSimple = ingredients.stream().allMatch(Ingredient::isSimple);
     }
 
-    public static final List<ItemStack> ALL_FARMS = List.of(
+    public static final List<DeferredHolder<Block, ?>> ALL_FARMS = List.of(
             // Passive Mobs
-            CHICKEN_FARM.get().getDefaultInstance(),
-            COD_FARM.get().getDefaultInstance(),
-            COW_FARM.get().getDefaultInstance(),
-            GLOW_SQUID_FARM.get().getDefaultInstance(),
-            HORSE_FARM.get().getDefaultInstance(),
-            MOOSHROOM_FARM.get().getDefaultInstance(),
-            PARROT_FARM.get().getDefaultInstance(),
-            PIG_FARM.get().getDefaultInstance(),
-            PUFFERFISH_FARM.get().getDefaultInstance(),
-            RABBIT_FARM.get().getDefaultInstance(),
-            SALMON_FARM.get().getDefaultInstance(),
-            SHEEP_FARM.get().getDefaultInstance(),
-            SNOW_GOLEM_FARM.get().getDefaultInstance(),
-            SQUID_FARM.get().getDefaultInstance(),
-            STRIDER_FARM.get().getDefaultInstance(),
-            TROPICAL_FISH_FARM.get().getDefaultInstance(),
-            TURTLE_FARM.get().getDefaultInstance(),
+            CHICKEN_FARM,
+            COD_FARM,
+            COW_FARM,
+            GLOW_SQUID_FARM,
+            HORSE_FARM,
+            MOOSHROOM_FARM,
+            PARROT_FARM,
+            PIG_FARM,
+            PUFFERFISH_FARM,
+            RABBIT_FARM,
+            SALMON_FARM,
+            SHEEP_FARM,
+            SNOW_GOLEM_FARM,
+            SQUID_FARM,
+            STRIDER_FARM,
+            TROPICAL_FISH_FARM,
+            TURTLE_FARM,
 
             // Neutral Mobs
-            ENDERMAN_FARM.get().getDefaultInstance(),
-            GOAT_FARM.get().getDefaultInstance(),
-            IRON_FARM.get().getDefaultInstance(),
-            SPIDER_FARM.get().getDefaultInstance(),
-            PIGLIN_FARM.get().getDefaultInstance(),
-            ZOMBIFIED_PIGLIN_FARM.get().getDefaultInstance(),
+            ENDERMAN_FARM,
+            GOAT_FARM,
+            IRON_FARM,
+            SPIDER_FARM,
+            PIGLIN_FARM,
+            ZOMBIFIED_PIGLIN_FARM,
 
             // Aggressive Mobs
-            BLAZE_FARM.get().getDefaultInstance(),
-            CREEPER_FARM.get().getDefaultInstance(),
-            DROWNED_FARM.get().getDefaultInstance(),
-            ELDER_GUARDIAN_FARM.get().getDefaultInstance(),
-            EVOKER_FARM.get().getDefaultInstance(),
-            GHAST_FARM.get().getDefaultInstance(),
-            GUARDIAN_FARM.get().getDefaultInstance(),
-            HOGLIN_FARM.get().getDefaultInstance(),
-            ILLUSIONER_FARM.get().getDefaultInstance(),
-            MAGMA_CUBE_FARM.get().getDefaultInstance(),
-            PHANTOM_FARM.get().getDefaultInstance(),
-            PILLAGER_FARM.get().getDefaultInstance(),
-            RAVAGER_FARM.get().getDefaultInstance(),
-            SHULKER_FARM.get().getDefaultInstance(),
-            SKELETON_FARM.get().getDefaultInstance(),
-            SLIME_FARM.get().getDefaultInstance(),
-            VINDICATOR_FARM.get().getDefaultInstance(),
-            WARDEN_FARM.get().getDefaultInstance(),
-            WITCH_FARM.get().getDefaultInstance(),
-            WITHER_SKELETON_FARM.get().getDefaultInstance(),
-            WITHER_FARM.get().getDefaultInstance(),
-            ZOGLIN_FARM.get().getDefaultInstance(),
-            ZOMBIE_FARM.get().getDefaultInstance()
+            BLAZE_FARM,
+            CREEPER_FARM,
+            DROWNED_FARM,
+            ELDER_GUARDIAN_FARM,
+            EVOKER_FARM,
+            GHAST_FARM,
+            GUARDIAN_FARM,
+            HOGLIN_FARM,
+            ILLUSIONER_FARM,
+            MAGMA_CUBE_FARM,
+            PHANTOM_FARM,
+            PILLAGER_FARM,
+            RAVAGER_FARM,
+            SHULKER_FARM,
+            SKELETON_FARM,
+            SLIME_FARM,
+            VINDICATOR_FARM,
+            WARDEN_FARM,
+            WITCH_FARM,
+            WITHER_SKELETON_FARM,
+            WITHER_FARM,
+            ZOGLIN_FARM,
+            ZOMBIE_FARM
     );
     ItemStack farm;
 
@@ -98,12 +102,28 @@ public class EnchantmentRemovalRecipe extends ShapelessRecipe {
 
     @Override
     public @NotNull ItemStack assemble(CraftingInput input, HolderLookup.@NotNull Provider registries) {
-        if (ALL_FARMS.contains(input.items().getFirst())) {
-            farm = input.items().getFirst().getItem().getDefaultInstance();
-            farm.remove(DataComponents.STORED_ENCHANTMENTS);
-            ItemContainerContents swordContents = farm.getOrDefault(ModDataComponents.SWORD_TYPE, ItemContainerContents.EMPTY);
-            swordContents.getStackInSlot(0).remove(DataComponents.ENCHANTMENTS);
-            farm.set(ModDataComponents.SWORD_TYPE, swordContents);
+
+        List<Item> farmBlocks = new ArrayList<>();
+        ItemEnchantments enchantments = ItemEnchantments.EMPTY;
+        ItemEnchantments.Mutable storedEnchantments = new ItemEnchantments.Mutable(enchantments);
+        for (var sidedBlock : ModItems.ITEM_REGISTER.getEntries()) {
+            farmBlocks.add(sidedBlock.get());
+        }
+        List<ItemStack> ingredient = input.items();
+        ItemContainerContents swordContents = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));   // Placeholder for pick contents
+        // Check the first and last ingredients for the SWORD_TYPE component
+        ItemStack farm = new ItemStack(Items.AIR);
+        for (ItemStack ingrnt : ingredient) {
+            if (farmBlocks.contains(ingrnt.getItem())) {
+                swordContents = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(ingrnt.getOrDefault(ModDataComponents.SWORD_TYPE, swordContents)).copyOne()));
+                farm = ingrnt.getItem().getDefaultInstance();
+                farm.remove(DataComponents.STORED_ENCHANTMENTS);
+                ItemStack sword = swordContents.getStackInSlot(0);
+                sword.remove(DataComponents.ENCHANTMENTS);
+                swordContents = ItemContainerContents.fromItems(Collections.singletonList(sword));
+                farm.set(ModDataComponents.SWORD_TYPE, swordContents);
+            }
+
         }
         return farm;
     }
