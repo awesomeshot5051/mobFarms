@@ -18,6 +18,10 @@ public class ModRecipes {
             RECIPE_SERIALIZERS.register("shapeless_serializer", CustomShapelessBlockRecipe.Serializer::new);
     public static final Supplier<RecipeSerializer<UpgradeRecipe>> UPGRADE_SERIALIZER =
             RECIPE_SERIALIZERS.register("upgrade_serializer", UpgradeRecipe.Serializer::new);
+    public static final Supplier<RecipeSerializer<EnchantmentAdditionRecipe>> ENCHANTING_SERIALIZER =
+            RECIPE_SERIALIZERS.register("enchanting_serializer", EnchantmentAdditionRecipe.Serializer::new);
+    public static final Supplier<RecipeSerializer<EnchantmentRemovalRecipe>> ENCHANTMENT_REMOVER_SERIALIZER =
+            RECIPE_SERIALIZERS.register("enchantment_remover_serializer", EnchantmentRemovalRecipe.Serializer::new);
     // Register the custom recipe serializer
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, Main.MODID);
     public static final Supplier<RecipeType<CustomShapedRecipe>> FARM_RECIPE =
@@ -36,6 +40,11 @@ public class ModRecipes {
             RECIPE_TYPES.register(
                     "upgrade_recipe",
                     () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Main.MODID, "upgrade_recipe")));
+    public static final Supplier<RecipeType<EnchantmentAdditionRecipe>> ENCHANTING_RECIPE =
+            RECIPE_TYPES.register(
+                    "enchanting_recipe",
+                    () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Main.MODID, "enchanting_recipe")));
+
 
     public static void registerRecipes(IEventBus eventBus) {
         // Example of registering your custom recipe using a custom recipe serializer

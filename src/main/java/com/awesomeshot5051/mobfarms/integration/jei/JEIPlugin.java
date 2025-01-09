@@ -35,7 +35,7 @@ public class JEIPlugin implements IModPlugin {
         List<RecipeHolder<CraftingRecipe>> hiddenRecipes = new ArrayList<>();
         for (var sidedBlock : ModBlocks.BLOCK_REGISTER.getEntries()) {
             if (sidedBlock.get() instanceof WitherFarmBlock baseMachineBlock) {
-                Optional<RecipeHolder<?>> recipe = recipeManager.byKey(ResourceLocation.parse(sidedBlock.getId() + "_nbtclear"));
+                Optional<RecipeHolder<?>> recipe = recipeManager.byKey(ResourceLocation.fromNamespaceAndPath(Main.MODID, "empty_farm_recipe"));
                 recipe.ifPresent(recipeHolder -> hiddenRecipes.add((RecipeHolder<CraftingRecipe>) recipeHolder));
             }
         }

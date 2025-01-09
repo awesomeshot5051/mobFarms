@@ -98,8 +98,6 @@ public class UpgradeRecipe extends ShapedRecipe {
 
             if (craftingInput.getItem(4).get(ModDataComponents.SWORD_TYPE) != null) {
                 swordStack = Objects.requireNonNull(craftingInput.getItem(4).get(ModDataComponents.SWORD_TYPE)).copyOne();
-            } else if (shovelFarms.contains(craftingInput.getItem(4).getItem())) {
-                swordStack = new ItemStack(Items.STONE_SHOVEL);
             } else {
                 swordStack = new ItemStack(Items.STONE_SWORD);
             }
@@ -116,11 +114,14 @@ public class UpgradeRecipe extends ShapedRecipe {
                 }
                 // Set the pick type in the result item's data
                 swordContents = ItemContainerContents.fromItems(Collections.singletonList(swordStack));
-                result2 = getResultItem(registries).copy(); // Copy the result item to avoid modifying the original
+                result2 = getResultItem(registries).copy();
+                result2.set(swordTypeComponent, swordContents);
+                result2.set(DataComponents.STORED_ENCHANTMENTS, itemenchantments);// Copy the result item to avoid modifying the original
+            } else {
+                return new ItemStack(Items.AIR);
             }
         }
-        result2.set(swordTypeComponent, swordContents);
-        result2.set(DataComponents.STORED_ENCHANTMENTS, itemenchantments);
+
         super.assemble(craftingInput, registries);
         return result2;
     }
@@ -128,8 +129,8 @@ public class UpgradeRecipe extends ShapedRecipe {
     private boolean isHigherSwordType(ItemStack baseSwordType, ItemStack modifierSwordType) {
         // Define PickType levels in ascending order of strength
         List<Item> swordTypeHierarchy = new ArrayList<>(List.of(
-                Items.WOODEN_SWORD, Items.STONE_SWORD, Items.IRON_SWORD,
-                Items.GOLDEN_SWORD, Items.DIAMOND_SWORD, Items.NETHERITE_SWORD
+                Items.WOODEN_SWORD, Items.GOLDEN_SWORD, Items.STONE_SWORD, Items.IRON_SWORD,
+                Items.DIAMOND_SWORD, Items.NETHERITE_SWORD
         ));
 
         // Map each SWORD type to its corresponding material
@@ -137,9 +138,9 @@ public class UpgradeRecipe extends ShapedRecipe {
                 Items.WOODEN_SWORD, Ingredient.of(Items.OAK_PLANKS, Items.SPRUCE_PLANKS, Items.BIRCH_PLANKS,
                         Items.JUNGLE_PLANKS, Items.ACACIA_PLANKS, Items.DARK_OAK_PLANKS,
                         Items.MANGROVE_PLANKS, Items.BAMBOO_PLANKS, Items.CHERRY_PLANKS),
+                Items.GOLDEN_SWORD, Ingredient.of(Items.GOLD_INGOT),
                 Items.STONE_SWORD, Ingredient.of(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE),
                 Items.IRON_SWORD, Ingredient.of(Items.IRON_INGOT),
-                Items.GOLDEN_SWORD, Ingredient.of(Items.GOLD_INGOT),
                 Items.DIAMOND_SWORD, Ingredient.of(Items.DIAMOND),
                 Items.NETHERITE_SWORD, Ingredient.of(Items.NETHERITE_INGOT)
         );

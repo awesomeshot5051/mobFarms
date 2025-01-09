@@ -1,31 +1,28 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity;
 
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs.*;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs.*;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.world.level.block.entity.*;
+import net.neoforged.api.distmarker.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.capabilities.*;
+import net.neoforged.neoforge.registries.*;
 
 public class ModTileEntities {
 
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_REGISTER = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Main.MODID);
 
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<InventoryViewerTileentity>> INVENTORY_VIEWER = BLOCK_ENTITY_REGISTER.register("inventory_viewer", () ->
-            BlockEntityType.Builder.of(InventoryViewerTileentity::new, ModBlocks.INVENTORY_VIEWER.get()).build(null)
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EmptyFarmTileentity>> EMPTY_FARM = BLOCK_ENTITY_REGISTER.register("empty_farm", () ->
+            BlockEntityType.Builder.of(EmptyFarmTileentity::new, ModBlocks.EMPTY_FARM.get()).build(null)
     );
     // Passive Mobs
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChickenFarmTileentity>> CHICKEN_FARM = BLOCK_ENTITY_REGISTER.register("chicken_farm", () ->
@@ -134,6 +131,7 @@ public class ModTileEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EvokerFarmTileentity>> EVOKER_FARM = BLOCK_ENTITY_REGISTER.register("evoker_farm", () ->
             BlockEntityType.Builder.of(EvokerFarmTileentity::new, ModBlocks.EVOKER_FARM.get()).build(null)
     );
+
     @OnlyIn(Dist.CLIENT)
     public static void clientSetup() {
         if (!Main.CLIENT_CONFIG.renderBlockContents.get()) {
@@ -247,7 +245,9 @@ public class ModTileEntities {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ZOGLIN_FARM.get(), (object, context) -> object.getItemHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ZOMBIE_FARM.get(), (object, context) -> object.getItemHandler());
 
-    }    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GhastFarmTileentity>> GHAST_FARM = BLOCK_ENTITY_REGISTER.register("ghast_farm", () ->
+    }
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GhastFarmTileentity>> GHAST_FARM = BLOCK_ENTITY_REGISTER.register("ghast_farm", () ->
             BlockEntityType.Builder.of(GhastFarmTileentity::new, ModBlocks.GHAST_FARM.get()).build(null)
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlazeFarmTileentity>> BLAZE_FARM = BLOCK_ENTITY_REGISTER.register("blaze_farm", () ->
@@ -310,8 +310,6 @@ public class ModTileEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ZombieFarmTileentity>> ZOMBIE_FARM = BLOCK_ENTITY_REGISTER.register("zombie_farm", () ->
             BlockEntityType.Builder.of(ZombieFarmTileentity::new, ModBlocks.ZOMBIE_FARM.get()).build(null)
     );
-
-
 
 
     public static void init(IEventBus eventBus) {

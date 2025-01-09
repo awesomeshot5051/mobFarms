@@ -68,7 +68,7 @@ public class ModBlocks {
     public static final DeferredHolder<Block, ZombieFarmBlock> ZOMBIE_FARM = BLOCK_REGISTER.register("zombie_farm", ZombieFarmBlock::new);
 
 
-    public static final DeferredHolder<Block, InventoryViewerBlock> INVENTORY_VIEWER = BLOCK_REGISTER.register("inventory_viewer", InventoryViewerBlock::new);
+    public static final DeferredHolder<Block, EmptyFarmBlock> EMPTY_FARM = BLOCK_REGISTER.register("empty_farm", EmptyFarmBlock::new);
 
     public static void init(IEventBus eventBus) {
         BLOCK_REGISTER.register(eventBus);

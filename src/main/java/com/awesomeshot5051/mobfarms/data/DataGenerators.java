@@ -1,6 +1,7 @@
 package com.awesomeshot5051.mobfarms.data;
 
 import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.data.providers.advancements.*;
 import com.awesomeshot5051.mobfarms.data.providers.recipe.*;
 import net.minecraft.core.*;
 import net.minecraft.data.*;
@@ -22,6 +23,8 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModAdvancementProvider(packOutput, lookupProvider, existingFileHelper));
+
 //        generator.addProvider(event.includeServer(), new ModItemModelProvider(packOutput, existingFileHelper));
 //        generator.addProvider(event.includeServer(), new ModBlockModelProvider(packOutput, existingFileHelper));
 //        generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),

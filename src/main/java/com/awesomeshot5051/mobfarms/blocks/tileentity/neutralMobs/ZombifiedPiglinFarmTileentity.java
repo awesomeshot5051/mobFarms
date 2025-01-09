@@ -39,6 +39,7 @@ public class ZombifiedPiglinFarmTileentity extends VillagerTileentity implements
         inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
+        swordType = new ItemStack(Items.WOODEN_SWORD);
     }
 
     public static double getZombifiedPiglinSpawnTime(ZombifiedPiglinFarmTileentity farm) {
@@ -142,6 +143,12 @@ public class ZombifiedPiglinFarmTileentity extends VillagerTileentity implements
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         super.saveAdditional(compound, provider);
+        if (swordType != null) {
+            CompoundTag swordTypeTag = new CompoundTag();
+            swordTypeTag.putString("id", BuiltInRegistries.ITEM.getKey(swordType.getItem()).toString()); // Save the item ID
+            swordTypeTag.putInt("count", swordType.getCount()); // Save the count
+            compound.put("SwordType", swordTypeTag); // Add the tag to the main compound
+        }
         ContainerHelper.saveAllItems(compound, inventory, false, provider);
         compound.putLong("Timer", timer);
     }
@@ -149,6 +156,14 @@ public class ZombifiedPiglinFarmTileentity extends VillagerTileentity implements
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
         ContainerHelper.loadAllItems(compound, inventory, provider);
+        if (compound.contains("SwordType")) {
+            SyncableTileentity.loadSwordType(compound, provider).ifPresent(stack -> this.swordType = stack);
+
+        }
+        if (swordType == null) {
+// If no pickType is saved, set a default one (e.g., Stone Pickaxe)
+            swordType = new ItemStack(Items.WOODEN_SWORD);
+        }
         timer = compound.getLong("Timer");
         super.loadAdditional(compound, provider);
     }

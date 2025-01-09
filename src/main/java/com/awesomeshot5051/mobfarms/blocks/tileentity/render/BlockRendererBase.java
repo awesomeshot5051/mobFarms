@@ -1,13 +1,12 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.FakeWorldTileentity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.entity.*;
 
 public class BlockRendererBase<T extends FakeWorldTileentity> implements BlockEntityRenderer<T> {
 
@@ -30,7 +29,6 @@ public class BlockRendererBase<T extends FakeWorldTileentity> implements BlockEn
 
     @Override
     public int getViewDistance() {
-        SwordType sword = SwordType.fromItem(farm.getSwordType().getItem());
-        return (double) Main.CLIENT_CONFIG.blockRenderDistance.get();
+        return Main.CLIENT_CONFIG.blockRenderDistance.get();
     }
 }

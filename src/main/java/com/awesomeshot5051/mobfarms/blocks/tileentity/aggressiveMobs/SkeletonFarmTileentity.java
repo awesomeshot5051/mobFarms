@@ -39,6 +39,7 @@ public class SkeletonFarmTileentity extends VillagerTileentity implements ITicka
         inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
+        swordType = new ItemStack(Items.WOODEN_SWORD);
     }
 
     public static double getSkeletonSpawnTime(SkeletonFarmTileentity farm) {

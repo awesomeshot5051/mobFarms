@@ -1,14 +1,12 @@
 package com.awesomeshot5051.mobfarms;
 
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.items.ModItems;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.items.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.world.item.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
 
 public class ModCreativeTabs {
 
@@ -74,7 +72,7 @@ public class ModCreativeTabs {
                     output.accept(new ItemStack(ModBlocks.ZOMBIE_FARM.get()));
 
 
-                    output.accept(new ItemStack(ModBlocks.INVENTORY_VIEWER.get()));
+                    output.accept(new ItemStack(ModBlocks.EMPTY_FARM.get()));
 
                 })
                 .title(Component.translatable("itemGroup.mob_farms"))

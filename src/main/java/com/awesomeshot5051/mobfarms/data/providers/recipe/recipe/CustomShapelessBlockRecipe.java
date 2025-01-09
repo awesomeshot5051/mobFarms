@@ -1,14 +1,16 @@
 package com.awesomeshot5051.mobfarms.data.providers.recipe.recipe;
 
-import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.items.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import net.minecraft.core.*;
+import net.minecraft.core.component.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.*;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.*;
 import net.neoforged.neoforge.common.util.*;
 
@@ -22,7 +24,7 @@ public class CustomShapelessBlockRecipe extends ShapelessRecipe {
     final ItemStack result;
     final NonNullList<Ingredient> ingredients;
     private final boolean isSimple;
-    private ItemContainerContents pickContents;
+    private ItemContainerContents swordContents;
     private ItemStack result2;
 
     public CustomShapelessBlockRecipe(String group, CraftingBookCategory category, ItemStack result, NonNullList<Ingredient> ingredients) {
@@ -67,47 +69,32 @@ public class CustomShapelessBlockRecipe extends ShapelessRecipe {
     }
 
     public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
-        // Map to convert shovel tools to their respective pickaxe tools
-        Map<Item, Item> shovelToPickaxeMap = Map.of(
-                Items.WOODEN_SHOVEL, Items.WOODEN_PICKAXE,
-                Items.STONE_SHOVEL, Items.STONE_PICKAXE,
-                Items.IRON_SHOVEL, Items.IRON_PICKAXE,
-                Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE,
-                Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE,
-                Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE
-        );
-
         List<ItemStack> ingredients = input.items(); // Ingredients from the crafting input
         ItemStack resultItem = ItemStack.EMPTY;      // Default result
 
-        ItemContainerContents pickContents = null;   // Placeholder for pick contents
-
+        ItemContainerContents swordContents = null;   // Placeholder for pick contents
+        Item farm = ModItems.EMPTY_FARM.get();
         // Check the first and last ingredients for the SWORD_TYPE component
-        if (ingredients.getFirst().get(ModDataComponents.SWORD_TYPE) != null) {
-            pickContents = ItemContainerContents.fromItems(Collections.singletonList(
-                    Objects.requireNonNull(ingredients.getFirst().get(ModDataComponents.SWORD_TYPE)).copyOne()
-            ));
-        } else if (ingredients.getLast().get(ModDataComponents.SWORD_TYPE) != null) {
-            pickContents = ItemContainerContents.fromItems(Collections.singletonList(
-                    Objects.requireNonNull(ingredients.getLast().get(ModDataComponents.SWORD_TYPE)).copyOne()
-            ));
+        if (ingredients.getFirst().is(farm)) {
+            swordContents = ItemContainerContents.fromItems(Collections.singletonList(ingredients.getLast()));
+        } else if (ingredients.getLast().is(farm)) {
+            swordContents = ItemContainerContents.fromItems(Collections.singletonList(ingredients.getFirst())
+            );
         }
 
-        // If pickContents is set, proceed to process the result
-        if (pickContents != null) {
-            ItemStack pickStack = pickContents.getStackInSlot(0); // Extract the ItemStack from pickContents
+        // If swordContents is set, proceed to process the result
+        if (swordContents != null) {
+            ItemStack swordStack = swordContents.getStackInSlot(0); // Extract the ItemStack from swordContents
 
-            // Check if the pickContents holds a shovel, and map it to the respective pickaxe
-            if (shovelToPickaxeMap.containsKey(pickStack.getItem())) {
-                Item newTool = shovelToPickaxeMap.get(pickStack.getItem()); // Get corresponding pickaxe
-                pickContents = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(newTool)));
-            }
+            ItemEnchantments enchantments = swordStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
 
             // Create and configure the result item
             resultItem = getResultItem(registries).copy();
-            resultItem.set(swordTypeComponent, pickContents);
-        }
 
+            resultItem.set(DataComponents.STORED_ENCHANTMENTS, enchantments);
+
+            resultItem.set(swordTypeComponent, swordContents);
+        }
         return resultItem;
     }
 

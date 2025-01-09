@@ -40,6 +40,7 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
         inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
+        swordType = new ItemStack(Items.WOODEN_SWORD);
     }
 
     @Override
@@ -130,7 +131,7 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
             dropCount = serverWorld.random.nextIntBetweenInclusive(4, 8);
         }
 
-        LootTable lootTable = serverWorld.getServer().reloadableRegistries().getLootTable(GOLEM_LOOT_TABLE);
+        drops.add(new ItemStack(Items.IRON_INGOT,dropCount));
 
         return drops;
     }

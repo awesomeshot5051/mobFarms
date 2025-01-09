@@ -40,6 +40,7 @@ public class WitchFarmTileentity extends VillagerTileentity implements ITickable
         inventory = NonNullList.withSize(4, ItemStack.EMPTY);
         itemHandler = new ItemStackHandler(inventory);
         outputItemHandler = new OutputItemHandler(inventory);
+        swordType = new ItemStack(Items.WOODEN_SWORD);
     }
 
     public static double getWitchSpawnTime(WitchFarmTileentity farm) {
