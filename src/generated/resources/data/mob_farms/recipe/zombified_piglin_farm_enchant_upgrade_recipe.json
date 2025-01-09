@@ -1,0 +1,16 @@
+{
+  "type": "mob_farms:enchanting_serializer",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:enchanted_book"
+    },
+    {
+      "item": "mob_farms:zombified_piglin_farm"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:zombified_piglin_farm"
+  }
+}

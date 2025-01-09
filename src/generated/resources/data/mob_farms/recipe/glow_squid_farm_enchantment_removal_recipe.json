@@ -1,0 +1,13 @@
+{
+  "type": "mob_farms:enchantment_remover_serializer",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mob_farms:glow_squid_farm"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:glow_squid_farm"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "mob_farms:block/farm",
+  "textures": {
+    "front": "minecraft:block/stone",
+    "back": "minecraft:block/stone"
+  }
+}
