@@ -12,6 +12,7 @@ import net.minecraft.core.registries.*;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.*;
 import net.minecraft.server.level.*;
+import net.minecraft.tags.*;
 import net.minecraft.world.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
@@ -88,7 +89,9 @@ public class PiglinFarmTileentity extends VillagerTileentity implements ITickabl
 
     @Override
     public void tick() {
-        if (!level.dimension().equals(Level.NETHER)) {
+        assert level != null;
+        BlockState blockBelow = level.getBlockState(getBlockPos().below());
+        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(BlockTags.BASE_STONE_NETHER)) {
             return; // Do nothing if not in the Nether
         }
         // No villager entity is needed

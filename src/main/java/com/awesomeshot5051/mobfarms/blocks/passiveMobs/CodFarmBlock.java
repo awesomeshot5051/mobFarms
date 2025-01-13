@@ -49,6 +49,15 @@ public class CodFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
+        if (Screen.hasShiftDown()) {
+            if (stack.has(ModDataComponents.SWORD_TYPE)) {
+                ItemStack axeType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0))).copyOne();
+                components.add(Component.literal("This farm has a " + convertToReadableName(axeType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
+                        .withStyle(ChatFormatting.RED));
+            }
+        } else {
+            components.add(Component.literal("Hold §4Shift§r to see tool").withStyle(ChatFormatting.YELLOW));
+        }
         CodFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new CodFarmTileentity(BlockPos.ZERO, ModBlocks.COD_FARM.get().defaultBlockState()));
         // Removed villager-related tooltip information
     }
@@ -78,8 +87,18 @@ public class CodFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
     @Nullable
     @Override
+
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level1, BlockState state, BlockEntityType<T> type) {
         return new SimpleBlockEntityTicker<>(); // Keeps default behavior
+    }
+
+    private String convertToReadableName(String block) {
+        // Remove "item.minecraft." and replace underscores with spaces
+        String readableName = block.replace("item.minecraft.", "").replace('_', ' ');
+        // Capitalize the first letter of each word
+        return Arrays.stream(readableName.split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     @Override

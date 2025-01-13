@@ -28,6 +28,7 @@ import net.neoforged.api.distmarker.*;
 
 import javax.annotation.*;
 import java.util.*;
+import java.util.stream.*;
 
 import static net.minecraft.world.item.BlockItem.*;
 
@@ -66,14 +67,38 @@ public class BlazeFarmBlock extends BlockBase implements EntityBlock, IItemBlock
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
+        if (Screen.hasShiftDown()) {
+            if (stack.has(ModDataComponents.SWORD_TYPE)) {
+                ItemStack axeType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0))).copyOne();
+                components.add(Component.literal("This farm has a " + convertToReadableName(axeType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
+                        .withStyle(ChatFormatting.RED));
+            }
+        } else {
+            components.add(Component.literal("Hold §4Shift§r to see tool").withStyle(ChatFormatting.YELLOW));
+        }
         BlazeFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new BlazeFarmTileentity(BlockPos.ZERO, ModBlocks.BLAZE_FARM.get().defaultBlockState()));
         if (Screen.hasShiftDown()) {
-            components.add(Component.translatable("tooltip.mobfarms.blaze_farm.shift")
+            components.add(Component.literal("Must be §4in the Nether or on top of Netherrack§r to work")
                     .withStyle(ChatFormatting.GRAY));
+            if (stack.has(ModDataComponents.SWORD_TYPE)) {
+                ItemStack axeType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0))).copyOne();
+                components.add(Component.literal("This farm has a " + convertToReadableName(axeType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
+                        .withStyle(ChatFormatting.RED));
+            }
         } else {
             components.add(Component.translatable("tooltip.mobfarms.blaze_farm.hint")
                     .withStyle(ChatFormatting.YELLOW));
+            components.add(Component.literal("Hold §4Shift§r to see tool").withStyle(ChatFormatting.YELLOW));
         }
+    }
+
+    private String convertToReadableName(String block) {
+        // Remove "item.minecraft." and replace underscores with spaces
+        String readableName = block.replace("item.minecraft.", "").replace('_', ' ');
+        // Capitalize the first letter of each word
+        return Arrays.stream(readableName.split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     @Override
@@ -104,7 +129,7 @@ public class BlazeFarmBlock extends BlockBase implements EntityBlock, IItemBlock
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level1, BlockState state, BlockEntityType<T> type) {
         return new SimpleBlockEntityTicker<>(); // Keeps default behavior
     }
-    
+
 
     @Nullable
     @Override

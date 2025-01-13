@@ -17,6 +17,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.storage.loot.*;
 import net.neoforged.neoforge.items.*;
@@ -89,7 +90,9 @@ public class WitherSkeletonFarmTileentity extends VillagerTileentity implements 
 
     @Override
     public void tick() {
-        if (!level.dimension().equals(Level.NETHER)) {
+        assert level != null;
+        BlockState blockBelow = level.getBlockState(getBlockPos().below());
+        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.NETHER_BRICKS)) {
             return; // Do nothing if not in the Nether
         }
         // No villager entity is needed

@@ -15,6 +15,8 @@ import net.minecraft.server.level.*;
 import net.minecraft.world.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.storage.loot.*;
 import net.neoforged.neoforge.items.*;
@@ -89,7 +91,11 @@ public class ZombifiedPiglinFarmTileentity extends VillagerTileentity implements
     public void tick() {
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.CREEPER_PRIMED);
-
+        assert level != null;
+        BlockState blockBelow = level.getBlockState(getBlockPos().below());
+        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.NETHERRACK)) {
+            return; // Do nothing if not in the Nether
+        }
         timer++;
         setChanged();
 

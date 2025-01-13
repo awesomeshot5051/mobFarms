@@ -28,6 +28,7 @@ import net.neoforged.api.distmarker.*;
 
 import javax.annotation.*;
 import java.util.*;
+import java.util.stream.*;
 
 import static net.minecraft.world.item.BlockItem.*;
 
@@ -51,14 +52,20 @@ public class ShulkerFarmBlock extends BlockBase implements EntityBlock, IItemBlo
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
-        ShulkerFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new ShulkerFarmTileentity(BlockPos.ZERO, ModBlocks.SHULKER_FARM.get().defaultBlockState()));
         if (Screen.hasShiftDown()) {
-            components.add(Component.translatable("tooltip.mobfarms.shulker_farm.shift")
+            components.add(Component.translatable("Must be §9in the End or on top of Purpur Bricks§r to work")
                     .withStyle(ChatFormatting.GRAY));
+            if (stack.has(ModDataComponents.SWORD_TYPE)) {
+                ItemStack axeType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0))).copyOne();
+                components.add(Component.literal("This farm has a " + convertToReadableName(axeType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
+                        .withStyle(ChatFormatting.RED));
+            }
         } else {
             components.add(Component.translatable("tooltip.mobfarms.shulker_farm.hint")
                     .withStyle(ChatFormatting.YELLOW));
+            components.add(Component.literal("Hold §4Shift§r to see tool").withStyle(ChatFormatting.YELLOW));
         }
+        ShulkerFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new ShulkerFarmTileentity(BlockPos.ZERO, ModBlocks.SHULKER_FARM.get().defaultBlockState()));
     }
 
     @Override
@@ -86,8 +93,18 @@ public class ShulkerFarmBlock extends BlockBase implements EntityBlock, IItemBlo
 
     @Nullable
     @Override
+
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level1, BlockState state, BlockEntityType<T> type) {
         return new SimpleBlockEntityTicker<>(); // Keeps default behavior
+    }
+
+    private String convertToReadableName(String block) {
+        // Remove "item.minecraft." and replace underscores with spaces
+        String readableName = block.replace("item.minecraft.", "").replace('_', ' ');
+        // Capitalize the first letter of each word
+        return Arrays.stream(readableName.split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     @Override
