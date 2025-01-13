@@ -29,7 +29,6 @@ import net.neoforged.api.distmarker.*;
 import javax.annotation.*;
 import java.util.*;
 import java.util.stream.*;
-import java.util.stream.*;
 
 import static net.minecraft.world.item.BlockItem.*;
 
@@ -68,15 +67,6 @@ public class BlazeFarmBlock extends BlockBase implements EntityBlock, IItemBlock
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
-        if (Screen.hasShiftDown()) {
-            if (stack.has(ModDataComponents.SWORD_TYPE)) {
-                ItemStack axeType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0))).copyOne();
-                components.add(Component.literal("This farm has a " + convertToReadableName(axeType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
-                        .withStyle(ChatFormatting.RED));
-            }
-        } else {
-            components.add(Component.literal("Hold §4Shift§r to see tool").withStyle(ChatFormatting.YELLOW));
-        }
         BlazeFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new BlazeFarmTileentity(BlockPos.ZERO, ModBlocks.BLAZE_FARM.get().defaultBlockState()));
         if (Screen.hasShiftDown()) {
             components.add(Component.literal("Must be §4in the Nether or on top of Netherrack§r to work")

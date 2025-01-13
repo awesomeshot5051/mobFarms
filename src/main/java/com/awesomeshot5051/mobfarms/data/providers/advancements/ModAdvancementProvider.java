@@ -55,7 +55,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
 // and the resulting AdvancementRewards can then be reused across multiple advancement builders.
             builder.rewards(
                     // Alternatively, use addExperience() to add to an existing builder.
-                    AdvancementRewards.Builder.experience(100)
+                    AdvancementRewards.Builder.experience(100000)
             );
 
 // Adds a criterion with the given name to the advancement. Use the corresponding trigger instance's static method.
