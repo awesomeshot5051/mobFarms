@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.*;
 
 import javax.annotation.*;
 import java.util.*;
+import java.util.stream.*;
 
 public class VillagerTileentity extends FakeWorldTileentity {
 

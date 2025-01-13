@@ -9,6 +9,8 @@ import com.awesomeshot5051.mobfarms.items.render.passiveMobs.*;
 import de.maxhenkel.corelib.block.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.client.*;
+import net.minecraft.*;
+import net.minecraft.client.gui.screens.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.nbt.*;
@@ -30,6 +32,7 @@ import net.neoforged.api.distmarker.*;
 
 import javax.annotation.*;
 import java.util.*;
+import java.util.stream.*;
 
 import static net.minecraft.world.item.BlockItem.*;
 

@@ -1,15 +1,14 @@
 package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.WitherFarmBlock;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.WitherFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.WitherFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import java.util.function.Function;
-import net.minecraft.core.BlockPos;
+import com.awesomeshot5051.mobfarms.blocks.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.*;
+import com.awesomeshot5051.mobfarms.items.render.*;
+import net.minecraft.core.*;
 
 public class WitherFarmItemRenderer extends BlockItemRendererBase<WitherFarmRenderer, WitherFarmTileentity> {
-   public WitherFarmItemRenderer() {
-/*  12 */     super(WitherFarmRenderer::new, () -> new WitherFarmTileentity(BlockPos.ZERO, ((WitherFarmBlock)ModBlocks.WITHER_FARM.get()).defaultBlockState()));
-   }
+    public WitherFarmItemRenderer() {
+        /*  12 */
+        super(WitherFarmRenderer::new, () -> new WitherFarmTileentity(BlockPos.ZERO, ModBlocks.WITHER_FARM.get().defaultBlockState()));
+    }
 }

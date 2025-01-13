@@ -29,6 +29,7 @@ import net.neoforged.api.distmarker.*;
 import javax.annotation.*;
 import java.util.*;
 import java.util.stream.*;
+import java.util.stream.*;
 
 import static net.minecraft.world.item.BlockItem.*;
 

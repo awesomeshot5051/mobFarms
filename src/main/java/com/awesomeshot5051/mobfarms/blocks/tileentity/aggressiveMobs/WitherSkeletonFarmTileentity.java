@@ -23,6 +23,7 @@ import net.minecraft.world.level.storage.loot.*;
 import net.neoforged.neoforge.items.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 

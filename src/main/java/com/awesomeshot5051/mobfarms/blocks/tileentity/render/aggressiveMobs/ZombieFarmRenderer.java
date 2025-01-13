@@ -11,6 +11,7 @@ import net.minecraft.world.entity.monster.*;
 
 import java.lang.ref.*;
 import java.util.*;
+import java.util.stream.*;
 
 public class ZombieFarmRenderer extends RendererBase<ZombieFarmTileentity> {
 

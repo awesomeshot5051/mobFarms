@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.chunk.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 public class SyncableTileentity extends BlockEntity {
 

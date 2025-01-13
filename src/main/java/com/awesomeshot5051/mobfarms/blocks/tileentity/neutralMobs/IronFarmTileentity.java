@@ -20,6 +20,7 @@ import net.minecraft.world.level.storage.loot.*;
 import net.neoforged.neoforge.items.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import static com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments.*;
 
@@ -131,7 +132,7 @@ public class IronFarmTileentity extends VillagerTileentity implements ITickableB
             dropCount = serverWorld.random.nextIntBetweenInclusive(4, 8);
         }
 
-        drops.add(new ItemStack(Items.IRON_INGOT,dropCount));
+        drops.add(new ItemStack(Items.IRON_INGOT, dropCount));
 
         return drops;
     }

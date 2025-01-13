@@ -8,6 +8,8 @@ import com.awesomeshot5051.mobfarms.items.render.*;
 import de.maxhenkel.corelib.block.*;
 import de.maxhenkel.corelib.blockentity.*;
 import de.maxhenkel.corelib.client.*;
+import net.minecraft.*;
+import net.minecraft.client.gui.screens.*;
 import net.minecraft.core.*;
 import net.minecraft.network.chat.*;
 import net.minecraft.server.level.*;
@@ -15,6 +17,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.player.*;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
@@ -26,6 +29,7 @@ import org.jetbrains.annotations.*;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.*;
 
 public class EmptyFarmBlock extends BlockBase implements EntityBlock, IItemBlock {
 
@@ -61,6 +65,15 @@ public class EmptyFarmBlock extends BlockBase implements EntityBlock, IItemBlock
         if (villager != null) {
             components.add(villager.getAdvancedName());
         }
+    }
+
+    private String convertToReadableName(String block) {
+        // Remove "item.minecraft." and replace underscores with spaces
+        String readableName = block.replace("item.minecraft.", "").replace('_', ' ');
+        // Capitalize the first letter of each word
+        return Arrays.stream(readableName.split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     @Override
