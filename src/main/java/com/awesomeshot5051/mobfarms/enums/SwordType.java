@@ -1,10 +1,11 @@
 package com.awesomeshot5051.mobfarms.enums;
 
-import net.minecraft.util.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.List;
 
 public enum SwordType implements StringRepresentable {
     WOODEN,
@@ -13,7 +14,7 @@ public enum SwordType implements StringRepresentable {
     GOLDEN,
     DIAMOND,
     NETHERITE;
-    List<Item> swordTypes = List.of(Items.NETHERITE_SWORD, Items.DIAMOND_SWORD, Items.GOLDEN_SWORD, Items.IRON_SWORD, Items.STONE_SWORD, Items.WOODEN_SWORD);
+    final List<Item> swordTypes = List.of(Items.NETHERITE_SWORD, Items.DIAMOND_SWORD, Items.GOLDEN_SWORD, Items.IRON_SWORD, Items.STONE_SWORD, Items.WOODEN_SWORD);
 
     public static SwordType fromItem(Item item) {
         if (item == Items.WOODEN_SWORD) return WOODEN;
