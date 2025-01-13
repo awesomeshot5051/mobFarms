@@ -29,7 +29,6 @@ import net.neoforged.api.distmarker.*;
 import javax.annotation.*;
 import java.util.*;
 import java.util.stream.*;
-import java.util.stream.*;
 
 import static net.minecraft.world.item.BlockItem.*;
 
@@ -56,11 +55,10 @@ public class PiglinFarmBlock extends BlockBase implements EntityBlock, IItemBloc
         if (Screen.hasShiftDown()) {
             components.add(Component.literal("Must be in the Nether or on any Nether Stones to work")
                     .withStyle(ChatFormatting.GRAY));
-            if (stack.has(ModDataComponents.SWORD_TYPE)) {
-                ItemStack axeType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0))).copyOne();
-                components.add(Component.literal("This farm has a " + convertToReadableName(axeType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
-                        .withStyle(ChatFormatting.RED));
-            }
+            ItemContainerContents defaultType = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));
+            ItemStack swordType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.getOrDefault(ModDataComponents.SWORD_TYPE, defaultType)).copyOne())).copyOne();
+            components.add(Component.literal("This farm has a " + convertToReadableName(swordType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
+                    .withStyle(ChatFormatting.RED));
         } else {
             components.add(Component.literal("Hold §4Shift§r to see tool").withStyle(ChatFormatting.YELLOW));
             components.add(Component.translatable("tooltip.mobfarms.piglin_farm.hint")

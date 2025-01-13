@@ -71,11 +71,11 @@ public class BlazeFarmBlock extends BlockBase implements EntityBlock, IItemBlock
         if (Screen.hasShiftDown()) {
             components.add(Component.literal("Must be §4in the Nether or on top of Netherrack§r to work")
                     .withStyle(ChatFormatting.GRAY));
-            if (stack.has(ModDataComponents.SWORD_TYPE)) {
-                ItemStack axeType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.get(ModDataComponents.SWORD_TYPE)).getStackInSlot(0))).copyOne();
-                components.add(Component.literal("This farm has a " + convertToReadableName(axeType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
-                        .withStyle(ChatFormatting.RED));
-            }
+            ItemContainerContents defaultType = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));
+            ItemStack swordType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.getOrDefault(ModDataComponents.SWORD_TYPE, defaultType)).copyOne())).copyOne();
+            components.add(Component.literal("This farm has a " + convertToReadableName(swordType.getItem().getDefaultInstance().getDescriptionId()) + " on it.")
+                    .withStyle(ChatFormatting.RED));
+
         } else {
             components.add(Component.translatable("tooltip.mobfarms.blaze_farm.hint")
                     .withStyle(ChatFormatting.YELLOW));
