@@ -55,7 +55,6 @@ public class Main {
 
         SERVER_CONFIG = CommonRegistry.registerConfig(MODID, ModConfig.Type.SERVER, ServerConfig.class);
         CLIENT_CONFIG = CommonRegistry.registerConfig(MODID, ModConfig.Type.CLIENT, ClientConfig.class);
-
         if (FMLEnvironment.dist.isClient()) {
             eventBus.addListener(Main.this::clientSetup);
 //            eventBus.addListener(Main.this::onRegisterKeyBinds);
