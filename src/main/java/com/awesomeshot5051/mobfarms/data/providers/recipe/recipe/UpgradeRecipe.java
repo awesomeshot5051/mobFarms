@@ -1,31 +1,26 @@
 package com.awesomeshot5051.mobfarms.data.providers.recipe.recipe;
 
-import com.awesomeshot5051.mobfarms.Main;
-import com.awesomeshot5051.mobfarms.datacomponents.ModDataComponents;
-import com.awesomeshot5051.mobfarms.enums.SwordType;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.ItemContainerContents;
+import com.awesomeshot5051.mobfarms.*;
+import com.awesomeshot5051.mobfarms.datacomponents.*;
+import com.awesomeshot5051.mobfarms.enums.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import net.minecraft.core.*;
+import net.minecraft.core.component.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.resources.*;
+import net.minecraft.tags.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.*;
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 public class UpgradeRecipe extends ShapedRecipe {
     public static final DataComponentType<ItemContainerContents> swordTypeComponent = ModDataComponents.SWORD_TYPE.get();
@@ -144,35 +139,16 @@ public class UpgradeRecipe extends ShapedRecipe {
     );
 
     private boolean isHigherSwordType(ItemStack baseSwordType, ItemStack modifierSwordType) {
-
-//
-//        // Convert baseSwordType and modifierSwordType to their corresponding materials
-//        Item baseSwordItem = baseSwordType.getItem();
-//
-//        Item baseMaterialType = null;
         Item modifierMaterialType = null;
-//
-//        // Find the materials corresponding to the SWORD items
         for (Map.Entry<Item, Ingredient> entry : SwordToMaterialMap.entrySet()) {
-//            if (entry.getKey().equals(baseSwordType.getItem())) {
-//                baseMaterialType = entry.getKey();
-//            }
             if (entry.getValue().test(modifierSwordType)) {
                 modifierMaterialType = entry.getKey();
             }
         }
-//
-//        // Ensure both types were mapped to a valid SWORD
-        if (/*baseMaterialType == null*/modifierMaterialType == null) {
+        if (modifierMaterialType == null) {
             return false; // Invalid types, cannot compare
         }
         modifierSwordType = modifierMaterialType.getDefaultInstance();
-//        // Compare indices in the hierarchy
-//        int baseIndex = swordTypeHierarchy.indexOf(baseMaterialType);
-//        int modifierIndex = swordTypeHierarchy.indexOf(modifierMaterialType);
-//
-//        // Return true if the modifier type is higher in the hierarchy
-//        return modifierIndex > baseIndex;
         return SwordType.getSwordRank(modifierSwordType.getItem()) > SwordType.getSwordRank(baseSwordType.getItem());
     }
 
@@ -201,11 +177,6 @@ public class UpgradeRecipe extends ShapedRecipe {
     public CraftingBookCategory category() {
         return category;
     }
-
-//    @Override
-//    public boolean isSpecial() {
-//        return true;
-//    }
 
 
     public static class Serializer implements RecipeSerializer<UpgradeRecipe> {
