@@ -1,25 +1,31 @@
 package com.awesomeshot5051.mobfarms.data.providers.recipe.recipe;
 
-import com.awesomeshot5051.mobfarms.*;
-import com.awesomeshot5051.mobfarms.datacomponents.*;
-import com.mojang.serialization.*;
-import com.mojang.serialization.codecs.*;
-import net.minecraft.core.*;
-import net.minecraft.core.component.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.network.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.resources.*;
-import net.minecraft.tags.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
+import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.datacomponents.ModDataComponents;
+import com.awesomeshot5051.mobfarms.enums.SwordType;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.item.enchantment.*;
-import net.minecraft.world.level.*;
-import org.jetbrains.annotations.*;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 public class UpgradeRecipe extends ShapedRecipe {
     public static final DataComponentType<ItemContainerContents> swordTypeComponent = ModDataComponents.SWORD_TYPE.get();
@@ -79,17 +85,17 @@ public class UpgradeRecipe extends ShapedRecipe {
                 && modifier.get(0).toString().equals(modifier.get(3).toString());
     }
 
+    public static Map<Ingredient, Item> materialToSwordMap = Map.of(
+            Ingredient.of(Items.OAK_PLANKS, Items.SPRUCE_PLANKS, Items.BIRCH_PLANKS, Items.JUNGLE_PLANKS, Items.ACACIA_PLANKS, Items.DARK_OAK_PLANKS, Items.MANGROVE_PLANKS, Items.BAMBOO_PLANKS, Items.CHERRY_PLANKS), Items.WOODEN_SWORD,
+            Ingredient.of(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE), Items.STONE_SWORD,
+            Ingredient.of(Items.IRON_INGOT), Items.IRON_SWORD,
+            Ingredient.of(Items.GOLD_INGOT), Items.GOLDEN_SWORD,
+            Ingredient.of(Items.DIAMOND), Items.DIAMOND_SWORD,
+            Ingredient.of(Items.NETHERITE_INGOT), Items.NETHERITE_SWORD
+    );
+
     @Override
     public @NotNull ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider registries) {
-        Map<Ingredient, Item> materialToSwordMap = Map.of(
-                Ingredient.of(Items.OAK_PLANKS, Items.SPRUCE_PLANKS, Items.BIRCH_PLANKS, Items.JUNGLE_PLANKS, Items.ACACIA_PLANKS, Items.DARK_OAK_PLANKS, Items.MANGROVE_PLANKS, Items.BAMBOO_PLANKS, Items.CHERRY_PLANKS), Items.WOODEN_SWORD,
-                Ingredient.of(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE), Items.STONE_SWORD,
-                Ingredient.of(Items.IRON_INGOT), Items.IRON_SWORD,
-                Ingredient.of(Items.GOLD_INGOT), Items.GOLDEN_SWORD,
-                Ingredient.of(Items.DIAMOND), Items.DIAMOND_SWORD,
-                Ingredient.of(Items.NETHERITE_INGOT), Items.NETHERITE_SWORD
-        );
-
         ItemEnchantments itemenchantments = ItemEnchantments.EMPTY;
         List<ItemStack> modifer = new ArrayList<>(List.of(craftingInput.getItem(1), craftingInput.getItem(3), craftingInput.getItem(5), craftingInput.getItem(7)));
         if (areAllModifiersEqual(modifer)) {
@@ -126,53 +132,48 @@ public class UpgradeRecipe extends ShapedRecipe {
         return result2;
     }
 
+    public static Map<Item, Ingredient> SwordToMaterialMap = Map.of(
+            Items.WOODEN_SWORD, Ingredient.of(Items.OAK_PLANKS, Items.SPRUCE_PLANKS, Items.BIRCH_PLANKS,
+                    Items.JUNGLE_PLANKS, Items.ACACIA_PLANKS, Items.DARK_OAK_PLANKS,
+                    Items.MANGROVE_PLANKS, Items.BAMBOO_PLANKS, Items.CHERRY_PLANKS),
+            Items.GOLDEN_SWORD, Ingredient.of(Items.GOLD_INGOT),
+            Items.STONE_SWORD, Ingredient.of(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE),
+            Items.IRON_SWORD, Ingredient.of(Items.IRON_INGOT),
+            Items.DIAMOND_SWORD, Ingredient.of(Items.DIAMOND),
+            Items.NETHERITE_SWORD, Ingredient.of(Items.NETHERITE_INGOT)
+    );
+
     private boolean isHigherSwordType(ItemStack baseSwordType, ItemStack modifierSwordType) {
-        // Define PickType levels in ascending order of strength
-        List<Item> swordTypeHierarchy = new ArrayList<>(List.of(
-                Items.WOODEN_SWORD, Items.GOLDEN_SWORD, Items.STONE_SWORD, Items.IRON_SWORD,
-                Items.DIAMOND_SWORD, Items.NETHERITE_SWORD
-        ));
 
-        // Map each SWORD type to its corresponding material
-        Map<Item, Ingredient> SwordToMaterialMap = Map.of(
-                Items.WOODEN_SWORD, Ingredient.of(Items.OAK_PLANKS, Items.SPRUCE_PLANKS, Items.BIRCH_PLANKS,
-                        Items.JUNGLE_PLANKS, Items.ACACIA_PLANKS, Items.DARK_OAK_PLANKS,
-                        Items.MANGROVE_PLANKS, Items.BAMBOO_PLANKS, Items.CHERRY_PLANKS),
-                Items.GOLDEN_SWORD, Ingredient.of(Items.GOLD_INGOT),
-                Items.STONE_SWORD, Ingredient.of(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE),
-                Items.IRON_SWORD, Ingredient.of(Items.IRON_INGOT),
-                Items.DIAMOND_SWORD, Ingredient.of(Items.DIAMOND),
-                Items.NETHERITE_SWORD, Ingredient.of(Items.NETHERITE_INGOT)
-        );
-
-        // Convert baseSwordType and modifierSwordType to their corresponding materials
-        Item baseSwordItem = baseSwordType.getItem();
-        Item modifierPickItem = modifierSwordType.getItem();
-
-        Item baseMaterialType = null;
+//
+//        // Convert baseSwordType and modifierSwordType to their corresponding materials
+//        Item baseSwordItem = baseSwordType.getItem();
+//
+//        Item baseMaterialType = null;
         Item modifierMaterialType = null;
-
-        // Find the materials corresponding to the SWORD items
+//
+//        // Find the materials corresponding to the SWORD items
         for (Map.Entry<Item, Ingredient> entry : SwordToMaterialMap.entrySet()) {
-            if (entry.getKey().equals(baseSwordType.getItem())) {
-                baseMaterialType = entry.getKey();
-            }
+//            if (entry.getKey().equals(baseSwordType.getItem())) {
+//                baseMaterialType = entry.getKey();
+//            }
             if (entry.getValue().test(modifierSwordType)) {
                 modifierMaterialType = entry.getKey();
             }
         }
-
-        // Ensure both types were mapped to a valid SWORD
-        if (baseMaterialType == null || modifierMaterialType == null) {
+//
+//        // Ensure both types were mapped to a valid SWORD
+        if (/*baseMaterialType == null*/modifierMaterialType == null) {
             return false; // Invalid types, cannot compare
         }
-
-        // Compare indices in the hierarchy
-        int baseIndex = swordTypeHierarchy.indexOf(baseMaterialType);
-        int modifierIndex = swordTypeHierarchy.indexOf(modifierMaterialType);
-
-        // Return true if the modifier type is higher in the hierarchy
-        return modifierIndex > baseIndex;
+        modifierSwordType = modifierMaterialType.getDefaultInstance();
+//        // Compare indices in the hierarchy
+//        int baseIndex = swordTypeHierarchy.indexOf(baseMaterialType);
+//        int modifierIndex = swordTypeHierarchy.indexOf(modifierMaterialType);
+//
+//        // Return true if the modifier type is higher in the hierarchy
+//        return modifierIndex > baseIndex;
+        return SwordType.getSwordRank(modifierSwordType.getItem()) > SwordType.getSwordRank(baseSwordType.getItem());
     }
 
 
