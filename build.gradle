@@ -5,6 +5,7 @@ plugins {
 //    id 'net.neoforged.moddevgradle.tasks.JarJar' version '0.4.2' // Added JarJar plugin
 }
 
+
 version = mod_version
 group = mod_group_id
 
