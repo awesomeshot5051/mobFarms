@@ -1,15 +1,16 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity;
 
-import com.awesomeshot5051.mobfarms.blocks.*;
-import com.awesomeshot5051.mobfarms.entity.*;
-import com.awesomeshot5051.mobfarms.gui.*;
-import de.maxhenkel.corelib.blockentity.*;
-import de.maxhenkel.corelib.inventory.*;
-import net.minecraft.core.*;
-import net.minecraft.world.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.state.*;
-import net.neoforged.neoforge.items.*;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
+import com.awesomeshot5051.mobfarms.gui.ModItemStackHandler;
+import de.maxhenkel.corelib.blockentity.IServerTickableBlockEntity;
+import de.maxhenkel.corelib.inventory.ItemListInventory;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class EmptyFarmTileentity extends VillagerTileentity implements IServerTickableBlockEntity {
 

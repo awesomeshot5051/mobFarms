@@ -1,7 +1,7 @@
 package com.awesomeshot5051.mobfarms.datacomponents;
 
-import com.awesomeshot5051.mobfarms.items.ModItems;
 import com.awesomeshot5051.mobfarms.blocks.tileentity.FakeWorldTileentity;
+import com.awesomeshot5051.mobfarms.items.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;

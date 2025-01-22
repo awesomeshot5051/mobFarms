@@ -1,13 +1,13 @@
 package com.awesomeshot5051.mobfarms.datacomponents;
 
-import com.awesomeshot5051.mobfarms.*;
-import net.minecraft.core.component.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.world.item.component.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.neoforge.registries.*;
+import com.awesomeshot5051.mobfarms.Main;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
 public class ModDataComponents {
     // Define the ResourceKey for the DataComponentType registry

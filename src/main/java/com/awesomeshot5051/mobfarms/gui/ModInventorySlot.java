@@ -1,10 +1,10 @@
 package com.awesomeshot5051.mobfarms.gui;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
-import com.awesomeshot5051.mobfarms.entity.*;
-import net.minecraft.world.*;
-import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.EmptyFarmTileentity;
+import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class ModInventorySlot extends Slot {
 

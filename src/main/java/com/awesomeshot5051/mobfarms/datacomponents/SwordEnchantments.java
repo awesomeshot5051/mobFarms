@@ -1,9 +1,11 @@
 package com.awesomeshot5051.mobfarms.datacomponents;
 
-import net.minecraft.resources.*;
-import net.minecraft.world.item.enchantment.*;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SwordEnchantments {
     // Initialize the enchantments map with default values

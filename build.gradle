@@ -39,7 +39,26 @@ repositories {
         url "https://maven.k-4u.nl"
     }
     maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+    maven {
         url "file://${project.projectDir}/repo"
+    }
+}
+repositories {
+    // Other repositories can go above or below Modrinth's. We don't need priority :)
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        // Only add this if you're using ForgeGradle, otherwise remove this line
+        filter {
+            includeGroup "maven.modrinth"
+        }
     }
 }
 
@@ -104,17 +123,18 @@ dependencies {
     implementation "mcjty.theoneprobe:theoneprobe:${top_version}"
     implementation "curse.maven:jade-324717:${jade_id}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+//    implementation "maven.modrinth:FgoYR2BV:bs1npeRX"
 
     // JarJar dependency
     jarJar(implementation("de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}")) {
-//        version {
+        version {
 //            // The version range your mod is actually compatible with.
 //            // Note that you may receive a *lower* version than your preferred if another
 //            // Mod is only compatible up to 1.7.24, for example, your mod might get 1.7.24 at runtime.
 //            strictly "[${corelib_version}]"
 //            prefer "${corelib_version}" // The version actually used in your dev workspace
-//        }
-//    implementation "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}"
+        }
+        implementation "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}"
         compileOnly "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}:javadoc"
 //    implementation 'net.neoforged:JarJarSelector:0.4.2'
     }

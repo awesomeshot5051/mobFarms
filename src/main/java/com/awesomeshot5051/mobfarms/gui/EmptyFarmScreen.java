@@ -1,11 +1,11 @@
 package com.awesomeshot5051.mobfarms.gui;
 
-import com.awesomeshot5051.mobfarms.*;
-import de.maxhenkel.corelib.inventory.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.player.*;
+import com.awesomeshot5051.mobfarms.Main;
+import de.maxhenkel.corelib.inventory.ScreenBase;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
 public class EmptyFarmScreen extends ScreenBase<EmptyFarmContainer> {
 

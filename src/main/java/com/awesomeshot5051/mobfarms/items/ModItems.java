@@ -1,16 +1,19 @@
 package com.awesomeshot5051.mobfarms.items;
 
-import com.awesomeshot5051.mobfarms.*;
-import com.awesomeshot5051.mobfarms.blocks.*;
-import com.awesomeshot5051.mobfarms.datacomponents.*;
-import com.awesomeshot5051.mobfarms.gui.*;
-import net.minecraft.core.component.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.neoforge.common.extensions.*;
-import net.neoforged.neoforge.registries.*;
+import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
+import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
+import com.awesomeshot5051.mobfarms.gui.CookedmeatConfigMenu;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
 

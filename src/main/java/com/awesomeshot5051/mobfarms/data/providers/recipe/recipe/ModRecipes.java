@@ -1,13 +1,14 @@
 package com.awesomeshot5051.mobfarms.data.providers.recipe.recipe;
 
-import com.awesomeshot5051.mobfarms.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.item.crafting.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.neoforge.registries.*;
+import com.awesomeshot5051.mobfarms.Main;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
 
 public class ModRecipes {

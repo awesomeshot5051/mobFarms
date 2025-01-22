@@ -1,22 +1,29 @@
 package com.awesomeshot5051.mobfarms.integration.jei;
 
-import com.awesomeshot5051.mobfarms.*;
-import com.awesomeshot5051.mobfarms.blocks.*;
-import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.*;
-import mezz.jei.api.*;
-import mezz.jei.api.constants.*;
-import mezz.jei.api.recipe.*;
-import mezz.jei.api.registration.*;
-import mezz.jei.api.runtime.*;
-import net.minecraft.client.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.npc.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.*;
-import net.minecraft.world.item.crafting.*;
-import org.jetbrains.annotations.*;
+import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.blocks.aggressiveMobs.WitherFarmBlock;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.recipe.IRecipeManager;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {

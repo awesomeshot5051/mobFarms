@@ -1,15 +1,21 @@
 package com.awesomeshot5051.mobfarms.items.render;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
-import com.awesomeshot5051.mobfarms.datacomponents.*;
-import com.mojang.blaze3d.vertex.*;
-import de.maxhenkel.corelib.client.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.blockentity.*;
-import net.minecraft.world.item.*;
-import net.neoforged.neoforge.client.model.data.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.FakeWorldTileentity;
+import com.awesomeshot5051.mobfarms.datacomponents.VillagerBlockEntityData;
+import com.mojang.blaze3d.vertex.PoseStack;
+import de.maxhenkel.corelib.client.ItemRenderer;
+import de.maxhenkel.corelib.client.RendererProviders;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.client.model.data.ModelData;
 
-import java.util.function.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class BlockItemRendererBase<T extends BlockEntityRenderer<U>, U extends FakeWorldTileentity> extends ItemRenderer {
 

@@ -1,17 +1,21 @@
 package com.awesomeshot5051.mobfarms.integration.theoneprobe;
 
-import com.awesomeshot5051.mobfarms.*;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
-import mcjty.theoneprobe.api.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.entity.*;
-import net.minecraft.world.level.block.state.*;
+import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
+import mcjty.theoneprobe.api.ElementAlignment;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoProvider;
+import mcjty.theoneprobe.api.ProbeMode;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class TileInfoProvider implements IProbeInfoProvider {
 

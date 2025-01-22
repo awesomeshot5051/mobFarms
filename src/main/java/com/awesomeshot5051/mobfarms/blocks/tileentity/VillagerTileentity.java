@@ -2,19 +2,22 @@ package com.awesomeshot5051.mobfarms.blocks.tileentity;
 
 //import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
 
-import com.awesomeshot5051.mobfarms.datacomponents.*;
-import com.awesomeshot5051.mobfarms.entity.*;
-import it.unimi.dsi.fastutil.objects.*;
-import net.minecraft.core.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.*;
-import net.minecraft.world.level.block.entity.*;
-import net.minecraft.world.level.block.state.*;
+import com.awesomeshot5051.mobfarms.datacomponents.SwordEnchantments;
+import com.awesomeshot5051.mobfarms.datacomponents.VillagerData;
+import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.*;
-import java.util.*;
-import java.util.stream.*;
+import javax.annotation.Nullable;
+import java.util.Map;
 
 public class VillagerTileentity extends FakeWorldTileentity {
 

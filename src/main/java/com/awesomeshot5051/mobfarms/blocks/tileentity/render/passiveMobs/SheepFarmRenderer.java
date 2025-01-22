@@ -1,18 +1,18 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.passiveMobs.*;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.*;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
-import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.blockentity.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.core.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.*;
-import net.minecraft.world.item.*;
+import com.awesomeshot5051.mobfarms.blocks.passiveMobs.SheepFarmBlock;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.SheepFarmTileentity;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.SheepRenderer;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.item.DyeColor;
 
-import java.lang.ref.*;
+import java.lang.ref.WeakReference;
 
 public class SheepFarmRenderer extends RendererBase<SheepFarmTileentity> {
 

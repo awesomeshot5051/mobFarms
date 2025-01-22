@@ -1,11 +1,11 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
-import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.blockentity.*;
-import net.minecraft.core.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.EmptyFarmTileentity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
 
 public class EmptyFarmRenderer extends RendererBase<EmptyFarmTileentity> {
 

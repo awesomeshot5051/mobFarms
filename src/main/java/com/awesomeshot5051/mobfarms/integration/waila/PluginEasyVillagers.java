@@ -1,7 +1,9 @@
 package com.awesomeshot5051.mobfarms.integration.waila;
 
-import com.awesomeshot5051.mobfarms.blocks.*;
-import snownee.jade.api.*;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import snownee.jade.api.IWailaClientRegistration;
+import snownee.jade.api.IWailaPlugin;
+import snownee.jade.api.WailaPlugin;
 
 @WailaPlugin
 public class PluginEasyVillagers implements IWailaPlugin {

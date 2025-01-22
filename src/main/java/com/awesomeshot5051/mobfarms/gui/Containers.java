@@ -1,13 +1,15 @@
 package com.awesomeshot5051.mobfarms.gui;
 
-import com.awesomeshot5051.mobfarms.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.world.inventory.*;
-import net.neoforged.api.distmarker.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.common.extensions.*;
-import net.neoforged.neoforge.registries.*;
+import com.awesomeshot5051.mobfarms.Main;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.inventory.MenuType;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class Containers {
 

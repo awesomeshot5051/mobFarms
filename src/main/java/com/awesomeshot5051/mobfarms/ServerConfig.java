@@ -1,7 +1,7 @@
 package com.awesomeshot5051.mobfarms;
 
-import de.maxhenkel.corelib.config.*;
-import net.neoforged.neoforge.common.*;
+import de.maxhenkel.corelib.config.ConfigBase;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ServerConfig extends ConfigBase {
     //meat dropping mobs

@@ -1,12 +1,14 @@
 package com.awesomeshot5051.mobfarms;
 
-import com.awesomeshot5051.mobfarms.blocks.*;
-import com.awesomeshot5051.mobfarms.items.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.world.item.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.neoforge.registries.*;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.items.ModItems;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModCreativeTabs {
 

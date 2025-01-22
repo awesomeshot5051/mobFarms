@@ -1,18 +1,18 @@
 package com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs;
 
-import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.*;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
-import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.*;
-import net.minecraft.client.model.geom.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.blockentity.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.core.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.monster.*;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.ZombifiedPiglinFarmTileentity;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.RendererBase;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.PiglinRenderer;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
 
-import java.lang.ref.*;
+import java.lang.ref.WeakReference;
 
 public class ZombifiedPiglinFarmRenderer extends RendererBase<ZombifiedPiglinFarmTileentity> {
 

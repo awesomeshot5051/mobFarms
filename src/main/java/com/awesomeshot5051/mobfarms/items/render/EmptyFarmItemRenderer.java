@@ -1,9 +1,9 @@
 package com.awesomeshot5051.mobfarms.items.render;
 
-import com.awesomeshot5051.mobfarms.blocks.*;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.*;
-import net.minecraft.core.*;
+import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.EmptyFarmTileentity;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.render.EmptyFarmRenderer;
+import net.minecraft.core.BlockPos;
 
 public class EmptyFarmItemRenderer extends BlockItemRendererBase<EmptyFarmRenderer, EmptyFarmTileentity> {
 

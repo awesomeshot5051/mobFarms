@@ -1,23 +1,25 @@
 package com.awesomeshot5051.mobfarms.integration.waila;
 
-import com.awesomeshot5051.mobfarms.*;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.*;
-import net.minecraft.*;
-import net.minecraft.core.component.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
-import net.minecraft.world.level.block.entity.*;
-import org.jetbrains.annotations.*;
-import snownee.jade.api.*;
-import snownee.jade.api.config.*;
-import snownee.jade.api.ui.*;
-import snownee.jade.impl.ui.*;
+import com.awesomeshot5051.mobfarms.Main;
+import com.awesomeshot5051.mobfarms.blocks.tileentity.VillagerTileentity;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
+import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.IBlockComponentProvider;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.ui.IElement;
+import snownee.jade.impl.ui.ItemStackElement;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class HUDHandlerVillager implements IBlockComponentProvider {
 
