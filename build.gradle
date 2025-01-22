@@ -170,7 +170,7 @@ tasks.register("generateModMetadata", ProcessResources) {
 }
 
 sourceSets.main.resources.srcDir generateModMetadata
-neoForge.ideSyncTask generateModMetadata
+neoForge.ideSyncTask generateModMetadata as Task
 
 publishing {
     publications {
