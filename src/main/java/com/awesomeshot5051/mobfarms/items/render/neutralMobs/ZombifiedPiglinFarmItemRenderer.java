@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.neutralMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.ZombifiedPiglinFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs.ZombifiedPiglinFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class ZombifiedPiglinFarmItemRenderer extends BlockItemRendererBase<ZombifiedPiglinFarmRenderer, ZombifiedPiglinFarmTileentity> {
-
-    public ZombifiedPiglinFarmItemRenderer() {
-        super(ZombifiedPiglinFarmRenderer::new, () -> new ZombifiedPiglinFarmTileentity(BlockPos.ZERO, ModBlocks.ZOMBIFIED_PIGLIN_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a5093f626b3f6ef5997e7a2acfdbeec2a5c202aceb302254823093bda64ed9ef
+size 784

@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.VindicatorFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.VindicatorFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class VindicatorFarmItemRenderer extends BlockItemRendererBase<VindicatorFarmRenderer, VindicatorFarmTileentity> {
-
-    public VindicatorFarmItemRenderer() {
-        super(VindicatorFarmRenderer::new, () -> new VindicatorFarmTileentity(BlockPos.ZERO, ModBlocks.VINDICATOR_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6e0422854864ab59ee510e0cd0a96727017a0f58da79d61a4d4c879f350d708e
+size 747

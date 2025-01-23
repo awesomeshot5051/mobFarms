@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.GhastFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.GhastFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class GhastFarmItemRenderer extends BlockItemRendererBase<GhastFarmRenderer, GhastFarmTileentity> {
-
-    public GhastFarmItemRenderer() {
-        super(GhastFarmRenderer::new, () -> new GhastFarmTileentity(BlockPos.ZERO, ModBlocks.GHAST_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:82da024a5df5ae2163bb3662a54524b90bd4f5731b0946fd8b7c51884399f99b
+size 702

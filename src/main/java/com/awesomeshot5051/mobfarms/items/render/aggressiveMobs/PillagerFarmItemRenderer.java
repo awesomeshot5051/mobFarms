@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.PillagerFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.PillagerFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class PillagerFarmItemRenderer extends BlockItemRendererBase<PillagerFarmRenderer, PillagerFarmTileentity> {
-
-    public PillagerFarmItemRenderer() {
-        super(PillagerFarmRenderer::new, () -> new PillagerFarmTileentity(BlockPos.ZERO, ModBlocks.PILLAGER_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:029db0696afb23fce5140b701564a5a11d832759b3ecce97b727d6580473f0a5
+size 729

@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.HoglinFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.HoglinFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class HoglinFarmItemRenderer extends BlockItemRendererBase<HoglinFarmRenderer, HoglinFarmTileentity> {
-
-    public HoglinFarmItemRenderer() {
-        super(HoglinFarmRenderer::new, () -> new HoglinFarmTileentity(BlockPos.ZERO, ModBlocks.HOGLIN_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:54632d42a45aa63c99f7624edf44587b5728bad0d6fef89e3cb55ca38e6d35b3
+size 711

@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.SkeletonFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.SkeletonFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class SkeletonFarmItemRenderer extends BlockItemRendererBase<SkeletonFarmRenderer, SkeletonFarmTileentity> {
-
-    public SkeletonFarmItemRenderer() {
-        super(SkeletonFarmRenderer::new, () -> new SkeletonFarmTileentity(BlockPos.ZERO, ModBlocks.SKELETON_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9fd2cef21949867d59657bfde8e888e427e5b13d650f0e2ad5e80386d8646250
+size 729

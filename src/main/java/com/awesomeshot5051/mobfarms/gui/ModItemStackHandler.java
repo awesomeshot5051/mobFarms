@@ -1,25 +1,3 @@
-package com.awesomeshot5051.mobfarms.gui;
-
-import com.awesomeshot5051.mobfarms.blocks.tileentity.EmptyFarmTileentity;
-import com.awesomeshot5051.mobfarms.entity.EasyVillagerEntity;
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
-
-public class ModItemStackHandler extends ItemStackHandler {
-
-    protected final EmptyFarmTileentity EmptyFarm;
-
-    public ModItemStackHandler(NonNullList<ItemStack> stacks, EmptyFarmTileentity EmptyFarm) {
-        super(stacks);
-        this.EmptyFarm = EmptyFarm;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        EasyVillagerEntity v = EmptyFarm.getVillagerEntity();
-        return super.isItemValid(slot, stack) && v != null && v.wantsToPickUp(stack);
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1be4bca2cc2f5968cc58ce5d750d3c239c732fcb0181cf06b5921e47f2efca5d
+size 899

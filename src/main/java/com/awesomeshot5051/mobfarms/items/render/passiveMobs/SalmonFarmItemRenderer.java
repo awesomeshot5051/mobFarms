@@ -1,14 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.passiveMobs;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.SalmonFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs.SalmonFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class SalmonFarmItemRenderer extends BlockItemRendererBase<SalmonFarmRenderer, SalmonFarmTileentity> {
-
-    public SalmonFarmItemRenderer() {
-        super(SalmonFarmRenderer::new, () -> new SalmonFarmTileentity(BlockPos.ZERO, ModBlocks.SALMON_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1f666d5f5332660ba945833b8ee5ad10c18289139c3d190a2a21e9a76bc4052c
+size 701

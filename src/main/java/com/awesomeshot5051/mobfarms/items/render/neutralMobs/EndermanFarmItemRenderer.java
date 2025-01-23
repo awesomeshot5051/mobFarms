@@ -1,14 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.neutralMobs;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.EndermanFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs.EndermanFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class EndermanFarmItemRenderer extends BlockItemRendererBase<EndermanFarmRenderer, EndermanFarmTileentity> {
-
-    public EndermanFarmItemRenderer() {
-        super(EndermanFarmRenderer::new, () -> new EndermanFarmTileentity(BlockPos.ZERO, ModBlocks.ENDERMAN_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:92b69dd320642e995b454047d42859c13ecd8f2f144bbf5ea542ede4055c0479
+size 719

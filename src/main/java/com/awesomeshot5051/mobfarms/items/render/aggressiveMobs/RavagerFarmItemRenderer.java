@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.RavagerFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.RavagerFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class RavagerFarmItemRenderer extends BlockItemRendererBase<RavagerFarmRenderer, RavagerFarmTileentity> {
-
-    public RavagerFarmItemRenderer() {
-        super(RavagerFarmRenderer::new, () -> new RavagerFarmTileentity(BlockPos.ZERO, ModBlocks.RAVAGER_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bf6dc248045265aba18b02b26ea9af670d53b8e0ffcff0338b44bb0c7f64e3e1
+size 720

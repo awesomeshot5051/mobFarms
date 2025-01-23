@@ -1,19 +1,3 @@
-package com.awesomeshot5051.mobfarms;
-
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
-
-public class OutputItemHandler extends ItemStackHandler {
-
-    public OutputItemHandler(NonNullList<ItemStack> stacks) {
-        super(stacks);
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        return false;
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5263f085b22ce4546609dff1054279f533cf861f2300d5a483dae2c524aaa8b0
+size 483

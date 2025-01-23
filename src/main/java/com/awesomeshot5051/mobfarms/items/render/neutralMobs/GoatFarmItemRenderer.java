@@ -1,14 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.neutralMobs;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.neutralMobs.GoatFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.neutralMobs.GoatFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class GoatFarmItemRenderer extends BlockItemRendererBase<GoatFarmRenderer, GoatFarmTileentity> {
-
-    public GoatFarmItemRenderer() {
-        super(GoatFarmRenderer::new, () -> new GoatFarmTileentity(BlockPos.ZERO, ModBlocks.GOAT_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:061e3799db23286372ce48ace7aa025b4de149e0e93f5368e632f7d0188785be
+size 683

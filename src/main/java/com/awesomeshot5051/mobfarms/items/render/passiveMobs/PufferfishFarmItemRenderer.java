@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.passiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.PufferfishFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs.PufferfishFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class PufferfishFarmItemRenderer extends BlockItemRendererBase<PufferfishFarmRenderer, PufferfishFarmTileentity> {  
-  
-  public PufferfishFarmItemRenderer() {  
-    super(PufferfishFarmRenderer::new, () -> new PufferfishFarmTileentity(BlockPos.ZERO, ModBlocks.PUFFERFISH_FARM.get().defaultBlockState()));  
-  }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a2f9495bb50c60f218cf50ed9b104aa471944b1dd4db5afb8ec15df21a5ce8f5
+size 738

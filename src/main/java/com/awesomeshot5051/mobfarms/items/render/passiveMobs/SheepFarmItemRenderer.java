@@ -1,14 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.passiveMobs;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.SheepFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs.SheepFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class SheepFarmItemRenderer extends BlockItemRendererBase<SheepFarmRenderer, SheepFarmTileentity> {
-
-    public SheepFarmItemRenderer() {
-        super(SheepFarmRenderer::new, () -> new SheepFarmTileentity(BlockPos.ZERO, ModBlocks.SHEEP_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c2f14050cbd6efda8f8896d892e0fd29c747673ff4ad6bc871193fbe375505b1
+size 692

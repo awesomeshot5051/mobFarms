@@ -1,14 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.passiveMobs;
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.CodFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs.CodFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class CodFarmItemRenderer extends BlockItemRendererBase<CodFarmRenderer, CodFarmTileentity> {
-
-    public CodFarmItemRenderer() {
-        super(CodFarmRenderer::new, () -> new CodFarmTileentity(BlockPos.ZERO, ModBlocks.COD_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:fb3eb6f9ab05c2321ba213c44ab56496ce52d77bfd51108c8e5d6951693a6647
+size 673

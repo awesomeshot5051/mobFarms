@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.BlazeFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.BlazeFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class BlazeFarmItemRenderer extends BlockItemRendererBase<BlazeFarmRenderer, BlazeFarmTileentity> {
-
-    public BlazeFarmItemRenderer() {
-        super(BlazeFarmRenderer::new, () -> new BlazeFarmTileentity(BlockPos.ZERO, ModBlocks.BLAZE_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:451147248afb4e58e8aee47532bfcef634a434aa55c4758ac748d37a396997d2
+size 702

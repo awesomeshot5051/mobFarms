@@ -1,18 +1,3 @@
-package com.awesomeshot5051.mobfarms.integration;
-
-import com.awesomeshot5051.mobfarms.integration.theoneprobe.TheOneProbeModule;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.InterModComms;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
-
-public class IMC {
-
-    @SubscribeEvent
-    public static void enqueueIMC(InterModEnqueueEvent event) {
-        if (ModList.get().isLoaded("theoneprobe")) {
-            InterModComms.sendTo("theoneprobe", "getTheOneProbe", TheOneProbeModule::new);
-        }
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c6ca1bc0b5ceed6ba6019431189a285ee54f557eba169c1f9ad2e5780f1352b8
+size 580

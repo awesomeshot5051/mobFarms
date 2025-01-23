@@ -1,15 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.aggressiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.aggressiveMobs.ZombieFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.aggressiveMobs.ZombieFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class ZombieFarmItemRenderer extends BlockItemRendererBase<ZombieFarmRenderer, ZombieFarmTileentity> {
-
-    public ZombieFarmItemRenderer() {
-        super(ZombieFarmRenderer::new, () -> new ZombieFarmTileentity(BlockPos.ZERO, ModBlocks.ZOMBIE_FARM.get().defaultBlockState()));
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e1bafaf8645cd011ce04d31309e2b6667638b976abe37627e92781b13a2b02d6
+size 711

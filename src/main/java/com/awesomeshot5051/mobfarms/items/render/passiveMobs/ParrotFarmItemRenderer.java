@@ -1,13 +1,3 @@
-package com.awesomeshot5051.mobfarms.items.render.passiveMobs;
-
-import com.awesomeshot5051.mobfarms.blocks.ModBlocks;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.passiveMobs.ParrotFarmTileentity;
-import com.awesomeshot5051.mobfarms.blocks.tileentity.render.passiveMobs.ParrotFarmRenderer;
-import com.awesomeshot5051.mobfarms.items.render.BlockItemRendererBase;
-import net.minecraft.core.BlockPos;
-
-public class ParrotFarmItemRenderer extends BlockItemRendererBase<ParrotFarmRenderer, ParrotFarmTileentity> {
-    public ParrotFarmItemRenderer() {
-        super(ParrotFarmRenderer::new, () -> new ParrotFarmTileentity(BlockPos.ZERO, ModBlocks.PARROT_FARM.get().defaultBlockState()));
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6d5cc7cb06253beedc71cfa45cda2eaea018fa2965eb58da638a2ba158fa525b
+size 700
