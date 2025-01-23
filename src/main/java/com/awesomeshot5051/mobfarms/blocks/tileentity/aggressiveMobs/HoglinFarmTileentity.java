@@ -105,7 +105,7 @@ public class HoglinFarmTileentity extends VillagerTileentity implements ITickabl
     public void tick() {
         assert level != null;
         BlockState blockBelow = level.getBlockState(getBlockPos().below());
-        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.CRIMSON_NYLIUM) || !blockBelow.is(Blocks.WARPED_NYLIUM)) {
+        if (!(level.dimension().equals(Level.NETHER) || blockBelow.is(Blocks.CRIMSON_NYLIUM) || blockBelow.is(Blocks.WARPED_NYLIUM))) {
             return; // Do nothing if not in the Nether
         }
         // No villager entity is needed

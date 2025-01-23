@@ -107,7 +107,7 @@ public class ZombifiedPiglinFarmTileentity extends VillagerTileentity implements
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.CREEPER_PRIMED);
         assert level != null;
         BlockState blockBelow = level.getBlockState(getBlockPos().below());
-        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.NETHERRACK)) {
+        if (!(level.dimension().equals(Level.NETHER) || blockBelow.is(Blocks.NETHERRACK))) {
             return; // Do nothing if not in the Nether
         }
         timer++;

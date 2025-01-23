@@ -72,7 +72,8 @@ public class ShulkerFarmBlock extends BlockBase implements EntityBlock, IItemBlo
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         if (Screen.hasShiftDown()) {
-            components.add(Component.translatable("Must be §9in the End or on top of Purpur Bricks§r to work")
+            components.add(Component.translatable("Must be §9in the End or on top of Purpur Bricks§r§7 to work.")
+
                     .withStyle(ChatFormatting.GRAY));
             ItemContainerContents defaultType = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));
             ItemStack swordType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.getOrDefault(ModDataComponents.SWORD_TYPE, defaultType)).copyOne())).copyOne();

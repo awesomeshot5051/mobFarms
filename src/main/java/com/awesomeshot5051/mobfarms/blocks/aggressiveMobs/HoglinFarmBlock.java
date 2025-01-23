@@ -73,7 +73,8 @@ public class HoglinFarmBlock extends BlockBase implements EntityBlock, IItemBloc
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         if (Screen.hasShiftDown()) {
-            components.add(Component.literal("Must be §4in the Nether or on " + convertToReadableName(Blocks.CRIMSON_NYLIUM.getDescriptionId()) + "§r to work.")
+            components.add(Component.literal("Must be §4in the Nether or on " + convertBlockToReadableName(Blocks.CRIMSON_NYLIUM.getDescriptionId()) + "\nor on " + convertBlockToReadableName(Blocks.WARPED_NYLIUM.getDescriptionId()) + " §r§7 to work.")
+
                     .withStyle(ChatFormatting.GRAY));
             ItemContainerContents defaultType = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));
             ItemStack swordType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.getOrDefault(ModDataComponents.SWORD_TYPE, defaultType)).copyOne())).copyOne();
@@ -85,6 +86,15 @@ public class HoglinFarmBlock extends BlockBase implements EntityBlock, IItemBloc
             components.add(Component.literal("Hold §4Shift§r to see tool").withStyle(ChatFormatting.YELLOW));
         }
         HoglinFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new HoglinFarmTileentity(BlockPos.ZERO, ModBlocks.HOGLIN_FARM.get().defaultBlockState()));
+    }
+
+    private String convertBlockToReadableName(String block) {
+        // Remove "item.minecraft." and replace underscores with spaces
+        String readableName = block.replace("block.minecraft.", "").replace('_', ' ');
+        // Capitalize the first letter of each word
+        return Arrays.stream(readableName.split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     @Override

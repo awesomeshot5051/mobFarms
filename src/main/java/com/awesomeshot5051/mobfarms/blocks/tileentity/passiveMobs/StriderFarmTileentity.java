@@ -107,8 +107,8 @@ public class StriderFarmTileentity extends VillagerTileentity implements ITickab
     public void tick() {
         assert level != null;
         BlockState blockBelow = level.getBlockState(getBlockPos().below());
-        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.LAVA)) {
-            return; // Do nothing if not in the Nether
+        if (!(level.dimension().equals(Level.NETHER) || blockBelow.is(Blocks.LAVA))) {
+            return; // Do nothing if not in the Nether or not on lava
         }
         // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.VILLAGER_AMBIENT);
         // VillagerBlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.ZOMBIE_AMBIENT);

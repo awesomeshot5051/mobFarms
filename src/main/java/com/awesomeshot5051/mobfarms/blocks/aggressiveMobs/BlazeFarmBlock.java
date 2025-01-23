@@ -88,7 +88,8 @@ public class BlazeFarmBlock extends BlockBase implements EntityBlock, IItemBlock
         super.appendHoverText(stack, context, components, tooltipFlag);
         BlazeFarmTileentity trader = VillagerBlockEntityData.getAndStoreBlockEntity(stack, context.registries(), context.level(), () -> new BlazeFarmTileentity(BlockPos.ZERO, ModBlocks.BLAZE_FARM.get().defaultBlockState()));
         if (Screen.hasShiftDown()) {
-            components.add(Component.literal("Must be §4in the Nether or on top of Netherrack§r to work")
+            components.add(Component.literal("Must be §4in the Nether or on top of Netherrack§r§7 to work.")
+
                     .withStyle(ChatFormatting.GRAY));
             ItemContainerContents defaultType = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));
             ItemStack swordType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.getOrDefault(ModDataComponents.SWORD_TYPE, defaultType)).copyOne())).copyOne();

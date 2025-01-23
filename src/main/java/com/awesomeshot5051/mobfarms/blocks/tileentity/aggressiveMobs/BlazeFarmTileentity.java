@@ -108,9 +108,10 @@ public class BlazeFarmTileentity extends VillagerTileentity implements ITickable
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.BLAZE_PRIMED);
         assert level != null;
         BlockState blockBelow = level.getBlockState(getBlockPos().below());
-        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.NETHER_BRICKS)) {
-            return; // Do nothing if not in the Nether
+        if (!(level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.NETHER_BRICKS))) {
+            return; // Do nothing if not in the Nether OR the block below is not Nether Bricks
         }
+
         timer++;
         setChanged();
 

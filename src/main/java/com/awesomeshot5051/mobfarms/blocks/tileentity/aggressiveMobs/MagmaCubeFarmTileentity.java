@@ -105,8 +105,8 @@ public class MagmaCubeFarmTileentity extends VillagerTileentity implements ITick
     public void tick() {
         assert level != null;
         BlockState blockBelow = level.getBlockState(getBlockPos().below());
-        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.LAVA)) {
-            return; // Do nothing if not in the Nether
+        if (!(level.dimension().equals(Level.NETHER) || blockBelow.is(Blocks.LAVA))) {
+            return; // Do nothing if not in the Nether or not on lava
         }
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.MAGMACUBE_PRIMED);

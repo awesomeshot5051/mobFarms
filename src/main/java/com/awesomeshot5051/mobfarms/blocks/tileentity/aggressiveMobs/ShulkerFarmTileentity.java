@@ -26,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -102,7 +103,9 @@ public class ShulkerFarmTileentity extends VillagerTileentity implements ITickab
 
     @Override
     public void tick() {
-        if (!level.dimension().equals(Level.END)) {
+        assert level != null;
+        BlockState blockBelow = level.getBlockState(getBlockPos().below());
+        if (!(level.dimension().equals(Level.END) || blockBelow.is(Blocks.PURPUR_BLOCK))) {
             return; // Do nothing if not in the Nether
         }
         // No villager entity is needed

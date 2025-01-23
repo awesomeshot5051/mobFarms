@@ -106,9 +106,10 @@ public class WitherSkeletonFarmTileentity extends VillagerTileentity implements 
     public void tick() {
         assert level != null;
         BlockState blockBelow = level.getBlockState(getBlockPos().below());
-        if (!level.dimension().equals(Level.NETHER) || !blockBelow.is(Blocks.NETHER_BRICKS)) {
-            return; // Do nothing if not in the Nether
+        if (!(level.dimension().equals(Level.NETHER) || blockBelow.is(Blocks.NETHER_BRICKS))) {
+            return; // Do nothing if not in the Nether OR the block below is not Nether Bricks
         }
+
         // No villager entity is needed
 //        BlockBase.playRandomVillagerSound(level, getBlockPos(), SoundEvents.WITHERSKELETON_PRIMED);
 

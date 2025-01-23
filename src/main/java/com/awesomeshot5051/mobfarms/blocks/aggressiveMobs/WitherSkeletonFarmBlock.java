@@ -72,7 +72,7 @@ public class WitherSkeletonFarmBlock extends BlockBase implements EntityBlock, I
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
         if (Screen.hasShiftDown()) {
-            components.add(Component.literal("Must be §4in the Nether or on top of Nether Bricks§r to work.")
+            components.add(Component.literal("Must be §4in the Nether or on top of Nether Bricks§r§7 to work.")
                     .withStyle(ChatFormatting.GRAY));
             ItemContainerContents defaultType = ItemContainerContents.fromItems(Collections.singletonList(new ItemStack(Items.WOODEN_SWORD)));
             ItemStack swordType = ItemContainerContents.fromItems(Collections.singletonList(Objects.requireNonNull(stack.getOrDefault(ModDataComponents.SWORD_TYPE, defaultType)).copyOne())).copyOne();
