@@ -1,0 +1,27 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:glass_panes"
+    },
+    "B": {
+      "item": "minecraft:potion"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "BSB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:illusioner_farm"
+  }
+}

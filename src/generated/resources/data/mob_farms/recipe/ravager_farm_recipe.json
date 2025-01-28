@@ -1,0 +1,30 @@
+{
+  "type": "mob_farms:shaped_serializer",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:glass_panes"
+    },
+    "F": {
+      "tag": "minecraft:swords"
+    },
+    "I": {
+      "item": "mob_farms:pillager_farm"
+    },
+    "O": {
+      "item": "minecraft:saddle"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "###",
+    "#F#",
+    "ISO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:ravager_farm"
+  }
+}

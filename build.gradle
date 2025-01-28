@@ -1,20 +1,18 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.74'
-//    id 'net.neoforged.moddevgradle.tasks.JarJar' version '0.4.2' // Added JarJar plugin
+    id 'net.neoforged.moddev' version '2.0.76'
 }
-
-
 version = mod_version
 group = mod_group_id
-
+def secretsFile = file("secrets/secrets.properties")
+if (secretsFile.exists()) {
+    def properties = new Properties()
+    properties.load(secretsFile.newDataInputStream())
+    properties.each { key, value -> project.ext.set(key, value) }
+}
 repositories {
     mavenLocal()
-    maven {
-        name = "henkelmax.public"
-        url = 'https://maven.maxhenkel.de/repository/public'
-    }
     maven {
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
@@ -40,25 +38,13 @@ repositories {
         url "https://maven.k-4u.nl"
     }
     maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-    }
-    maven {
         url "file://${project.projectDir}/repo"
     }
-}
-repositories {
-    // Other repositories can go above or below Modrinth's. We don't need priority :)
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = "Modrinth"
-                url = "https://api.modrinth.com/maven"
-            }
-        }
-        // Only add this if you're using ForgeGradle, otherwise remove this line
-        filter {
-            includeGroup "maven.modrinth"
+    maven {
+        url = uri("https://maven.pkg.github.com/awesomeshot5051/corelib")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
         }
     }
 }
@@ -124,31 +110,12 @@ dependencies {
     implementation "mcjty.theoneprobe:theoneprobe:${top_version}"
     implementation "curse.maven:jade-324717:${jade_id}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-//    implementation "maven.modrinth:FgoYR2BV:bs1npeRX"
 
-    // JarJar dependency
-    jarJar(implementation("de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}")) {
-        version {
-//            // The version range your mod is actually compatible with.
-//            // Note that you may receive a *lower* version than your preferred if another
-//            // Mod is only compatible up to 1.7.24, for example, your mod might get 1.7.24 at runtime.
-//            strictly "[${corelib_version}]"
-//            prefer "${corelib_version}" // The version actually used in your dev workspace
-        }
-        implementation "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}"
-        compileOnly "de.maxhenkel.corelib:corelib:${minecraft_version}-${corelib_version}:javadoc"
-//    implementation 'net.neoforged:JarJarSelector:0.4.2'
+    compileOnly "com.awesomeshot5051.corelib:corelib:1.21-2.1.5"
+    implementation("com.awesomeshot5051.corelib:corelib:1.21-2.1.5") {
+        exclude group: 'com.github.jitpack', module: 'gradle-simple'
     }
 }
-
-//processResources {
-//    filesMatching('**/*.toml') {
-//        expand 'mod_version': mod_version,
-//                'neoforge_dependency': neoforge_dependency,
-//                'minecraft_version': minecraft_version
-//    }
-//}
-
 
 tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
