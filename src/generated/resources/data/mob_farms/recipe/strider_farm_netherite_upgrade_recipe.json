@@ -11,7 +11,7 @@
   },
   "pattern": [
     " N ",
-    " F ",
+    "NFN",
     " N "
   ],
   "result": {

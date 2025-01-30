@@ -77,6 +77,8 @@
   "key.mob_farms.pick_up": "Pick Up",
   "key.mob_farms.cycle_trades": "Cycle Trades",
   "category.mob_farms": "Mob Farms",
+  "item.mob_farms.speed_upgrade": "Speed Upgrade",
+  "item.mob_farms.nether_upgrade": "Nether Upgrade",
   "tooltip.mobfarms.hoglin_farm.shift": "Must be in the Nether to work",
   "tooltip.mobfarms.hoglin_farm.hint": "Hold \u00A74Shift\u00A7r for more info.",
   "tooltip.mobfarms.wither_skeleton_farm.shift": "Must be in the Nether to work",
