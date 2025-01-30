@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_nether_upgrade": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mob_farms:nether_upgrade"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mob_farms:hoglin_farm_nether_upgrade_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_nether_upgrade"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mob_farms:hoglin_farm_nether_upgrade_recipe"
+    ]
+  }
+}

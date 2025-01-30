@@ -1,0 +1,25 @@
+{
+  "type": "mob_farms:card_upgrade_serializer",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mob_farms:zoglin_farm"
+    },
+    {
+      "item": "mob_farms:nether_upgrade"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "minecraft:netherrack"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:zoglin_farm"
+  }
+}
