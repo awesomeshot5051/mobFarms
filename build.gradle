@@ -124,8 +124,8 @@ dependencies {
     implementation "curse.maven:jade-324717:${jade_id}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
-    runtimeOnly "com.awesomeshot5051.corelib:corelib:1.21-2.1.5"
-    shadow("com.awesomeshot5051.corelib:corelib:1.21-2.1.5")
+    runtimeOnly "com.awesomeshot5051.corelib:corelib:1.21-3.0.0"
+    shadow("com.awesomeshot5051.corelib:corelib:1.21-3.0.0")
 }
 
 tasks.register("generateModMetadata", ProcessResources) {
