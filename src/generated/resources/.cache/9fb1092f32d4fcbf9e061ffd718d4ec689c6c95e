@@ -1,4 +1,4 @@
-// 1.21.1	2025-01-30T15:57:12.5630956	Recipes
+// 1.21.1	2025-02-10T09:55:16.662656	Recipes
 346ba5b300109452ff562b5b4202f915df792b5a data/mob_farms/advancement/recipes/misc/blaze_farm_diamond_upgrade_recipe.json
 e2ab5c7562f799a423b190b4d4fa187f21062370 data/mob_farms/advancement/recipes/misc/blaze_farm_enchantment_removal_recipe.json
 84e855be9ddb3b1e906f667e50f2aeb3ec67c9e2 data/mob_farms/advancement/recipes/misc/blaze_farm_enchant_upgrade_recipe.json
@@ -407,7 +407,7 @@ dafa648639cc2e574e0c89ce9096553806b736b7 data/mob_farms/recipe/cow_farm_enchantm
 7c455cc00b4555b4f50d99c314ae1c0a3b7e1ea7 data/mob_farms/recipe/cow_farm_gold_upgrade_recipe.json
 83a7bed9fbcf9001a100b860d5388183020bdee2 data/mob_farms/recipe/cow_farm_iron_upgrade_recipe.json
 273a0aca8f1305508310c9d564266aaa24abedad data/mob_farms/recipe/cow_farm_netherite_upgrade_recipe.json
-edeba6f7cbe4d00b5e7fc60510dc978f4b8d086c data/mob_farms/recipe/cow_farm_recipe.json
+aeb77281309d47e1f715a8661a3aa7e507dd1709 data/mob_farms/recipe/cow_farm_recipe.json
 f9d9b01221b3bec23ce31adb3c4d30c05eab8476 data/mob_farms/recipe/cow_farm_stone_upgrade_recipe.json
 a031efd7e3e3aed1ba15e587d299d9bd8c86ed9f data/mob_farms/recipe/creeper_farm_diamond_upgrade_recipe.json
 ab63321d61fcfc6412ce1bab4159fddee7c8343d data/mob_farms/recipe/creeper_farm_enchantment_removal_recipe.json

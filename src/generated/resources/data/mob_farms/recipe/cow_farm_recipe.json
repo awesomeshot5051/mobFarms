@@ -11,6 +11,9 @@
     "S": {
       "tag": "minecraft:swords"
     },
+    "T": {
+      "tag": "c:stones"
+    },
     "X": {
       "item": "minecraft:leather"
     }
@@ -18,7 +21,7 @@
   "pattern": [
     "###",
     "#S#",
-    "BSX"
+    "BTX"
   ],
   "result": {
     "count": 1,
