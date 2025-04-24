@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "ae2:certus_quartz_crystal"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CQC",
+    "CCC"
+  ],
+  "result": {
+    "count": 8,
+    "id": "mob_farms:ae_conduit"
+  }
+}

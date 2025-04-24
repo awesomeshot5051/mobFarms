@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ae_conduit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mob_farms:ae_conduit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_inscriber": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ae2:inscriber"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mob_farms:inscriber_upgrade"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ae_conduit",
+      "has_inscriber"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mob_farms:inscriber_upgrade"
+    ]
+  }
+}

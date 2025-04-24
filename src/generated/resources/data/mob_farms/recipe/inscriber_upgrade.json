@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "mob_farms:ae_conduit"
+    },
+    "I": {
+      "item": "ae2:inscriber"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AIA",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:inscriber_upgrade"
+  }
+}
