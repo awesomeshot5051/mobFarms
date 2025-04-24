@@ -1,0 +1,16 @@
+{
+  "type": "mob_farms:card_upgrade_serializer",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mob_farms:enderman_farm"
+    },
+    {
+      "item": "mob_farms:inscriber_upgrade"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mob_farms:enderman_farm"
+  }
+}
