@@ -1,13 +1,10 @@
 modLoader = "javafml"
 loaderVersion = "*"
 license = "MIT"
-#issueTrackerURL = "https://github.com/henkelmax/easy-villagers/issues"
 [[mods]]
 modId = "mob_farms"
 #version = "${mod_version}"
 displayName = "Mob Farms"
-#updateJSONURL = "https://github.com/awesomeshot5051/Mod-Website/blob/main/updateJSON.json"
-#displayURL = "https://www.curseforge.com/minecraft/mc-mods/easy-villagers"
 logoFile = "../assets/mob_farms/textures/gui/icons/icon.png"
 authors = "awesomeshot5051"
 description = '''Mod Farms'''
@@ -21,7 +18,7 @@ side = "BOTH"
 modId = "minecraft"
 type = "required"
 versionRange = "[1.21,1.21.1]"
-version="1.21.1-2.0.3"
+version = "1.21.1-2.0.3"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.mob_farms]]

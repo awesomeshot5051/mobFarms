@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.78'
+    id 'net.neoforged.moddev' version '2.0.80'
     id 'com.gradleup.shadow' version '9.0.0-beta6'
 }
 version = mod_version
@@ -124,8 +124,22 @@ dependencies {
     implementation "curse.maven:jade-324717:${jade_id}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     localRuntime("curse.maven:configured-457570:${configuredid}")
-    runtimeOnly "com.awesomeshot5051.corelib:corelib:1.21-3.0.3"
-    shadow("com.awesomeshot5051.corelib:corelib:1.21-3.0.3")
+    implementation "curse.maven:integrated-dynamics-236307:${id_id}"
+    implementation "curse.maven:integrated-terminals-295910:${terminals_id}"
+    implementation "curse.maven:integrated-tunnels-251389:${tunnels_id}"
+    implementation "curse.maven:advancedae-1084104:${aae_id}"
+    localRuntime "curse.maven:geckolib-388172:${gecko_id}"
+    localRuntime "curse.maven:cyclops-core-232758:${cyclops_id}"
+    localRuntime "curse.maven:common-capabilities-247007:${capabilities_id}"
+    implementation "curse.maven:applied-energistics-223794:${ae_id}"
+    implementation "curse.maven:ex-pattern-provider-892005:${eae_id}"
+    implementation "curse.maven:adm2-1063220:${adm_id}"
+    localRuntime "curse.maven:architectury-api-419699:${architecture_id}"
+    localRuntime "curse.maven:glodium-957920:${glodium_id}"
+    localRuntime "curse.maven:guideme-1173950:${guideme_id}"
+    shadow("com.awesomeshot5051.corelib:corelib:1.21-3.0.17")
+    runtimeOnly "com.awesomeshot5051.corelib:corelib:1.21-3.0.17"
+    implementation "curse.maven:resourcefarms-1164206:${rf_id}"
 }
 
 tasks.register("generateModMetadata", ProcessResources) {
